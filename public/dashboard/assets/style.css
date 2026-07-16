@@ -1,0 +1,147 @@
+/* ============================================================
+   DREAM HOME — REAL ESTATE
+   Main Stylesheet
+   ============================================================ */
+
+/* CSS VARIABLES & THEMING */
+:root {
+  --bg-body: #19221d;
+  --bg-nav-scroll: #101815;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --text-main: #ffffff;
+  --text-muted: #8aa894;
+  --primary: #3cb57c;
+  --primary-hover: #2a8f60;
+  --border-color: #36634d;
+  --form-bg: #101815;
+  --form-input-bg: #19221d;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --lightgreen: #134b3056;
+  --font-family: "Poppins", sans-serif;
+  --nav-color: #ffffff;
+  --h1-size: 3.5rem;
+  --h1-size-mobile: 2.5rem;
+  --footer-bg: #0b1310;
+  --footer-border: rgba(60, 181, 124, 0.2);
+}
+
+[data-theme="light"] {
+  --bg-body: #f4f7f6;
+  --bg-card: #ffffff;
+  --text-main: #19221d;
+  --text-muted: #5a6e60;
+  --primary: #2d8a5e;
+  --primary-hover: #1e6341;
+  --border-color: #cbd5e1;
+  --form-bg: #ffffff;
+  --form-input-bg: #f8f9fa;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --nav-color: #ffffff;
+  --bg-nav-scroll: #13211c;
+  --footer-bg: #0f1e17;
+  --footer-border: rgba(60, 181, 124, 0.25);
+}
+
+/* ---- GLOBAL RESET & TYPOGRAPHY ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  overflow-x: hidden;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-main);
+  font-family: var(--font-family) !important;
+}
+
+.text-primary-custom {
+  color: var(--primary);
+}
+
+.text-muted-custom {
+  color: var(--text-muted);
+}
+
+.font-pop {
+  font-family: var(--font-family);
+}
+
+.letter-spacing-2 {
+  letter-spacing: 2px;
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--nav-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.theme-toggle-btn i {
+  display: inline-block;
+  transition: transform 0.4s var(--ease-standard, cubic-bezier(0.2, 0, 0.2, 1));
+}
+.theme-toggle-btn:hover i {
+  transform: rotate(20deg);
+}
+
+::placeholder {
+  color: var(--text-muted) !important;
+}
+
+.badge-custom {
+  background-color: var(--primary);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.page-link {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 10px 18px;
+  margin: 0 5px;
+  border-radius: 8px;
+}
+
+.page-link:hover {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.page-item.active .page-link {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}

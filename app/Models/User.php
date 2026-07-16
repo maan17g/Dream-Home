@@ -23,6 +23,7 @@ class User extends Authenticatable
     'last_name',
     'email',
     'password',
+    'is_verified',
     'newsletter',
     'role',
 ];
@@ -36,7 +37,12 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+  public function otp(){
+    return $this->hasOne(Otp::class);
+  }
+  public function property(){
+    return $this->hasOne(Property::class);
+  }
     /**
      * Get the attributes that should be cast.
      *

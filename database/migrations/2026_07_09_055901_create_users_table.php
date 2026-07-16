@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->enum('role', ['admin', 'agent', 'buyer'])->default('buyer');
             $table->string('password');
+            $table->boolean('is_verified')->default(false);
             $table->boolean('newsletter')->nullable();
             $table->timestamps();
         });

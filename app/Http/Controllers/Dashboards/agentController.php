@@ -1,25 +1,37 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboards;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class loginController extends Controller
+class agentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+       return view('agent.agent-dashboard');
     }
-
+    public function properties(){
+        return view('agent.agent-properties');
+    }
+    public function appointments(){
+        return view('agent.agent-appointments');
+    }
+    public function messages(){
+        return view('agent.agent-messages');
+    }
+    public function profile(){
+        return view('agent.agent-profile');
+    }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return view('agent.agent-add-property'); 
     }
 
     /**
@@ -35,7 +47,7 @@ class loginController extends Controller
      */
     public function show(string $id)
     {
-        //
+       
     }
 
     /**
