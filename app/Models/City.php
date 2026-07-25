@@ -1,12 +1,17 @@
 <?php
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class City extends Model
 {
-    public function property(){
-        return $this->hasone(Property::class,'city_id','id');
+    use HasFactory;
+
+    protected $fillable = ['city', 'state', 'country', 'address_line', 'latitude', 'longitude'];
+
+      public function properties(): HasMany
+    {
+        return $this->hasMany(Property::class, 'city_id');
     }
 }

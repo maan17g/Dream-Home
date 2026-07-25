@@ -2,37 +2,37 @@
    DREAM HOME — Main JavaScript
    ============================================================ */
 
-// ---- 1. THEME TOGGLE ----
-const themeBtn = document.getElementById("themeToggle");
+// // ---- 1. THEME TOGGLE ----
+// const themeBtn = document.getElementById("themeToggle");
 
-if (themeBtn) {
-    const themeIcon = themeBtn.querySelector("i");
-    const body = document.body;
+// if (themeBtn) {
+//     const themeIcon = themeBtn.querySelector("i");
+//     const body = document.body;
 
-    // Restore saved theme
-    const savedTheme = localStorage.getItem("theme") || "dark";
-    body.setAttribute("data-theme", savedTheme);
+//     // Restore saved theme
+//     const savedTheme = localStorage.getItem("theme") || "dark";
+//     body.setAttribute("data-theme", savedTheme);
 
-    if (savedTheme === "light") {
-        themeIcon.classList.replace("bi-sun-fill", "bi-moon-fill");
-    } else {
-        themeIcon.classList.replace("bi-moon-fill", "bi-sun-fill");
-    }
+//     if (savedTheme === "light") {
+//         themeIcon.classList.replace("bi-sun-fill", "bi-moon-fill");
+//     } else {
+//         themeIcon.classList.replace("bi-moon-fill", "bi-sun-fill");
+//     }
 
-    themeBtn.addEventListener("click", () => {
-        const current = body.getAttribute("data-theme");
+//     themeBtn.addEventListener("click", () => {
+//         const current = body.getAttribute("data-theme");
 
-        if (current === "dark") {
-            body.setAttribute("data-theme", "light");
-            themeIcon.classList.replace("bi-sun-fill", "bi-moon-fill");
-            localStorage.setItem("theme", "light");
-        } else {
-            body.setAttribute("data-theme", "dark");
-            themeIcon.classList.replace("bi-moon-fill", "bi-sun-fill");
-            localStorage.setItem("theme", "dark");
-        }
-    });
-}
+//         if (current === "dark") {
+//             body.setAttribute("data-theme", "light");
+//             themeIcon.classList.replace("bi-sun-fill", "bi-moon-fill");
+//             localStorage.setItem("theme", "light");
+//         } else {
+//             body.setAttribute("data-theme", "dark");
+//             themeIcon.classList.replace("bi-moon-fill", "bi-sun-fill");
+//             localStorage.setItem("theme", "dark");
+//         }
+//     });
+// }
 
 // ---- 2. NAVBAR SCROLL EFFECT ----
 const navbar = document.getElementById("navbar");

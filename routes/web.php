@@ -20,9 +20,9 @@ Register Controller
 Route::controller(RegisterController::class)->prefix('/auth')->group(function(){
     Route::get('/register','index')->name('register.index');
     Route::post('/register','store')->name('register.store');
-
-});
-
+    
+    });
+    
 Route::controller(loginController::class)->prefix('/auth')->group(function(){
     Route::get('/login','index')->name('login.index');
     Route::post('/login','store')->name('login.store');
@@ -40,17 +40,18 @@ Route::controller(blog::class)->group(function(){
 });
 Route::controller(PropertyController::class)->group(function(){
     Route::get('/properties','index')->name('property.index');
-    Route::get('/properties/title','show')->name('property.show');
-});
+    Route::get('/properties/{id}','show')->name('property.show');
+    
+    });
 Route::middleware(['verified'])->group(function(){
-
+Route::put('user/dashboard/profile', [RegisterController::class, 'update'])->name('register.update');
 Route::middleware(['role:buyer'])->controller(userController::class)->prefix('user')->group(function(){
     Route::get('/dashboard','index')->name('user.index');
     Route::get('/dashboard/saved','saved')->name('user.saved');//for Saved Properties
     Route::get('/dashboard/appointments','appointments')->name('user.appointments'); // for user Appointments
     Route::get('/dashboard/inquiries','inquiries')->name('user.inquiries');
     Route::get('/dashboard/profile','profile')->name('user.profile');
-    Route::get('/dashboard/logout','destroy')->name('user.destroy');
+    Route::delete('/dashboard/profile','destroy')->name('user.destroy');
 
 });
 Route::middleware(['role:admin'])->controller(adminController::class)->prefix('admin')->group(function(){
@@ -64,6 +65,9 @@ Route::middleware(['role:agent'])->controller(agentController::class)->prefix('a
     Route::get('/dashboard/appointments','appointments')->name('agent.appointments'); // for APPOINTEMENTS
     Route::get('/dashboard/messages','messages')->name('agent.messages'); // for Messages
     Route::get('/dashboard/profile','profile')->name('agent.profile'); // for profile
+    Route::post('/dashboard/add',[PropertyController::class,'store'])->name('properties.store');
+
+
 });
 });
 

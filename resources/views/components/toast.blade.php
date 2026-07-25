@@ -1,3 +1,0 @@
- <div id="toast" style="position:fixed;bottom:2rem;right:2rem;z-index:9999;background:var(--primary);color:#fff;padding:1rem 1.5rem;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);display:flex;align-items:center;gap:0.75rem;font-size:0.95rem;font-weight:500;transform:translateY(100px);opacity:0;transition:all 0.4s ease;font-family:var(--font-family);">
-    <i class="bi bi-check-circle-fill"></i> <span id="toastMsg">{{$msg}}</span>
-  </div>

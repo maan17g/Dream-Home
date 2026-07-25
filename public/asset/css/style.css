@@ -24,7 +24,7 @@
     --footer-bg: #0b1310;
     --footer-border: rgba(60, 181, 124, 0.2);
 }
-
+/* 
 [data-theme="light"] {
     --bg-body: #f4f7f6;
     --bg-card: #ffffff;
@@ -40,7 +40,7 @@
     --bg-nav-scroll: #305045;
     --footer-bg: #0f1e17;
     --footer-border: rgba(60, 181, 124, 0.25);
-}
+} */
 
 /* ---- GLOBAL RESET & TYPOGRAPHY ---- */
 * {
@@ -3150,9 +3150,10 @@ main {
         transform: rotate(360deg);
     }
 }
-/* login end */
+/* gin end */
 /* email-verify */
-* ── SPLIT LAYOUT (same pattern as login/register) ── */ .auth-page {
+/* * ── SPLIT LAYOUT (same pattern as login/register) ── */ /* lo */ */
+.auth-page {
     min-height: 100vh;
     display: flex;
 }
@@ -3592,7 +3593,7 @@ main {
     }
     .breadcrumb { margin: 0; font-size: 0.85rem; }
     .breadcrumb-item a { color: var(--primary); text-decoration: none; }
-    .breadcrumb-item.active { color: var(--text-muted); }
+    .breadcrumb-item.crumb-active { color: var(--text-muted); }
     .breadcrumb-item + .breadcrumb-item::before { color: var(--text-muted); }
 
     /* ── GALLERY ── */

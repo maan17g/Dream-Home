@@ -63,20 +63,6 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  const sidebar = document.getElementById('sidebar');
-  document.getElementById('burgerBtn').addEventListener('click', () => { if (window.innerWidth <= 991) sidebar.classList.toggle('mobile-open'); else sidebar.classList.toggle('collapsed'); });
-  const themeBtn = document.getElementById('themeToggle'); const root = document.documentElement;
-  themeBtn.addEventListener('click', () => { const isLight = root.getAttribute('data-theme') === 'light'; root.setAttribute('data-theme', isLight ? 'dark' : 'light'); themeBtn.innerHTML = isLight ? '<i class="bi bi-moon-stars-fill"></i>' : '<i class="bi bi-sun-fill"></i>'; });
-
-  const tabs = document.querySelectorAll('.dash-tab');
-  tabs.forEach(t => t.addEventListener('click', () => {
-    tabs.forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    document.querySelectorAll('.appt-pane').forEach(p => p.classList.add('d-none'));
-    document.getElementById('pane-' + t.dataset.tab).classList.remove('d-none');
-  }));
-</script>
+<script src= {{ asset('dashboard/assets/js/script.js') }}></script>
 </body>
 </html>

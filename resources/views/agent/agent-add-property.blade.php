@@ -1,206 +1,208 @@
-@include('agent.layout.header',['title'=>'Add Listing | Dream Home Agent'])
+@include('agent.layout.header', ['title' => 'Add Listing | Dream Home Agent'])
 
-    <main class="dash-content">
-      <div class="dash-breadcrumb"><a href="agent-dashboard.html">Agent</a> / <a href="agent-properties.html">My Properties</a> / <span class="current">Add Listing</span></div>
-      <div class="dash-page-head">
-        <div>
-          <h1 class="dash-page-title">Add New Listing</h1>
-          <p class="dash-page-desc">Fill in the details below. You can save as draft and finish later.</p>
-        </div>
-        <div class="dash-head-actions">
-          <button class="dash-btn-secondary"><i class="bi bi-eye"></i> Preview</button>
-          <button class="dash-btn-secondary"><i class="bi bi-save"></i> Save Draft</button>
-          <button class="dash-btn-primary" onclick="showToast()"><i class="bi bi-check-lg"></i> Publish</button>
-        </div>
-      </div>
+<main class="dash-content">
+    <div class="dash-breadcrumb">
+        <a href="agent-dashboard.html">Agent</a> / 
+        <a href="agent-properties.html">My Properties</a> / 
+        <span class="current">Add Listing</span>
+    </div>
 
-      <div class="row g-3">
-        <!-- Step sidebar -->
-        <div class="col-lg-3">
-          <div class="form-steps-sidebar">
-            <div class="form-step-item done"><span class="step-circle"><i class="bi bi-check"></i></span> Basic Information</div>
-            <div class="form-step-item done"><span class="step-circle"><i class="bi bi-check"></i></span> Pricing & Details</div>
-            <div class="form-step-item"><span class="step-circle">3</span> Media & Gallery</div>
-            <div class="form-step-item"><span class="step-circle">4</span> Location</div>
-            <div class="form-step-item"><span class="step-circle">5</span> Amenities</div>
-            <div class="form-step-item"><span class="step-circle">6</span> SEO & Publish</div>
-          </div>
+    <form action="{{ route('properties.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="dash-page-head">
+            <div>
+                <h1 class="dash-page-title">Add New Listing</h1>
+                <p class="dash-page-desc">Fill in the details below. You can save as draft and finish later.</p>
+            </div>
+            <div class="dash-head-actions">
+                <button type="button" class="dash-btn-secondary"><i class="bi bi-eye"></i> Preview</button>
+                <button type="submit" class="dash-btn-primary"><i class="bi bi-check-lg"></i> Publish</button>
+            </div>
         </div>
 
-        <!-- Form -->
-        <div class="col-lg-9">
-          <div class="dash-panel">
-            <div class="dash-tabs">
-              <button class="dash-tab active" data-tab="basic">Basic Info</button>
-              <button class="dash-tab" data-tab="pricing">Pricing</button>
-              <button class="dash-tab" data-tab="media">Media</button>
-              <button class="dash-tab" data-tab="location">Location</button>
-              <button class="dash-tab" data-tab="features">Features</button>
-              <button class="dash-tab" data-tab="seo">SEO</button>
-            </div>
+        <div class="row g-3">
+            <div class="col-lg-12">
+                <div class="dash-panel">
+                    
+                    <!-- Form Specific Tabs (Scoped as property-tab) -->
+                    <div class="dash-tabs mb-4">
+                        <button type="button" class="dash-tab property-tab active" data-tab="basic">Basic Info</button>
+                        <button type="button" class="dash-tab property-tab" data-tab="pricing">Pricing</button>
+                        <button type="button" class="dash-tab property-tab" data-tab="media">Media</button>
+                        <button type="button" class="dash-tab property-tab" data-tab="location">Location</button>
+                        <button type="button" class="dash-tab property-tab" data-tab="features">Features</button>
+                        <button type="button" class="dash-tab property-tab" data-tab="seo">SEO</button>
+                    </div>
 
-            <!-- BASIC INFO -->
-            <div class="dash-tab-pane active" id="tab-basic">
-              <div class="row g-3">
-                <div class="col-md-8">
-                  <label class="dash-form-label">Property Title <span class="req">*</span></label>
-                  <input type="text" class="dash-input" placeholder="e.g. Modern Villa in Miami">
-                </div>
-                <div class="col-md-4">
-                  <label class="dash-form-label">Property ID</label>
-                  <input type="text" class="dash-input" placeholder="Auto-generated" disabled>
-                </div>
-                <div class="col-md-4">
-                  <label class="dash-form-label">Type <span class="req">*</span></label>
-                  <select class="dash-select"><option>Villa</option><option>Apartment</option><option>Townhouse</option><option>Condo</option><option>Commercial</option></select>
-                </div>
-                <div class="col-md-4">
-                  <label class="dash-form-label">Purpose <span class="req">*</span></label>
-                  <select class="dash-select"><option>For Sale</option><option>For Rent</option></select>
-                </div>
-                <div class="col-md-4">
-                  <label class="dash-form-label">Listed By</label>
-                  <input type="text" class="dash-input" value="John Doe (You)" disabled>
-                </div>
-                <div class="col-12">
-                  <label class="dash-form-label">Description</label>
-                  <textarea class="dash-input" rows="5" placeholder="Describe the property..."></textarea>
-                  <div class="dash-form-hint">Minimum 100 characters recommended for better search visibility.</div>
-                </div>
-                <div class="col-md-4 d-flex align-items-center gap-2 mt-2">
-                  <label class="dash-toggle"><input type="checkbox" checked><span class="dash-toggle-slider"></span></label>
-                  <span class="dash-form-label mb-0">Featured Listing</span>
-                </div>
-              </div>
-            </div>
+                    <!-- Tab 1: Basic Info -->
+                    <div class="dash-tab-pane property-tab-pane active" id="tab-basic">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="dash-form-label">Property Title <span class="req">*</span></label>
+                                <input type="text" class="dash-input @error('property_title') is-invalid @enderror" name="property_title" value="{{ old('property_title') }}" placeholder="e.g. Modern Villa in Miami">
+                                @error('property_title') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-4">
+                                <label class="dash-form-label">Type <span class="req">*</span></label>
+                                <select class="dash-select @error('property_type') is-invalid @enderror" name="property_type">
+                                    <option value="house" {{ old('property_type') == 'house' ? 'selected' : '' }}>House</option>
+                                    <option value="villa" {{ old('property_type') == 'villa' ? 'selected' : '' }}>Villa</option>
+                                    <option value="apartment" {{ old('property_type') == 'apartment' ? 'selected' : '' }}>Apartment</option>
+                                    <option value="office" {{ old('property_type') == 'office' ? 'selected' : '' }}>Office</option>
+                                    <option value="land" {{ old('property_type') == 'land' ? 'selected' : '' }}>Land</option>
+                                </select>
+                                @error('property_type') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-4">
+                                <label class="dash-form-label">Purpose <span class="req">*</span></label>
+                                <select class="dash-select @error('property_purpose') is-invalid @enderror" name="property_purpose">
+                                    <option value="sale" {{ old('property_purpose') == 'sale' ? 'selected' : '' }}>For Sale</option>
+                                    <option value="rent" {{ old('property_purpose') == 'rent' ? 'selected' : '' }}>For Rent</option>
+                                </select>
+                                @error('property_purpose') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-4">
+                                <label class="dash-form-label">Listed By</label>
+                                <input type="text" class="dash-input" value="{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}" disabled>
+                            </div>
+                            <div class="col-12">
+                                <label class="dash-form-label">Description</label>
+                                <textarea class="dash-input @error('property_description') is-invalid @enderror" name="property_description" rows="5" placeholder="Describe the property...">{{ old('property_description') }}</textarea>
+                                @error('property_description') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- PRICING -->
-            <div class="dash-tab-pane" id="tab-pricing">
-              <div class="row g-3">
-                <div class="col-md-4"><label class="dash-form-label">Price <span class="req">*</span></label><input type="text" class="dash-input" placeholder="$ 850,000"></div>
-                <div class="col-md-4"><label class="dash-form-label">Price Type</label><select class="dash-select"><option>Fixed</option><option>Negotiable</option><option>Starting From</option></select></div>
-                <div class="col-md-4"><label class="dash-form-label">Bedrooms</label><input type="number" class="dash-input" placeholder="5"></div>
-                <div class="col-md-4"><label class="dash-form-label">Bathrooms</label><input type="number" class="dash-input" placeholder="4"></div>
-                <div class="col-md-4"><label class="dash-form-label">Garages</label><input type="number" class="dash-input" placeholder="2"></div>
-                <div class="col-md-4"><label class="dash-form-label">Area (sqft)</label><input type="number" class="dash-input" placeholder="4500"></div>
-              </div>
-            </div>
+                    <!-- Tab 2: Pricing & Details -->
+                    <div class="dash-tab-pane property-tab-pane d-none" id="tab-pricing">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="dash-form-label">Price ($) <span class="req">*</span></label>
+                                <input type="number" class="dash-input @error('property_price') is-invalid @enderror" name="property_price" value="{{ old('property_price') }}" placeholder="850000">
+                                @error('property_price') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-4">
+                                <label class="dash-form-label">Floors</label>
+                                <input type="number" name="property_floors" class="dash-input" value="{{ old('property_floors', 1) }}" placeholder="1">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="dash-form-label">Bedrooms</label>
+                                <input type="number" name="property_bedrooms" class="dash-input" value="{{ old('property_bedrooms', 0) }}" placeholder="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="dash-form-label">Bathrooms</label>
+                                <input type="number" name="property_bathrooms" class="dash-input" value="{{ old('property_bathrooms', 0) }}" placeholder="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="dash-form-label">Garages</label>
+                                <input type="number" name="property_garages" class="dash-input" value="{{ old('property_garages', 0) }}" placeholder="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="dash-form-label">Area (sqft)</label>
+                                <input type="number" name="property_area" class="dash-input" value="{{ old('property_area') }}" placeholder="4500">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="dash-form-label">Year Built</label>
+                                <input type="number" name="year_built" class="dash-input" value="{{ old('year_built', date('Y')) }}" placeholder="2024">
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- MEDIA -->
-            <div class="dash-tab-pane" id="tab-media">
-              <label class="dash-form-label">Featured Image</label>
-              <div class="dash-dropzone mb-3">
-                <i class="bi bi-cloud-arrow-up"></i>
-                <div><strong>Drag & drop an image</strong> or <span class="text-primary-custom">browse files</span></div>
-                <div class="dash-form-hint">Recommended size: 1200×800px, JPG or PNG</div>
-              </div>
-              <label class="dash-form-label">Gallery (multiple images)</label>
-              <div class="dash-dropzone mb-3"><i class="bi bi-images"></i><div><strong>Drag & drop images</strong> or <span class="text-primary-custom">browse files</span></div></div>
-              <label class="dash-form-label">Video Tour (optional)</label>
-              <input type="text" class="dash-input" placeholder="YouTube / Vimeo URL">
-            </div>
+                    <!-- Tab 3: Media -->
+                    <div class="dash-tab-pane property-tab-pane d-none" id="tab-media">
+                        <!-- Featured Image -->
+                        <div class="mb-4">
+                            <label class="dash-form-label">Featured Cover Image <span class="req">*</span></label>
+                            <div class="dash-dropzone position-relative text-center p-4 border rounded @error('property_f_image') border-danger @enderror" id="featuredDropzone">
+                                <i class="bi bi-cloud-arrow-up fs-1 text-primary"></i>
+                                <div><strong>Click or drag cover image here</strong></div>
+                                <span class="text-muted small">(JPG, PNG, WEBP - Max 3MB)</span>
+                                
+                                <input type="file" name="property_f_image" id="property_f_image" class="opacity-0 position-absolute w-100 h-100 top-0 start-0 pointer-cursor" accept="image/*">
+                                
+                                <div id="featuredPreview" class="mt-3 d-none">
+                                    <img src="" id="featuredPreviewImg" class="img-thumbnail" style="max-height: 180px; object-fit: cover;">
+                                </div>
+                            </div>
+                            @error('property_f_image') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                        </div>
 
-            <!-- LOCATION -->
-            <div class="dash-tab-pane" id="tab-location">
-              <div class="row g-3">
-                <div class="col-md-6"><label class="dash-form-label">Address <span class="req">*</span></label><input type="text" class="dash-input" placeholder="Street address"></div>
-                <div class="col-md-3"><label class="dash-form-label">City</label><input type="text" class="dash-input" placeholder="Miami"></div>
-                <div class="col-md-3"><label class="dash-form-label">State</label><input type="text" class="dash-input" placeholder="Florida"></div>
-                <div class="col-12">
-                  <label class="dash-form-label">Pin on Map</label>
-                  <div style="height:220px;border-radius:14px;border:1px solid var(--border-color);background:var(--form-input-bg);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:.85rem;">
-                    <i class="bi bi-geo-alt me-2"></i> Interactive map picker
-                  </div>
+                        <!-- Gallery Images -->
+                        <div class="mb-3">
+                            <label class="dash-form-label">Gallery Images (Multiple)</label>
+                            <div class="dash-dropzone position-relative text-center p-4 border rounded @error('property_all_images.*') border-danger @enderror" id="galleryDropzone">
+                                <i class="bi bi-images fs-1 text-primary"></i>
+                                <div><strong>Click or drag gallery photos here</strong></div>
+                                <span class="text-muted small">You can select multiple photos</span>
+                                
+                                <input type="file" name="property_all_images[]" id="property_all_images" class="opacity-0 position-absolute w-100 h-100 top-0 start-0 pointer-cursor" accept="image/*" multiple>
+                            </div>
+                            @error('property_all_images.*') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+
+                            <div id="galleryPreview" class="row g-2 mt-3"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 4: Location -->
+                    <div class="dash-tab-pane property-tab-pane d-none" id="tab-location">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="dash-form-label">Address <span class="req">*</span></label>
+                                <input type="text" class="dash-input @error('property_address') is-invalid @enderror" name="property_address" value="{{ old('property_address') }}" placeholder="Street address">
+                                @error('property_address') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-3">
+                                <label class="dash-form-label">City <span class="req">*</span></label>
+                                <input type="text" name="property_city" class="dash-input @error('property_city') is-invalid @enderror" value="{{ old('property_city') }}" placeholder="Miami">
+                                @error('property_city') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-3">
+                                <label class="dash-form-label">State <span class="req">*</span></label>
+                                <input type="text" name="property_state" class="dash-input @error('property_state') is-invalid @enderror" value="{{ old('property_state') }}" placeholder="Florida">
+                                @error('property_state') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 5: Features & Amenities -->
+                    <div class="dash-tab-pane property-tab-pane d-none" id="tab-features">
+                        <label class="dash-form-label">Amenities</label>
+                        <div class="chip-select">
+                            @if(isset($amenities) && count($amenities) > 0)
+                                @foreach($amenities as $amenity)
+                                    <input type="checkbox" name="amenities[]" value="{{ $amenity->id }}" id="am{{ $amenity->id }}" {{ is_array(old('amenities')) && in_array($amenity->id, old('amenities')) ? 'checked' : '' }}>
+                                    <label for="am{{ $amenity->id }}"><i class="{{ $amenity->icon }}"></i> {{$amenity->name }}</label>
+                                @endforeach
+                            @else
+                                <p class="text-muted">No amenities found in database.</p>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Tab 6: SEO -->
+                    <div class="dash-tab-pane property-tab-pane d-none" id="tab-seo">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="dash-form-label">URL Slug (Auto-generated if left blank)</label>
+                                <input type="text" class="dash-input @error('slug') is-invalid @enderror" name="slug" value="{{ old('slug') }}" placeholder="modern-villa-in-miami">
+                                @error('slug') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="d-flex justify-content-between mt-4 pt-3" style="border-top:1px solid var(--border-color);">
+                        <button type="button" class="dash-btn-secondary" id="prevTabBtn"><i class="bi bi-arrow-left"></i> Previous</button>
+                        <button type="button" class="dash-btn-primary" id="nextTabBtn">Next <i class="bi bi-arrow-right"></i></button>
+                    </div>
+
                 </div>
-                <div class="col-12">
-                  <label class="dash-form-label">Nearby Places</label>
-                  <div class="chip-select">
-                    <input type="checkbox" id="np1" checked><label for="np1">School</label>
-                    <input type="checkbox" id="np2"><label for="np2">Hospital</label>
-                    <input type="checkbox" id="np3" checked><label for="np3">Metro Station</label>
-                    <input type="checkbox" id="np4"><label for="np4">Shopping Mall</label>
-                    <input type="checkbox" id="np5"><label for="np5">Park</label>
-                  </div>
-                </div>
-              </div>
             </div>
-
-            <!-- FEATURES -->
-            <div class="dash-tab-pane" id="tab-features">
-              <label class="dash-form-label">Amenities</label>
-              <div class="chip-select">
-                <input type="checkbox" id="am1" checked><label for="am1">Swimming Pool</label>
-                <input type="checkbox" id="am2" checked><label for="am2">Gym</label>
-                <input type="checkbox" id="am3"><label for="am3">Garden</label>
-                <input type="checkbox" id="am4"><label for="am4">Security</label>
-                <input type="checkbox" id="am5" checked><label for="am5">Parking</label>
-                <input type="checkbox" id="am6"><label for="am6">Elevator</label>
-                <input type="checkbox" id="am7"><label for="am7">Balcony</label>
-                <input type="checkbox" id="am8"><label for="am8">Pet Friendly</label>
-              </div>
-            </div>
-
-            <!-- SEO -->
-            <div class="dash-tab-pane" id="tab-seo">
-              <div class="row g-3">
-                <div class="col-12"><label class="dash-form-label">Meta Title</label><input type="text" class="dash-input" placeholder="Modern Villa in Miami | Dream Home"></div>
-                <div class="col-12"><label class="dash-form-label">Meta Description</label><textarea class="dash-input" rows="3" placeholder="Short SEO description..."></textarea></div>
-                <div class="col-12"><label class="dash-form-label">URL Slug</label><input type="text" class="dash-input" value="modern-villa-in-miami"></div>
-                <div class="col-12">
-                  <label class="dash-form-label">Status</label>
-                  <select class="dash-select" style="max-width:220px;"><option>Draft</option><option>Published</option><option>Pending Review</option></select>
-                </div>
-              </div>
-            </div>
-
-            <div class="d-flex justify-content-between mt-4 pt-3" style="border-top:1px solid var(--border-color);">
-              <button class="dash-btn-secondary" id="prevTabBtn"><i class="bi bi-arrow-left"></i> Previous</button>
-              <button class="dash-btn-primary" id="nextTabBtn">Next <i class="bi bi-arrow-right"></i></button>
-            </div>
-          </div>
         </div>
-      </div>
-    </main>
-  </div>
-</div>
+    </form>
+</main>
 
-<div class="dash-toast" id="successToast"><i class="bi bi-check-circle-fill"></i><span>Property published successfully.</span></div>
+@include('layout.Notification')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  const sidebar = document.getElementById('sidebar');
-  document.getElementById('burgerBtn').addEventListener('click', () => {
-    if (window.innerWidth <= 991) sidebar.classList.toggle('mobile-open'); else sidebar.classList.toggle('collapsed');
-  });
-  const themeBtn = document.getElementById('themeToggle');
-  const root = document.documentElement;
-  themeBtn.addEventListener('click', () => {
-    const isLight = root.getAttribute('data-theme') === 'light';
-    root.setAttribute('data-theme', isLight ? 'dark' : 'light');
-    themeBtn.innerHTML = isLight ? '<i class="bi bi-moon-stars-fill"></i>' : '<i class="bi bi-sun-fill"></i>';
-  });
-  function showToast(){ const t=document.getElementById('successToast'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
-
-  // Tabs
-  const tabs = document.querySelectorAll('.dash-tab');
-  const panes = document.querySelectorAll('.dash-tab-pane');
-  function activateTab(name) {
-    tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-    panes.forEach(p => p.classList.toggle('active', p.id === 'tab-' + name));
-  }
-  tabs.forEach(t => t.addEventListener('click', () => activateTab(t.dataset.tab)));
-
-  const order = ['basic','pricing','media','location','features','seo'];
-  document.getElementById('nextTabBtn').addEventListener('click', () => {
-    const current = document.querySelector('.dash-tab.active').dataset.tab;
-    const idx = order.indexOf(current);
-    if (idx < order.length - 1) activateTab(order[idx+1]);
-  });
-  document.getElementById('prevTabBtn').addEventListener('click', () => {
-    const current = document.querySelector('.dash-tab.active').dataset.tab;
-    const idx = order.indexOf(current);
-    if (idx > 0) activateTab(order[idx-1]);
-  });
-</script>
-</body>
-</html>
+<script src="{{ asset('dashboard/assets/js/script.js') }}"></script>

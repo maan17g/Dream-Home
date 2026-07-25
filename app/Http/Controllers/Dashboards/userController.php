@@ -75,9 +75,19 @@ class userController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy(Request $request)
     {
+        
         Auth::logout();
+
+    // 2. Clear all data out of the current session
+    $request->session()->invalidate();
+
+    // 3. Force regenerate a brand new CSRF token to prevent session hijacking
+    $request->session()->regenerateToken();
+
+    // 4. Send the user back to the homepage or login screen
+    return redirect()->route('page.index');
         
     }
 }

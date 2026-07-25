@@ -17,6 +17,7 @@ return new class extends Migration
         ->constrained('users')
         ->cascadeOnDelete();
     $table->string('title');
+     $table->string('slug', 200)->unique();
     $table->text('description')->nullable();
     $table->enum('purpose', ['sale', 'rent']);
     $table->enum('type', ['house', 'apartment', 'office', 'villa', 'land']);
@@ -27,6 +28,11 @@ return new class extends Migration
     $table->unsignedTinyInteger('bedrooms')->default(0);
     $table->unsignedTinyInteger('bathrooms')->default(0); 
     $table->unsignedTinyInteger('garages')->default(0);
+       $table->boolean('featured');
+       $table->integer('floors');
+       $table->year('year_built');
+
+    $table->integer('views')->default(0);
     $table->timestamps();
 });
     }

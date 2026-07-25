@@ -781,15 +781,19 @@ textarea.dash-input { height: auto; padding: 10px 12px; resize: vertical; }
 .dash-toggle input:checked + .dash-toggle-slider { background: var(--primary); }
 .dash-toggle input:checked + .dash-toggle-slider::before { transform: translateX(18px); }
 
+.dash-dropzone input {
+  
+  cursor: pointer;
+}
 .dash-dropzone {
   border: 2px dashed var(--border-color);
   border-radius: 16px;
   padding: 2.5rem 1rem;
   text-align: center;
   color: var(--text-muted);
-  cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .dash-dropzone:hover { border-color: var(--primary); color: var(--primary); }
 .dash-dropzone i { font-size: 2rem; margin-bottom: 0.6rem; display: block; }
 
@@ -984,13 +988,55 @@ textarea.dash-input { height: auto; padding: 10px 12px; resize: vertical; }
 .dash-progress-fill { height:100%; background: var(--primary); border-radius:20px; }
 
 /* ---------------- AVATAR UPLOAD ---------------- */
-.avatar-upload { position:relative; width:96px; height:96px; margin: 0 auto; }
-.avatar-upload img { width:100%; height:100%; border-radius:50%; object-fit:cover; border:3px solid var(--bg-card); }
-.avatar-upload-btn {
-  position:absolute; bottom:0; right:0; width:30px; height:30px; border-radius:50%;
-  background: var(--primary); color:#fff; border:2px solid var(--bg-body);
-  display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:.8rem;
+
+/* Base container that sets the actual size */
+.avatar-upload {
+  width: 130px;  /* Change this one value to resize everything scale-perfectly */
+  height: 130px;
+  margin: 0 auto;
 }
+
+/* Wrapper anchors the button explicitly to the size of the container */
+.avatar-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Image forces itself to stay within the boundaries */
+.avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--bg-card);
+  display: block;
+}
+
+/* Button anchors perfectly to the bottom-right corner of the circle */
+.avatar-upload-btn {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  border: 2px solid var(--bg-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: .85rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+}
+
+.avatar-upload-btn:hover {
+  transform: scale(1.1);
+}
+
 
 /* ---------------- PROPERTY VIEW GALLERY ---------------- */
 .prop-view-main-img { height: 380px; border-radius: 18px; overflow: hidden; margin-bottom: .6rem; }

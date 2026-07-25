@@ -3,7 +3,11 @@
     <main class="dash-content">
       <div class="dash-breadcrumb"><a href="agent-dashboard.html">Agent</a> / <span class="current">My Properties</span></div>
       <div class="dash-page-head">
-        <div><h1 class="dash-page-title">My Properties</h1><p class="dash-page-desc">28 listings under your name.</p></div>
+        <div>
+          <h1 class="dash-page-title">My Properties</h1>
+          <!-- Counts total items dynamically from the collection or paginator -->
+          <p class="dash-page-desc">{{ $properties instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator ? $properties->total() : $properties->count() }} listings under your name.</p>
+        </div>
         <div class="dash-head-actions"><a href="{{ route('agent.create') }}" class="dash-btn-primary"><i class="bi bi-plus-lg"></i> Add Listing</a></div>
       </div>
 
@@ -21,103 +25,116 @@
 
       <!-- GRID VIEW -->
       <div class="row g-3" id="gridView">
-        <div class="col-md-6 col-lg-4">
-          <div class="agent-prop-card">
-            <div class="agent-prop-thumb">
-              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=60" alt="">
-              <span class="badge-custom position-absolute" style="top:10px;left:10px;">For Sale</span>
-              <button class="card-fav-btn active position-absolute" style="top:10px;right:10px;"><i class="bi bi-heart-fill"></i></button>
-            </div>
-            <div class="agent-prop-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div class="dash-row-title">Modern Villa in Miami</div>
-                <span class="status-pill success"><i class="bi bi-circle-fill"></i>Published</span>
+        @forelse($properties as $property)
+          @php
+            // Pull out the primary thumbnail, or fallback to the first image if thumbnail isn't explicit
+            $thumbnail = $property->images->firstWhere('is_thumbnail', 1) ?? $property->images->first();
+            $thumbnailUrl = $thumbnail ? asset('storage/' . $thumbnail->image) : asset('images/default-property.jpg');
+          @endphp
+          <div class="col-md-6 col-lg-4">
+            <div class="agent-prop-card">
+              <div class="agent-prop-thumb">
+                <img src="{{ $thumbnailUrl }}" alt="{{ $property->title }}">
+                <span class="badge-custom position-absolute" style="top:10px;left:10px;">For {{ ucfirst($property->purpose) }}</span>
+                <button class="card-fav-btn {{ $property->featured ? 'active' : '' }} position-absolute" style="top:10px;right:10px;"><i class="bi bi-heart-fill"></i></button>
               </div>
-              <div class="dash-row-sub mb-2">Miami, Florida · $850,000</div>
-              <div class="agent-prop-stats">
-                <span><i class="bi bi-eye"></i> 1,204 views</span>
-                <span><i class="bi bi-heart"></i> 46 saved</span>
+              <div class="agent-prop-body">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div class="dash-row-title">{{ $property->title }}</div>
+                  <!-- Static fallback status example, replace with $property->status when you add it -->
+                  <span class="status-pill success"><i class="bi bi-circle-fill"></i>Published</span>
+                </div>
+                <div class="dash-row-sub mb-2">
+                  {{ $property->city?->city ?? 'Unknown City' }}, {{ $property->city?->country ?? '' }} · 
+                  ${{ number_format($property->price) }}{{ $property->purpose === 'rent' ? '/mo' : '' }}
+                </div>
+                <div class="agent-prop-stats">
+                  <span><i class="bi bi-eye"></i> {{ number_format($property->views) }} views</span>
+                  <span><i class="bi bi-door-open"></i> {{ $property->bedrooms }} Beds</span>
+                </div>
+                <div class="row-actions mt-3">
+                  <a href="{{ route('property.show', $property->id) }}" class="row-action-btn"><i class="bi bi-eye"></i></a>
+                  {{-- <a href="{{ route('agent.edit', $property->id) }}" class="row-action-btn"><i class="bi bi-pencil"></i></a> --}}
+                  <button class="row-action-btn danger btn-delete-trigger" data-id="{{ $property->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button>
+                </div>
               </div>
-              <div class="row-actions mt-3"><a href="../admin/property-view.html" class="row-action-btn"><i class="bi bi-eye"></i></a><a href="agent-add-property.html" class="row-action-btn"><i class="bi bi-pencil"></i></a><button class="row-action-btn danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button></div>
             </div>
           </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="agent-prop-card">
-            <div class="agent-prop-thumb">
-              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=400&q=60" alt="">
-              <span class="badge-custom position-absolute" style="top:10px;left:10px;">For Rent</span>
-              <button class="card-fav-btn position-absolute" style="top:10px;right:10px;"><i class="bi bi-heart"></i></button>
-            </div>
-            <div class="agent-prop-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div class="dash-row-title">Downtown Loft</div>
-                <span class="status-pill warning"><i class="bi bi-circle-fill"></i>Pending</span>
-              </div>
-              <div class="dash-row-sub mb-2">Chicago, IL · $1,200/mo</div>
-              <div class="agent-prop-stats"><span><i class="bi bi-eye"></i> 412 views</span><span><i class="bi bi-heart"></i> 12 saved</span></div>
-              <div class="row-actions mt-3"><a href="../admin/property-view.html" class="row-action-btn"><i class="bi bi-eye"></i></a><a href="agent-add-property.html" class="row-action-btn"><i class="bi bi-pencil"></i></a><button class="row-action-btn danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button></div>
-            </div>
+        @empty
+          <div class="col-12 text-center py-5">
+            <p class="text-muted">No properties found.</p>
           </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="agent-prop-card">
-            <div class="agent-prop-thumb">
-              <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=60" alt="">
-              <span class="badge-custom position-absolute" style="top:10px;left:10px;">For Sale</span>
-              <button class="card-fav-btn position-absolute" style="top:10px;right:10px;"><i class="bi bi-heart"></i></button>
-            </div>
-            <div class="agent-prop-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div class="dash-row-title">Beach House in Florida</div>
-                <span class="status-pill success"><i class="bi bi-circle-fill"></i>Published</span>
-              </div>
-              <div class="dash-row-sub mb-2">Miami, Florida · $650,000</div>
-              <div class="agent-prop-stats"><span><i class="bi bi-eye"></i> 2,310 views</span><span><i class="bi bi-heart"></i> 88 saved</span></div>
-              <div class="row-actions mt-3"><a href="../admin/property-view.html" class="row-action-btn"><i class="bi bi-eye"></i></a><a href="agent-add-property.html" class="row-action-btn"><i class="bi bi-pencil"></i></a><button class="row-action-btn danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button></div>
-            </div>
-          </div>
-        </div>
+        @endforelse
       </div>
 
       <!-- TABLE VIEW -->
       <div class="dash-panel" id="tableView" style="display:none;">
         <div class="dash-table-wrap">
           <table class="dash-table">
-            <thead><tr><th>Property</th><th>Price</th><th>Status</th><th>Views</th><th>Saved</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Property</th><th>Price</th><th>Status</th><th>Views</th><th>Beds/Baths</th><th>Actions</th></tr></thead>
             <tbody>
-              <tr>
-                <td class="d-flex align-items-center gap-2"><img class="dash-row-thumb" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=100&q=60" alt=""><div><div class="dash-row-title">Modern Villa in Miami</div><div class="dash-row-sub">Miami, Florida</div></div></td>
-                <td>$850,000</td><td><span class="status-pill success"><i class="bi bi-circle-fill"></i>Published</span></td><td>1,204</td><td>46</td>
-                <td><div class="row-actions"><a href="../admin/property-view.html" class="row-action-btn"><i class="bi bi-eye"></i></a><a href="agent-add-property.html" class="row-action-btn"><i class="bi bi-pencil"></i></a><button class="row-action-btn danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button></div></td>
-              </tr>
-              <tr>
-                <td class="d-flex align-items-center gap-2"><img class="dash-row-thumb" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=100&q=60" alt=""><div><div class="dash-row-title">Downtown Loft</div><div class="dash-row-sub">Chicago, IL</div></div></td>
-                <td>$1,200/mo</td><td><span class="status-pill warning"><i class="bi bi-circle-fill"></i>Pending</span></td><td>412</td><td>12</td>
-                <td><div class="row-actions"><a href="../admin/property-view.html" class="row-action-btn"><i class="bi bi-eye"></i></a><a href="agent-add-property.html" class="row-action-btn"><i class="bi bi-pencil"></i></a><button class="row-action-btn danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button></div></td>
-              </tr>
+              @foreach($properties as $property)
+                @php
+                  $thumbnail = $property->images->firstWhere('is_thumbnail', 1) ?? $property->images->first();
+                  $thumbnailUrl = $thumbnail ? asset('storage/' . $thumbnail->image) : asset('images/default-property.jpg');
+                @endphp
+                <tr>
+                  <td class="d-flex align-items-center gap-2">
+                    <img class="dash-row-thumb" src="{{ $thumbnailUrl }}" alt="{{ $property->title }}">
+                    <div>
+                      <div class="dash-row-title">{{ $property->title }}</div>
+                      <div class="dash-row-sub">{{ $property->city?->city ?? 'Unknown City' }}</div>
+                    </div>
+                  </td>
+                  <td>${{ number_format($property->price) }}{{ $property->purpose === 'rent' ? '/mo' : '' }}</td>
+                  <td><span class="status-pill success"><i class="bi bi-circle-fill"></i>Published</span></td>
+                  <td>{{ number_format($property->views) }}</td>
+                  <td>{{ $property->bedrooms }}B / {{ $property->bathrooms }}B</td>
+                  <td>
+                    <div class="row-actions">
+                      <a href="{{ route('property.show', $property->id) }}" class="row-action-btn"><i class="bi bi-eye"></i></a>
+                      {{-- <a href="{{ route('agent.edit', $property->id) }}" class="row-action-btn"><i class="bi bi-pencil"></i></a> --}}
+                      <button class="row-action-btn danger btn-delete-trigger" data-id="{{ $property->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              @endforeach
             </tbody>
           </table>
         </div>
       </div>
 
-      <div class="dash-pagination-bar">
-        <span>Showing 1 to 3 of 28 entries</span>
-        <ul class="dash-pagination"><li class="page-link"><i class="bi bi-chevron-left"></i></li><li class="page-link" style="background:var(--primary);color:#fff;border-color:var(--primary);">1</li><li class="page-link">2</li><li class="page-link"><i class="bi bi-chevron-right"></i></li></ul>
-      </div>
+      <!-- PAGINATION BAR -->
+      @if($properties instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator)
+        <div class="dash-pagination-bar mt-4">
+          <span>Showing {{ $properties->firstItem() }} to {{ $properties->lastItem() }} of {{ $properties->total() }} entries</span>
+          <div>
+            {{ $properties->links('pagination::bootstrap-4') }}
+          </div>
+        </div>
+      @endif
     </main>
   </div>
 </div>
 
+<!-- DELETE MODAL -->
 <div class="modal fade dash-modal danger" id="deleteModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content text-center p-3">
-      <div class="modal-body">
-        <div class="stat-icon-lg mx-auto mb-3"><i class="bi bi-trash"></i></div>
-        <h5 class="mb-2">Delete this listing?</h5>
-        <p class="text-muted-custom" style="font-size:.85rem;">This action can't be undone.</p>
-      </div>
-      <div class="modal-footer justify-content-center border-0 pt-0"><button class="dash-btn-secondary" data-bs-dismiss="modal">Cancel</button><button class="dash-btn-danger" data-bs-dismiss="modal">Delete</button></div>
+      <!-- Wrapped in a form targeting your delete endpoint -->
+      <form id="deleteForm" method="POST" action="">
+        @csrf
+        @method('DELETE')
+        <div class="modal-body">
+          <div class="stat-icon-lg mx-auto mb-3"><i class="bi bi-trash"></i></div>
+          <h5 class="mb-2">Delete this listing?</h5>
+          <p class="text-muted-custom" style="font-size:.85rem;">This action can't be undone.</p>
+        </div>
+        <div class="modal-footer justify-content-center border-0 pt-0">
+          <button type="button" class="dash-btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="dash-btn-danger">Delete</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -133,6 +150,15 @@
   const gridView = document.getElementById('gridView'), tableView = document.getElementById('tableView');
   gridBtn.addEventListener('click', () => { gridBtn.classList.add('active'); tableBtn.classList.remove('active'); gridView.style.display='flex'; tableView.style.display='none'; });
   tableBtn.addEventListener('click', () => { tableBtn.classList.add('active'); gridBtn.classList.remove('active'); tableView.style.display='block'; gridView.style.display='none'; });
+
+  // Dynamically apply correct delete action endpoint to the form inside the modal
+  document.querySelectorAll('.btn-delete-trigger').forEach(button => {
+    button.addEventListener('click', function() {
+      const id = this.getAttribute('data-id');
+      // Adjust this URL string to match your routes format
+      document.getElementById('deleteForm').setAttribute('action', `/agent/properties/${id}`);
+    });
+  });
 </script>
 </body>
 </html>

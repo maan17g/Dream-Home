@@ -96,7 +96,7 @@
   <script>
   
   </script>
-@include('auth.layout.Notification')
+@include('layout.Notification')
 
 </body>
 </html>

@@ -11,14 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('property_amenity', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('property_id')
-                ->constrained()
-                ->cascadeOnDelete();
-            $table->unsignedTinyInteger('amenity_id');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+        $table->string('phone',11)->nullable();
         });
     }
 
@@ -27,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('amenities_');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };
