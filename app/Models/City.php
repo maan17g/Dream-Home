@@ -10,7 +10,7 @@ class City extends Model
 
     protected $fillable = ['city', 'state', 'country', 'address_line', 'latitude', 'longitude'];
 
-      public function properties(): HasMany
+      public function properties()
     {
         return $this->hasMany(Property::class, 'city_id');
     }

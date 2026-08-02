@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Dashboards;
 
 use App\Http\Controllers\Controller;
+use App\Models\Property;
+use App\Models\savedProperties;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,20 +16,21 @@ class userController extends Controller
      */
     public function index()
     {
+        // $record=User::with(['savedProperties'])->where('sid',Auth::user()->id)->count();
+
         return view('user.user-dashboard');
     }
+
     public function saved()
     {
-        return view('user.user-saved');
+        
+        $record = savedProperties::where('user_id', Auth::user()->id)->pluck('property_id');
+        $properties = Property::with(['images', 'agent.user', 'city'])->whereIn('id', $record)->paginate(3);
+
+        return view('user.user-saved', compact('properties'));
     }
-    public function appointments()
-    {
-        return view('user.user-appointments');
-    }
-    public function inquiries()
-    {
-        return view('user.user-inquiries');
-    }
+
+    
     public function profile()
     {
         return view('user.user-profile');
@@ -77,17 +81,17 @@ class userController extends Controller
      */
     public function destroy(Request $request)
     {
-        
+
         Auth::logout();
 
-    // 2. Clear all data out of the current session
-    $request->session()->invalidate();
+        // 2. Clear all data out of the current session
+        $request->session()->invalidate();
 
-    // 3. Force regenerate a brand new CSRF token to prevent session hijacking
-    $request->session()->regenerateToken();
+        // 3. Force regenerate a brand new CSRF token to prevent session hijacking
+        $request->session()->regenerateToken();
 
-    // 4. Send the user back to the homepage or login screen
-    return redirect()->route('page.index');
-        
+        // 4. Send the user back to the homepage or login screen
+        return redirect()->route('page.index');
+
     }
 }

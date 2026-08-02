@@ -1487,6 +1487,7 @@ textarea.form-control {
 .successToast,
 .errorToast,
 .warningToast {
+    width: inherit;
     position: fixed;
     z-index: 9999;
     padding: 1rem 1.5rem;
@@ -3766,7 +3767,8 @@ main {
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .btn-save-prop:hover, .btn-save-prop.saved {
-      border-color: #e74c3c; color: #e74c3c; background: rgba(231,76,60,0.07);
+      border-color: var(--border-color); color: var(--primary);
+       background:var(--bg-body);
     }
     .btn-save-prop.saved i { color: #e74c3c; }
     .price-meta { display: flex; gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
@@ -3849,3 +3851,14 @@ main {
       .amenities-grid { grid-template-columns: 1fr 1fr; }
       .quick-stats { flex-wrap: nowrap; overflow-x: auto; }
     }
+    /* ---- APPOINTMENT SPECIFIC STYLES ----
+input[type="date"].form-control {
+    color-scheme: dark;
+}
+.appointment-section {
+    background-color: var(--bg-body);
+}
+
+.input-icon-wrap input[type="date"] {
+    padding-left: 2.5rem; */
+/* } */

@@ -20,21 +20,18 @@
     <ul class="dash-nav"><li><a href="{{ route('agent.index') }}" class="dash-nav-link  {{ request()->routeIs('agent.index') ? 'active' : '' }}"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li></ul>
     <div class="dash-nav-label">Workspace</div>
     <ul class="dash-nav">
-      <li><a href="{{ route('agent.properties') }}" class="dash-nav-link  {{ request()->routeIs('agent.properties') ? 'active' : '' }}"><i class="bi bi-buildings-fill"></i><span>My Properties</span></a></li>
-      <li><a href="{{ route('agent.appointments') }}" class="dash-nav-link  {{ request()->routeIs('agent.appointments') ? 'active' : '' }}"><i class="bi bi-calendar-check-fill"></i><span>Appointments</span><span class="dash-nav-badge">4</span></a></li>
-      <li><a href="{{ route('agent.messages') }}" class="dash-nav-link  {{ request()->routeIs('agent.messages') ? 'active' : '' }}"><i class="bi bi-chat-dots-fill"></i><span>Messages</span><span class="dash-nav-badge">3</span></a></li>
+      <li><a href="{{ route('agent.properties') }}" class="dash-nav-link  {{ request()->routeIs('agent.properties') ? 'active' : '' }}"><i class="bi bi-buildings-fill"></i><span>My Properties</span><span class="dash-nav-badge">{{Auth::user()->agent->properties->count()}}</span></a></li>
+      <li><a href="{{ route('agent.appointments') }}" class="dash-nav-link  {{ request()->routeIs('agent.appointments') ? 'active' : '' }}"><i class="bi bi-calendar-check-fill"></i><span>Appointments</span><span class="dash-nav-badge">{{ Auth::user()->agent->appointments->count() }}</span></a></li>
     </ul>
     <div class="dash-nav-label">Account</div>
     <ul class="dash-nav"><li><a href="{{ route('agent.profile') }}" class="dash-nav-link  {{ request()->routeIs('agent.profile') ? 'active' : '' }}"><i class="bi bi-person-fill"></i><span>Profile</span></a></li></ul>
-    <div class="dash-sidebar-footer"><ul class="dash-nav"><li><a href="#" class="dash-nav-link"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a></li></ul></div>
+    <div class="dash-sidebar-footer"><ul class="dash-nav"><li><a href="{{ route('agent.destroy') }}" class="dash-nav-link"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a></li></ul></div>
   </aside>
 
   <div class="dash-main">
     <header class="dash-topbar">
       <button class="dash-burger" id="burgerBtn"><i class="bi bi-list"></i></button>
-      <div class="dash-search"><i class="bi bi-search"></i><input type="text" placeholder="Search your listings..."></div>
       <div class="dash-topbar-right">
-        <button class="dash-icon-btn" id="themeToggle"><i class="bi bi-moon-stars-fill"></i></button>
         <div class="dropdown">
           <button class="dash-profile border-0" data-bs-toggle="dropdown">
             <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Agent">
@@ -43,7 +40,7 @@
           </button>
           <div class="dropdown-menu dropdown-menu-end dash-dropdown-menu">
             <a class="dropdown-item" href="{{ route('agent.profile') }}"><i class="bi bi-person"></i> My Profile</a>
-            <a class="dropdown-item" href="#" style="color:#e5484d"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            <a class="dropdown-item" href="{{ route('agent.destroy') }}" style="color:#e5484d"><i class="bi bi-box-arrow-right"></i> Logout</a>
           </div>
         </div>
       </div>

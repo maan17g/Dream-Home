@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Otp extends Model
 {
-     protected $fillable = [
+    protected $fillable = [
         'user_id',
         'otp',
-        'used'
+        'used',
     ];
-    public function otp(){
-    return $this->belongsTo(User::class);
-     }
+
+    public function otp()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

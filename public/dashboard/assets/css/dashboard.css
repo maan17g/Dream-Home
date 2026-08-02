@@ -344,6 +344,7 @@
   align-items: flex-start;
   gap: 1rem;
   height: 100%;
+  align-items: center;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .stat-card:hover {
@@ -949,12 +950,16 @@ textarea.dash-input { height: auto; padding: 10px 12px; resize: vertical; }
 
 /* ---------------- APPOINTMENT / CUSTOMER CARD ---------------- */
 .appointment-card {
+
   display:flex; align-items:center; gap:1rem;
+justify-content: center;
   background: var(--bg-card); border:1px solid var(--border-color); border-radius:14px;
-  padding: 1rem 1.2rem; margin-bottom:.7rem;
+  padding: 1rem 1.2rem;
 }
 .appt-date-box {
+
   width:52px; text-align:center; flex-shrink:0;
+    flex-direction: row;
   background: var(--form-input-bg); border:1px solid var(--border-color); border-radius:10px; padding:6px 0;
 }
 .appt-date-box .d { font-size:1.1rem; font-weight:700; line-height:1; }

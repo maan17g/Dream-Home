@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('appointments', function (Blueprint $table) {
-    $table->id();
-    $table->integer('property_id');
- $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-    $table->foreignId('agent_id')->constrained('users')->onDelete('cascade');
-    $table->dateTime('scheduled_at');
-    $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled']);
-    $table->text('notes');
-    $table->timestamps();
-});
+            $table->id();
+            $table->foreignId('property_id')->constrained('properties')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('agent_id')->constrained('agents')->cascadeOnDelete();
+            $table->dateTime('scheduled_at');
+            $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled']);
+            $table->text('notes');
+            $table->timestamps();
+        });
     }
 
     /**

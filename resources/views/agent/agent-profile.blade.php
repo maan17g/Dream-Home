@@ -1,8 +1,9 @@
 @include('agent.layout.header', ['title' => 'My Profile | Dream Home Agent'])
 
 <main class="dash-content">
-    <div class="dash-breadcrumb"><a href="{{ route('agent.index') }}">Agent</a> / <span class="current">Profile</span></div>
-    
+    <div class="dash-breadcrumb"><a href="{{ route('agent.index') }}">Agent</a> / <span class="current">Profile</span>
+    </div>
+
     <div class="dash-page-head">
         <div>
             <h1 class="dash-page-title">My Profile</h1>
@@ -20,11 +21,13 @@
                 <div class="dash-panel text-center">
                     <div class="avatar-upload">
                         <div class="avatar-wrapper">
-                            @if(Auth::user()->avatar)
-                                <img id="avatar-preview" class="avatar-preview" src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Profile Picture">
+                            @if (Auth::user()->avatar)
+                                <img id="avatar-preview" class="avatar-preview"
+                                    src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Profile Picture">
                             @endif
 
-                            <input type="file" name="profile_picture" id="profile_picture" class="d-none" accept="image/*">
+                            <input type="file" name="profile_picture" id="profile_picture" class="d-none"
+                                accept="image/*">
 
                             <label for="profile_picture" class="avatar-upload-btn">
                                 <i class="bi bi-camera-fill"></i>
@@ -59,19 +62,21 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="dash-form-label">First Name</label>
-                                <input type="text" name="first_name" class="dash-input" value="{{ old('first_name', Auth::user()->first_name) }}">
+                                <input type="text" name="first_name" class="dash-input"
+                                    value="{{ old('first_name', Auth::user()->first_name) }}">
                                 @error('first_name')
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
                             </div>
-
                             <div class="col-md-6">
                                 <label class="dash-form-label">Last Name</label>
-                                <input type="text" name="last_name" class="dash-input" value="{{ old('last_name', Auth::user()->last_name) }}">
-                                @error('last_name')
+                                <input type="text" name="last_name" class="dash-input"
+                                    value="{{ old('first_name', Auth::user()->last_name) }}">
+                                @error('last_name ')
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
                             </div>
+                           
 
                             <div class="col-md-6">
                                 <label class="dash-form-label">Email</label>
@@ -80,7 +85,8 @@
 
                             <div class="col-md-6">
                                 <label class="dash-form-label">Phone</label>
-                                <input type="text" name="phone" class="dash-input" value="{{ old('phone', Auth::user()->phone) }}">
+                                <input type="text" name="phone" class="dash-input"
+                                    value="{{ old('phone', Auth::user()->phone) }}">
                                 @error('phone')
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
@@ -105,7 +111,8 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="dash-form-label">License Number</label>
-                                <input type="text" name="license_number" class="dash-input" value="{{ old('license_number', Auth::user()->agent['license_no']) }}">
+                                <input type="text" name="license_number" class="dash-input"
+                                    value="{{ old('license_number', Auth::user()->agent['license_no']) }}">
                                 @error('license_number')
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
@@ -113,8 +120,41 @@
 
                             <div class="col-md-6">
                                 <label class="dash-form-label">Years of Experience</label>
-                                <input type="number" name="experience" class="dash-input" value="{{ old('experience', Auth::user()->agent['years_experience']) }}">
+                                <input type="number" name="experience" class="dash-input"
+                                    value="{{ old('experience', Auth::user()->agent['years_experience']) }}">
                                 @error('experience')
+                                    <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
+                                @enderror
+                            </div>
+                             <div class="col-md-6">
+                                <label class="dash-form-label">Agent Type</label>
+                                <select name="agent_type" class="dash-input">
+                                    <option value="agent"
+                                        {{ old('agent_type', Auth::user()->agent?->agent_type) == 'agent' ? 'selected' : '' }}>
+                                        Agent</option>
+                                    <option value="rental_specialist"
+                                        {{ old('agent_type', Auth::user()->agent?->agent_type) == 'rental_specialist' ? 'selected' : '' }}>
+                                        Rental Specialist</option>
+                                    <option value="luxury_agent"
+                                        {{ old('agent_type', Auth::user()->agent?->agent_type) == 'luxury_agent' ? 'selected' : '' }}>
+                                        Luxury Specialist</option>
+                                    <option value="commercial_agent"
+                                        {{ old('agent_type', Auth::user()->agent?->agent_type) == 'commercial_agent' ? 'selected' : '' }}>
+                                        Commercial Agent</option>
+                                    <option value="residential_agent"
+                                        {{ old('agent_type', Auth::user()->agent?->agent_type) == 'residential_agent' ? 'selected' : '' }}>
+                                        Residential Agent</option>
+                                    <option value="land_specialist"
+                                        {{ old('agent_type', Auth::user()->agent?->agent_type) == 'land_specialist' ? 'selected' : '' }}>
+                                        Land Specialist</option>
+                                    <option value="new_construction"
+                                        {{ old('agent_type', Auth::user()->agent?->agent_type) == 'new_construction' ? 'selected' : '' }}>
+                                        New Construction Specialist</option>
+                                    <option value="property_manager"
+                                        {{ old('agent_type', Auth::user()->agent?->agent_type) == 'property_manager' ? 'selected' : '' }}>
+                                        Property Manager</option>
+                                </select>
+                                @error('agent_type')
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -130,7 +170,9 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="dash-form-label">Instagram Profile</label>
-                                <input type="url" name="instagram" class="dash-input" value="{{ old('instagram', Auth::user()->agent['instagram']) }}" placeholder="https://instagram.com/username">
+                                <input type="url" name="instagram" class="dash-input"
+                                    value="{{ old('instagram', Auth::user()->agent['instagram']) }}"
+                                    placeholder="https://instagram.com/username">
                                 @error('instagram')
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
@@ -138,7 +180,9 @@
 
                             <div class="col-md-6">
                                 <label class="dash-form-label">LinkedIn Profile</label>
-                                <input type="url" name="linkedin" class="dash-input" value="{{ old('linkedin', Auth::user()->agent['linkedin']) }}" placeholder="https://linkedin.com/in/username">
+                                <input type="url" name="linkedin" class="dash-input"
+                                    value="{{ old('linkedin', Auth::user()->agent['linkedin']) }}"
+                                    placeholder="https://linkedin.com/in/username">
                                 @error('linkedin')
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
@@ -146,7 +190,9 @@
 
                             <div class="col-md-6">
                                 <label class="dash-form-label">Twitter / X Profile</label>
-                                <input type="url" name="twitter" class="dash-input" value="{{ old('twitter', Auth::user()->agent['twitter']) }}" placeholder="https://x.com/username">
+                                <input type="url" name="twitter" class="dash-input"
+                                    value="{{ old('twitter', Auth::user()->agent['twitter']) }}"
+                                    placeholder="https://x.com/username">
                                 @error('twitter')
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
@@ -154,7 +200,9 @@
 
                             <div class="col-md-6">
                                 <label class="dash-form-label">Facebook Profile</label>
-                                <input type="url" name="facebook" class="dash-input" value="{{ old('facebook', Auth::user()->agent['facebook']) }}" placeholder="https://facebook.com/username">
+                                <input type="url" name="facebook" class="dash-input"
+                                    value="{{ old('facebook', Auth::user()->agent['facebook']) }}"
+                                    placeholder="https://facebook.com/username">
                                 @error('facebook')
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
@@ -227,16 +275,9 @@
         });
     }
 
-    const themeBtn = document.getElementById('themeToggle');
-    const root = document.documentElement;
-    if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-            const isLight = root.getAttribute('data-theme') === 'light';
-            root.setAttribute('data-theme', isLight ? 'dark' : 'light');
-            themeBtn.innerHTML = isLight ? '<i class="bi bi-moon-stars-fill"></i>' : '<i class="bi bi-sun-fill"></i>';
-        });
-    }
+    
 </script>
 @include('layout.Notification')
 </body>
+
 </html>

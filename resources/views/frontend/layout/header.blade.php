@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Dream Home - Find your perfect property with verified listings and expert guidance">
     <meta name="keywords" content="real estate, property, homes, apartments, villas">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ $title }}</title>
 
@@ -17,7 +18,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
+    <script>
+        window.Laravel = {
+            isLoggedIn: {{ Auth::check() ? 'true' : 'false' }}
+        };
+    </script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('asset/css/style.css') }}">
@@ -29,7 +34,7 @@
     <header>
         <nav class="navbar navbar-expand-lg fixed-top" id="navbar">
             <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <a class="navbar-brand d-flex align-items-center" href="{{ route('page.index') }}">
                     <i class="bi bi-house-door-fill"></i> Real Estate
                 </a>
 
@@ -64,16 +69,19 @@
                                         class="bi bi-person-circle" style="font-size: 2rem;"></i>
                                 </a>
                             @elseif (Auth::user()->role == 'agent')
-                                <a href="{{ route('agent.index') }}" class="nav-link fw-bold"><i
-                                        class="bi bi-person-circle" style="font-size: 2rem;"></i>
+                                <a href="{{ route('agent.index') }}" class="nav-link fw-bold">
+                                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt=""
+                                        width="30" height="30" class="rounded-circle img"> <!-- <i
+                                        class="bi bi-person-circle" style="font-size: 2rem;"></i> -->
                                 </a>
                             @else
-                                <a href="{{ route('user.index') }}" class="nav-link fw-bold"><i
-                                        class="bi bi-person-circle" style="font-size: 2rem;"></i>
-                                </a>
-                            @endif
-                        @else
-                            <a href="{{ route('login.index') }}" class="nav-link fw-bold">Login</a>
+                                <a href="{{ route('user.index') }}" class="nav-link fw-bold">
+                                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt=""
+                                        width="30" height="30" class="rounded-circle img"> 
+                                    </a>
+@endif
+@else
+<a href="{{ route('login.index') }}" class="nav-link fw-bold">Login</a>
                         @endif
 
 

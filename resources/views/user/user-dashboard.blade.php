@@ -4,55 +4,72 @@
     <main class="dash-content">
       <div class="dash-breadcrumb"><a href="user-dashboard.html">Home</a> / <span class="current">Dashboard</span></div>
       <div class="dash-page-head">
-        <div><h1 class="dash-page-title">Welcome back, John 👋</h1><p class="dash-page-desc">Here's what's new since your last visit.</p></div>
-        <div class="dash-head-actions"><a href="../../properties.html" class="dash-btn-primary"><i class="bi bi-search"></i> Browse Properties</a></div>
+        <div><h1 class="dash-page-title">Welcome back, {{ Auth::user()->first_name }} 👋</h1><p class="dash-page-desc">Here's what's new since your last visit.</p></div>
+        <div class="dash-head-actions"><a href="{{ route('property.index') }}" class="dash-btn-primary"><i class="bi bi-search"></i> Browse Properties</a></div>
       </div>
 
       <div class="row g-3 mb-3">
-        <div class="col-6 col-lg-3"><div class="stat-card"><div class="stat-icon"><i class="bi bi-heart-fill"></i></div><div><div class="stat-label">Saved Properties</div><div class="stat-value">12</div></div></div></div>
-        <div class="col-6 col-lg-3"><div class="stat-card"><div class="stat-icon"><i class="bi bi-calendar-check-fill"></i></div><div><div class="stat-label">Appointments</div><div class="stat-value">3</div></div></div></div>
-        <div class="col-6 col-lg-3"><div class="stat-card"><div class="stat-icon"><i class="bi bi-chat-dots-fill"></i></div><div><div class="stat-label">Active Inquiries</div><div class="stat-value">2</div></div></div></div>
-        <div class="col-6 col-lg-3"><div class="stat-card"><div class="stat-icon"><i class="bi bi-eye-fill"></i></div><div><div class="stat-label">Recently Viewed</div><div class="stat-value">24</div></div></div></div>
+        <div class="col-6 col-lg-3"><div class="stat-card"><div class="stat-icon"><i class="bi bi-heart-fill"></i></div><div><div class="stat-label">Saved Properties</div><div class="stat-value">{{Auth::user()->savedProperties()->count()}}
+</div></div></div></div>
+        <div class="col-6 col-lg-3"><div class="stat-card"><div class="stat-icon"><i class="bi bi-calendar-check-fill"></i></div><div><div class="stat-label">Appointments</div><div class="stat-value">{{Auth::user()->appointments->count()}}</div></div></div></div>
       </div>
 
       <div class="row g-3 mb-3">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <div class="dash-panel">
-            <div class="dash-panel-head"><div class="dash-panel-title">Recommended For You</div><a href="../../properties.html" class="dash-link">View All</a></div>
+            <div class="dash-panel-head"><div class="dash-panel-title">Recommended For You</div><a href="{{ route('property.index') }}" class="dash-link">View All</a></div>
             <div class="row g-3">
-              <div class="col-md-6">
-                <div class="agent-prop-card">
-                  <div class="agent-prop-thumb"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=60" alt=""><span class="badge-custom position-absolute" style="top:10px;left:10px;">For Sale</span><button class="card-fav-btn position-absolute" style="top:10px;right:10px;"><i class="bi bi-heart"></i></button></div>
-                  <div class="agent-prop-body"><div class="dash-row-title">Modern Villa in Miami</div><div class="dash-row-sub">Miami, Florida · $850,000</div></div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="agent-prop-card">
-                  <div class="agent-prop-thumb"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=400&q=60" alt=""><span class="badge-custom position-absolute" style="top:10px;left:10px;">For Rent</span><button class="card-fav-btn active position-absolute" style="top:10px;right:10px;"><i class="bi bi-heart-fill"></i></button></div>
-                  <div class="agent-prop-body"><div class="dash-row-title">Luxury Apartment in LA</div><div class="dash-row-sub">Los Angeles, CA · $2,500/mo</div></div>
-                </div>
-              </div>
+                    @php
+    $properties = App\Models\Property::latest()->take(2)->get();
+@endphp
+@foreach ($properties as $property )
+
+<x-property :property="$property" />
+@endforeach
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
-          <div class="dash-panel">
-            <div class="dash-panel-head"><div class="dash-panel-title">Recent Activity</div></div>
-            <div style="display:flex;flex-direction:column;gap:1rem;">
-              <div class="d-flex gap-2"><div class="notif-icon inquiry"><i class="bi bi-heart"></i></div><div><div class="notif-text">You saved <strong>Beach House in Florida</strong></div><div class="notif-time">2 hours ago</div></div></div>
-              <div class="d-flex gap-2"><div class="notif-icon appointment"><i class="bi bi-calendar-check"></i></div><div><div class="notif-text">Appointment confirmed for <strong>Modern Villa</strong></div><div class="notif-time">Yesterday</div></div></div>
-              <div class="d-flex gap-2"><div class="notif-icon system"><i class="bi bi-chat-dots"></i></div><div><div class="notif-text">Agent replied to your inquiry</div><div class="notif-time">2 days ago</div></div></div>
-            </div>
-          </div>
-        </div>
+      
       </div>
 
       <div class="dash-panel">
-        <div class="dash-panel-head"><div class="dash-panel-title">Upcoming Appointments</div><a href="user-appointments.html" class="dash-link">View All</a></div>
-        <div class="appointment-card">
-          <div class="appt-date-box"><div class="d">11</div><div class="m">Jun</div></div>
-          <div class="flex-fill"><div class="dash-row-title" style="font-size:.85rem;">Modern Villa in Miami</div><div class="dash-row-sub">11:00 AM with John Doe</div></div>
-          <span class="status-pill success"><i class="bi bi-circle-fill"></i>Confirmed</span>
+        <div class="dash-panel-head"><div class="dash-panel-title">Upcoming Appointments</div><a href="{{ route('user.appointments') }}" class="dash-link">View All</a></div>
+   @php
+    // Fetch the single most recent appointment
+    $appointment = Auth::user()->appointments()->latest()->first();
+@endphp
+
+@if($appointment)
+<div class="d-flex align-items-center justify-content-between gap-3">
+
+  <div class="appt-date-box">
+    <!-- Convert the string to a date object using Carbon::parse before formatting -->
+    <div class="d">{{ $appointment->scheduled_at ? \Carbon\Carbon::parse($appointment->scheduled_at)->format('d') : '--' }}</div>
+    <div class="m">{{ $appointment->scheduled_at ? \Carbon\Carbon::parse($appointment->scheduled_at)->format('M') : 'None' }}</div>
+  </div>
+      
+      
+  <div class="flex-fill">
+        <!-- Changed to 'property_id' or another descriptive field if 'title' doesn't exist -->
+        <div class="dash-row-title" style="font-size:.85rem;">
+          Property ID: {{ $appointment->property_id }}
+        </div>
+        <!-- Formatting the time using scheduled_at -->
+        <div class="dash-row-sub">
+          {{ $appointment->scheduled_at ? \Carbon\Carbon::parse($appointment->scheduled_at)->format('h:i A') : 'No Time Set' }} with Agent ID: {{ $appointment->agent_id }}
+        </div>
+      </div>
+      
+      <!-- Dynamically displaying the status (e.g., cancelled, confirmed) -->
+      <span class="status-pill {{ $appointment->status === 'confirmed' ? 'success' : 'danger' }}">
+        <i class="bi bi-circle-fill"></i>{{ ucfirst($appointment->status) }}
+      </span>
+    </div>
+@else
+    <p>No recent appointments found.</p>
+@endif
+
+
         </div>
       </div>
     </main>

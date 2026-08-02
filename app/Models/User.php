@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -38,7 +36,6 @@ class User extends Authenticatable
      * A User has many Properties THROUGH their Agent profile.
      * Allows: $user->properties
      */
- 
 
     /**
      * A User has one active OTP record.
@@ -46,6 +43,16 @@ class User extends Authenticatable
     public function otp(): HasOne
     {
         return $this->hasOne(Otp::class, 'user_id');
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'user_id');
+    }
+
+    public function savedProperties()
+    {
+        return $this->hasMany(savedProperties::class);
     }
 
     protected $hidden = [

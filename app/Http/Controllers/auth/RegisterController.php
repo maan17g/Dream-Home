@@ -106,73 +106,78 @@ class RegisterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
-    {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
+   public function update(Request $request)
+{
 
-        $validatedData = $request->validate([
-            'first_name'      => 'required|string|max:255',
-            'last_name'       => 'required|string|max:255',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'bio'             => 'nullable|string',
-            'phone'           => 'nullable|numeric|digits:11',
-            'license_number'  => [
-                'nullable',
-                'string',
-                'max:100',
-                Rule::unique('agents', 'license_no')->ignore($user->agent?->id),
-            ],
-            'experience'      => 'nullable|integer|min:0',
-            'facebook'        => 'nullable|url',
-            'instagram'       => 'nullable|url',
-            'linkedin'        => 'nullable|url',
-            'twitter'         => 'nullable|url',
-        ]);
+    /** @var \App\Models\User $user */
+    $user = Auth::user();
 
-        // Profile Picture Upload
-        if ($request->hasFile('profile_picture')) {
-            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-                Storage::disk('public')->delete($user->avatar);
-            }
-            
-            $extension = $request->file('profile_picture')->getClientOriginalExtension();
-            $fileName  = 'user_' . $user->id . '_' . time() . '.' . $extension;
+    $validatedData = $request->validate([
+        'first_name'      => 'required|string|max:255',
+        'last_name'       => 'nullable|string|max:255', // Made nullable if not sent in payload
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'bio'             => 'nullable|string',
+        'phone'           => 'nullable|string|max:20', // Changed from numeric|digits:11 to allow flexible phone inputs
+        'license_number'  => [
+            'nullable',
+            'string',
+            'max:100',
+            Rule::unique('agents', 'license_no')->ignore($user->agent?->id),
+        ],
+        'experience'      => 'nullable|integer|min:0',
+        'agent_type'      => 'nullable|string|in:agent,rental_specialist,luxury_agent,commercial_agent,residential_agent,land_specialist,new_construction,property_manager',
+        'facebook'        => 'nullable|url',
+        'instagram'       => 'nullable|url',
+        'linkedin'        => 'nullable|url',
+        'twitter'         => 'nullable|url',
+    ]);
 
-            $path = $request->file('profile_picture')->storeAs('avatars', $fileName, 'public');
-            $user->avatar = $path;
+    // Profile Picture Upload
+    if ($request->hasFile('profile_picture')) {
+        if ($user->avatar && Storage::disk('public')->exists($user->avatar) && $user->avatar!='avatars/default.png') {
+            Storage::disk('public')->delete($user->avatar);
         }
+        
+        $extension = $request->file('profile_picture')->getClientOriginalExtension();
+        $fileName  = 'user_' . $user->id . '_' . time() . '.' . $extension;
 
-        // Safely update user fields using null coalescing
-        $user->first_name = $validatedData['first_name'];
-        $user->last_name  = $validatedData['last_name'];
-        $user->phone      = $validatedData['phone'] ?? $user->phone;
-        $user->save();
-
-        // Update Agent Profile
-        if ($user->role === 'agent') {
-            $licenseNo = $validatedData['license_number'] ?? $user->agent?->license_no;
-
-            if (empty($licenseNo)) {
-                $licenseNo = 'LIC-' . strtoupper(Str::random(8));
-            }
-
-            $user->agent()->updateOrCreate(
-                ['user_id' => $user->id],
-                [
-                    'bio'              => $validatedData['bio'] ?? null,
-                    'license_no'       => $licenseNo,
-                    'years_experience' => $validatedData['experience'] ?? 0,
-                    'facebook'         => $validatedData['facebook'] ?? null,
-                    'instagram'        => $validatedData['instagram'] ?? null,
-                    'linkedin'         => $validatedData['linkedin'] ?? null,
-                    'twitter'          => $validatedData['twitter'] ?? null,
-                ]
-            );
-        }
-
-        return redirect()->back()->with('success', 'Profile updated successfully!');
+        $path = $request->file('profile_picture')->storeAs('avatars', $fileName, 'public');
+        $user->avatar = $path;
     }
+
+    // Update User
+    $user->first_name = $validatedData['first_name'];
+    if (isset($validatedData['last_name'])) {
+        $user->last_name = $validatedData['last_name'];
+    }
+    $user->phone = $validatedData['phone'] ?? $user->phone;
+    $user->save();
+
+    // Update Agent Profile
+    if ($user->role === 'agent') {
+        $licenseNo = $validatedData['license_number'] ?? $user->agent?->license_no;
+
+        if (empty($licenseNo)) {
+            $licenseNo = 'LIC-' . strtoupper(Str::random(8));
+        }
+
+        $user->agent()->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'bio'              => $validatedData['bio'] ?? null,
+                'license_no'       => $licenseNo,
+                'years_experience' => $validatedData['experience'] ?? 0,
+                'agent_type'       => $validatedData['agent_type'] ?? $user->agent?->agent_type ?? 'agent',
+                'facebook'         => $validatedData['facebook'] ?? null,
+                'instagram'        => $validatedData['instagram'] ?? null,
+                'linkedin'         => $validatedData['linkedin'] ?? null,
+                'twitter'          => $validatedData['twitter'] ?? null,
+            ]
+        );
+    }
+
+    return redirect()->back()->with('success', 'Profile updated successfully!');
+}
 
     /**
      * Remove the specified resource from storage.

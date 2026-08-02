@@ -15,8 +15,10 @@ class Property extends Model
     protected $fillable = [
         'agent_id', 'title', 'slug', 'description', 'purpose',
         'type', 'city_id', 'price', 'area', 'bedrooms',
-        'bathrooms', 'garages', 'featured', 'floors', 'year_built', 'views'
+        'bathrooms', 'garages', 'featured', 'floors', 'year_built', 'views',
     ];
+
+  
 
     /**
      * A Property belongs directly to an Agent.
@@ -25,6 +27,11 @@ class Property extends Model
     public function agent(): BelongsTo
     {
         return $this->belongsTo(Agent::class, 'agent_id');
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
     }
 
     /**
@@ -41,6 +48,11 @@ class Property extends Model
     public function images(): HasMany
     {
         return $this->hasMany(PropertyImage::class, 'property_id');
+    }
+
+    public function savedProperties()
+    {
+        return $this->hasMany(savedProperties::class);
     }
 
     /**
