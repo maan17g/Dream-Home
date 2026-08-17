@@ -302,68 +302,76 @@
                 </div>
 
                 <form id="schedule-form" action="{{ route('appointment.create') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="property_id" value="{{ $property->id }}">
-                    @error('property_id')
-                        <span class="invalid-feedback">{{ $message }}</span>
-                    @enderror
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="visit_date">Preferred Date</label>
-                            <input type="date" id="visit_date" name="visit_date" value="{{ old('visit_date') }}"
-                                class="@error('visit_date') is-invalid @enderror" required>
-                            @error('visit_date')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="visit_time">Time Slot</label>
-                            <select id="visit_time" name="visit_time" class="@error('visit_time') is-invalid @enderror"
-                                required>
-                                <option value="" disabled {{ old('visit_time') ? '' : 'selected' }}>Select slot
-                                </option>
-                                <option value="10:00" {{ old('visit_time') == '10:00' ? 'selected' : '' }}>10:00 AM
-                                </option>
-                                <option value="12:00" {{ old('visit_time') == '12:00' ? 'selected' : '' }}>12:00 PM
-                                </option>
-                                <option value="14:00" {{ old('visit_time') == '14:00' ? 'selected' : '' }}>02:00 PM
-                                </option>
-                                <option value="16:00" {{ old('visit_time') == '16:00' ? 'selected' : '' }}>04:00 PM
-                                </option>
-                            </select>
-                            @error('visit_time')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="notes">Special Requirements / Notes</label>
-                        <textarea id="notes" name="notes" rows="3" class="@error('notes') is-invalid @enderror"
-                            placeholder="Any specific questions or accessibility needs...">{{ old('notes') }}</textarea>
-                        @error('notes')
+                    <form id="schedule-form" action="{{ route('appointment.create') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="property_id" value="{{ $property->id }}">
+                        @error('property_id')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
-                    </div>
 
-                    <div class="actions-group">
-                        <!-- Action 1: Save Listing -->
-                        <button type="button" class="btn-save-prop js-fav-btn" data-id="{{ $property->id }}">
-                            <i
-                                class="bi {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
-                            <span>
-                                {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property' }}
-                            </span>
-                        </button>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="visit_date">Preferred Date</label>
+                                <input type="date" id="visit_date" name="visit_date" value="{{ old('visit_date') }}"
+                                    class="@error('visit_date') is-invalid @enderror" required>
+                                @error('visit_date')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
 
-                        <!-- Action 2: Submit Schedule Request -->
-                        <button type="submit" name="action" value="schedule" class="btn btn-primary">
-                            <i class="bi bi-calendar-check"></i> Schedule Visit
-                        </button>
-                    </div>
-                </form>
+                            <div class="form-group">
+                                <label for="visit_time">Time Slot</label>
+                                <select id="visit_time" name="visit_time"
+                                    class="@error('visit_time') is-invalid @enderror" required>
+                                    <option value="" disabled {{ old('visit_time') ? '' : 'selected' }}>Select
+                                        slot
+                                    </option>
+                                    <option value="10:00" {{ old('visit_time') == '10:00' ? 'selected' : '' }}>10:00
+                                        AM
+                                    </option>
+                                    <option value="12:00" {{ old('visit_time') == '12:00' ? 'selected' : '' }}>12:00
+                                        PM
+                                    </option>
+                                    <option value="14:00" {{ old('visit_time') == '14:00' ? 'selected' : '' }}>02:00
+                                        PM
+                                    </option>
+                                    <option value="16:00" {{ old('visit_time') == '16:00' ? 'selected' : '' }}>04:00
+                                        PM
+                                    </option>
+                                </select>
+                                @error('visit_time')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Special Requirements / Notes</label>
+                            <textarea id="notes" name="notes" rows="3" class="@error('notes') is-invalid @enderror"
+                                placeholder="Any specific questions or accessibility needs...">{{ old('notes') }}</textarea>
+                            @error('notes')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="actions-group">
+                            <!-- Action 1: Save Listing -->
+                            <!-- Action 1: Save Listing -->
+                            <button type="button" class="btn-save-prop js-fav-btn" data-id="{{ $property->id }}"
+                                data-url="{{ route('properties.save', $property->id) }}">
+                                <i
+                                    class="bi {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+                                <span>
+                                    {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property' }}
+                                </span>
+                            </button>
+
+                            <!-- Action 2: Submit Schedule Request -->
+                            <button type="submit" name="action" value="schedule" class="btn btn-primary">
+                                <i class="bi bi-calendar-check"></i> Schedule Visit
+                            </button>
+                        </div>
+                    </form>
             </div>
         </section>
 
@@ -371,6 +379,7 @@
 
     @include('layout.Notification')
     <script src="{{ asset('asset/js/script.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/js/script.js') }}"></script>
 </body>
 
 </html>

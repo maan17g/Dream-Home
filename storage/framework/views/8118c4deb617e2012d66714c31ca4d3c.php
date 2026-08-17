@@ -8,7 +8,7 @@
     <!-- LEFT: IMAGE PANEL -->
     <div class="auth-image-panel">
       <div class="auth-image-overlay"></div>
-      <a href="index.html" class="auth-image-logo">
+      <a href="<?php echo e(route('page.index')); ?>" class="auth-image-logo">
         <i class="bi bi-house-door-fill"></i> Real Estate
       </a>
       <div class="auth-image-content">

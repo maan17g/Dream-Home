@@ -16,27 +16,31 @@ use Illuminate\Validation\Rule;
 
 class PropertyController extends Controller
 {
-    public function create()
+    public function create() // for Agent to createt Property
     {
         $amenities = Amenity::all();
 
+        $cities = City::all();
+
         // Return the Blade view template and pass the $amenities variable
-        return view('agent.agent-add-property', compact('amenities'));
+        return view('agent.agent-add-property', compact('amenities', 'cities'));
     }
 
     public function index()
     {
-        $properties = Property::with(['images', 'amenities', 'city', 'agent.user'])->get();
+        $properties = Property::with(['images', 'amenities', 'city', 'agent.user'])->where('verified','approved')->get();
+        $cities = City::all()->unique('city')->pluck('city');
 
-        return view('frontend.property', compact('properties'));
+        return view('frontend.property', compact('properties', 'cities'));
     }
 
     public function edit($id)
     {
         $property = Property::with(['images', 'agent.user', 'city', 'amenities'])->findOrFail($id);
         $amenities = Amenity::all();
+        $cities = City::all();
 
-        return view('agent.agent-add-property', compact('property', 'amenities'));
+        return view('agent.agent-add-property', compact('property', 'amenities', 'cities'));
     }
 
     public function update(Request $request, $id)
@@ -58,7 +62,7 @@ class PropertyController extends Controller
             'property_area' => ['nullable', 'numeric', 'min:0'],
             'year_built' => ['nullable', 'integer', 'digits:4'],
             'property_address' => ['required', 'string', 'max:255'],
-            'property_city' => ['required', 'string', 'max:100'],
+            'property_city_id' => ['required', 'string', 'max:100'],
             'property_state' => ['required', 'string', 'max:100'],
             'amenities' => ['nullable', 'array'],
             'amenities.*' => ['integer', 'exists:amenities,id'],
@@ -72,7 +76,7 @@ class PropertyController extends Controller
         if ($property->city) {
             $property->city->update([
                 'address_line' => $request->property_address,
-                'city' => $request->property_city,
+                'city' => $request->property_city_id,
                 'state' => $request->property_state,
             ]);
             $cityId = $property->city->id;
@@ -149,8 +153,9 @@ class PropertyController extends Controller
         return redirect()->route('property.create')->with('success', 'Property updated successfully!');
     }
 
-    public function search(Request $request)
+    public function search(Request $request) // for [page]
     {
+      
         $validated = $request->validate([
             'search' => 'nullable|string|max:100',
             'type' => 'nullable|string|in:apartment,villa,house,appartment,land,office',
@@ -166,6 +171,11 @@ class PropertyController extends Controller
             // 2. Base query for active/approved listings
 
             $query = Property::with('city')->where('verified', 'approved');
+                  if ($request->filled('city')) {
+            $query->whereHas('city', function ($q) use ($request) {
+                $q->where('city', $request->city);
+            });
+        }
 
             // Search filter
             if (! empty($validated['search'])) {
@@ -209,6 +219,8 @@ class PropertyController extends Controller
             if (! empty($validated['max_price'])) {
                 $query->where('price', '<=', $validated['max_price']);
             }
+        $cities = City::all()->unique('city')->pluck('city');
+            
 
             // Sorting
             $sort = $validated['sort'] ?? 'featured';
@@ -234,7 +246,7 @@ class PropertyController extends Controller
             // Paginate and retain active query params
             $properties = $query->paginate(12)->withQueryString();
 
-            return view('frontend.property', compact('properties'));
+            return view('frontend.property', compact('properties','cities'));
 
         } catch (\Exception $e) {
             // Return back with error alert if a query or database issue occurs
@@ -242,7 +254,7 @@ class PropertyController extends Controller
         }
     }
 
-    public function propsearch(Request $request)
+    public function propsearch(Request $request) // for agent Properties 
     {
         // 1. Get the agent ID safely
 
@@ -262,7 +274,7 @@ class PropertyController extends Controller
                 $q->where('title', 'like', '%'.$searchTerm.'%');
             });
         }
-
+    
         // 4. Status filter (FIXED)
         if ($request->filled('status') && $request->status !== 'all') {
             $query->where('verified', $request->status);
@@ -295,7 +307,7 @@ class PropertyController extends Controller
             'year_built' => 'nullable|integer|digits:4|max:'.date('Y'),
             // Location
             'property_address' => 'required|string|max:255',
-            'property_city' => 'required|string|max:255',
+            'property_city_id' => 'required|exists:cities,id',
             'property_state' => 'required|string|max:255',
 
             // Amenities
@@ -314,16 +326,13 @@ class PropertyController extends Controller
 
         try {
             // Location processing
-            $city = City::firstOrCreate(
-                [
-                    'city' => $request->property_city,
-                    'state' => $request->property_state,
-                    'address_line' => $request->property_address,
-                ],
-                [
-                    'country' => 'Pakistan',
-                ]
-            );
+            $city = City::findOrFail($request->property_city_id);
+
+            $city->update([
+                'address_line' => $request->property_address,
+                'state' => $request->property_state,
+                'country' => 'Pakistan',
+            ]);
 
             $user = Auth::user();
             // Slug generation
@@ -392,7 +401,7 @@ class PropertyController extends Controller
         }
     }
 
-    public function show(Request $request, $id)
+    public function show(Request $request, $id) // For showing single property
     {
 
         $property = Property::findOrFail($id);
@@ -414,10 +423,10 @@ class PropertyController extends Controller
         return view('frontend.properties-detail', compact('property'));
     }
 
-    public function destroy($id)
+    public function destroy($id) // For Deleting A Propety
     {
         $property = Property::with(['images'])->findOrFail($id);
-
+  
         $images = $property->images;
         foreach ($images as $image) {
             if (Storage::disk('public')->exists($image['image'])) {
@@ -429,6 +438,22 @@ class PropertyController extends Controller
         if ($isdeleted) {
             return redirect()->back()->with('success', 'Property deleted Successfully');
         }
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'verified' => 'required|in:approved,pending,rejected',
+        ]);
+
+        $property = Property::findOrFail($id);
+        $property->verified = $request->verified;
+        $property->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Property status updated successfully.',
+        ]);
     }
 
     public function toggle($id)
@@ -458,5 +483,15 @@ class PropertyController extends Controller
             'success' => true,
             'is_favorited' => true,
         ]);
+    }
+
+    public function toggleFeature(Property $property)
+    {
+        // Toggle featured status (1 -> 0, or 0 -> 1)
+        $property->update([
+            'featured' => ! $property->featured,
+        ]);
+
+        return redirect()->back()->with('success', 'Property feature status updated successfully.');
     }
 }

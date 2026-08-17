@@ -23,6 +23,7 @@ class roleMiddleware
             return redirect()->route('login.index');
         }
 
+    
         // Match the user's role method against the requested group value
         if (Auth::user()->role !== $role) {
             // Drop a standard 403 Forbidden page if they try to access another dashboard

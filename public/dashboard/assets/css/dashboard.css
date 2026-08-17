@@ -395,7 +395,6 @@
   border: 1px solid var(--border-color);
   border-radius: 18px;
   padding: 1.5rem;
-  height: 100%;
 }
 
 .dash-panel-head {
@@ -580,15 +579,16 @@
 .dash-toast.show { transform: translateY(0); opacity: 1; }
 
 /* ---------------- MODAL ---------------- */
-.dash-modal .modal-content {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
+.dash-modal  {
+  background-color: var(--bg-body)!important;
+  border: 1px solid var(--border-color) !important;
   border-radius: 18px;
   color: var(--text-main);
+
 }
-.dash-modal .modal-header,
-.dash-modal .modal-footer { border-color: var(--border-color); }
-.dash-modal.danger .stat-icon-lg { background: rgba(229,72,77,0.14); color: #e5484d; }
+.dash-modal, .modal-header,
+.dash-modal ,.modal-footer { border-color: var(--border-color); }
+.dash-modal.danger ,.stat-icon-lg { background: rgba(229,72,77,0.14); color: #e5484d; }
 .stat-icon-lg {
   width: 56px; height: 56px; border-radius: 14px;
   background: rgba(60,181,124,0.14); color: var(--primary);
@@ -710,14 +710,16 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1rem; 
   margin-top: 1.5rem;
   font-size: 0.83rem;
   color: var(--text-muted);
 }
 .dash-pagination { display: flex; gap: 6px; list-style: none; padding: 0; margin: 0; }
 .dash-pagination .page-link { padding: 7px 13px; margin: 0; font-size: 0.82rem; cursor: pointer; }
-
+.pagination{
+  gap: 0.5rem !important;
+}
 /* ---------------- TABS ---------------- */
 .dash-tabs {
   display: flex;

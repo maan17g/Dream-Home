@@ -98,7 +98,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                           
+
 
                             <div class="col-md-6">
                                 <label class="dash-form-label">Email</label>
@@ -147,8 +147,8 @@ unset($__errorArgs, $__bag); ?>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="dash-form-label">License Number</label>
-                                <input type="text" name="license_number" class="dash-input"
-                                    value="<?php echo e(old('license_number', Auth::user()->agent['license_no'])); ?>">
+                                <input type="text" name="license_number" class="dash-input" disabled
+                                    value="<?php echo e(Auth::user()->agent['license_no']); ?>">
                                 <?php $__errorArgs = ['license_number'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -176,7 +176,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                             <div class="col-md-6">
+                            <div class="col-md-6">
                                 <label class="dash-form-label">Agent Type</label>
                                 <select name="agent_type" class="dash-input">
                                     <option value="agent"
@@ -359,8 +359,6 @@ unset($__errorArgs, $__bag); ?>
             else sidebar.classList.toggle('collapsed');
         });
     }
-
-    
 </script>
 <?php echo $__env->make('layout.Notification', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </body>

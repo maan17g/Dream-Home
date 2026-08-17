@@ -1,5 +1,6 @@
 @include('user.layout.header', ['title' => 'My Appointments | Dream Home'])
 @include('layout.Notification')
+
 <main class="dash-content">
     <div class="dash-breadcrumb">
         <a href="{{ route('page.index') }}">Home</a> / <span class="current">My Appointments</span>
@@ -24,7 +25,6 @@
                 <div class="appt-date-box">
                     <div class="d">{{ \Carbon\Carbon::parse($appt->scheduled_at)->format('d') }}</div>
                     <div class="m">{{ \Carbon\Carbon::parse($appt->scheduled_at)->format('M') }}</div>
-                
                 </div>
 
                 <div class="flex-fill ms-3">
@@ -73,6 +73,8 @@
                             <th>Date</th>
                             <th>Agent</th>
                             <th>Status</th>
+                            <th>Review</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,10 +93,30 @@
                                         <i class="bi bi-circle-fill"></i> {{ ucfirst($appt->status) }}
                                     </span>
                                 </td>
+
+                                <!-- REVIEW ACTION COLUMN -->
                                 <td>
-                                    <form action="{{ route('appointment.delete',$appt->id) }}" method="GET">
+                                    @if($appt->status === 'completed')
+                                        @if($appt->review)
+                                            <span class="badge bg-success"><i class="bi bi-star-fill me-1"></i> Reviewed</span>
+                                        @else
+                                            <button type="button" 
+                                                    class="btn btn-sm btn-outline-primary py-0" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#reviewModal"
+                                                    onclick="populateReviewModal({{ $appt->id }}, {{ $appt->property->id }}, '{{ addslashes($appt->property->title) }}')">
+                                                <i class="bi bi-star"></i> Leave Review
+                                            </button>
+                                        @endif
+                                    @else
+                                        <span class="text-muted small">N/A</span>
+                                    @endif
+                                </td>
+
+                                <td>
+                                    <form action="{{ route('appointment.delete', $appt->id) }}" method="GET">
                                         @csrf
-                                        <button type=submit class="status-pill danger">
+                                        <button type="submit" class="status-pill danger border-0">
                                            Delete
                                         </button>
                                     </form>
@@ -102,27 +124,90 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center py-4 text-muted">No appointment history found.</td>
+                                <td colspan="6" class="text-center py-4 text-muted">No appointment history found.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
-                
             </div>
         </div>
     </div>
-    
 </main>
+
+<!-- REVIEW POPUP MODAL -->
+<div class="modal fade property-card" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content dash-modal">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">Leave a Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form action="{{ route('user.review') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <p class="text-muted-custo">How was your experience visiting <strong id="modalPropertyTitle">this property</strong>?</p>
+                    
+                    <input type="hidden" name="appointment_id" id="modalAppointmentId" value="{{ $unreviewedAppointment->id ?? '' }}">
+                    <input type="hidden" name="property_id" id="modalPropertyId" value="{{ $unreviewedAppointment->property_id ?? '' }}">
+
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">Rating</label>
+                        <select name="rating" class="form-select" required>
+                            <option value="5" selected>⭐⭐⭐⭐⭐ (5/5) Excellent</option>
+                            <option value="4">⭐⭐⭐⭐ (4/5) Very Good</option>
+                            <option value="3">⭐⭐⭐ (3/5) Average</option>
+                            <option value="2">⭐⭐ (2/5) Poor</option>
+                            <option value="1">⭐ (1/5) Terrible</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">Your Review / Feedback</label>
+                        <textarea name="comment" class="form-control" rows="3" placeholder="Write your feedback here..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('dashboard/assets/js/script.js') }}"></script>
 <script>
+    // Tab switching logic
     document.querySelectorAll('.dash-tab').forEach(t => t.addEventListener('click', () => {
         document.querySelectorAll('.dash-tab').forEach(x => x.classList.remove('active'));
         t.classList.add('active');
         document.getElementById('pane-upcoming').classList.toggle('d-none', t.dataset.tab !== 'upcoming');
         document.getElementById('pane-history').classList.toggle('d-none', t.dataset.tab !== 'history');
     }));
+
+    // Function to populate modal dynamically when user clicks "Leave Review" button manually
+    function populateReviewModal(apptId, propId, propTitle) {
+        document.getElementById('modalAppointmentId').value = apptId;
+        document.getElementById('modalPropertyId').value = propId;
+        document.getElementById('modalPropertyTitle').innerText = propTitle;
+    }
+
+    // AUTO POPUP LOGIC: Automatically open modal if a completed appointment is pending a review
+    @if(isset($unreviewedAppointment) && $unreviewedAppointment)
+        document.addEventListener('DOMContentLoaded', function() {
+            populateReviewModal(
+                {{ $unreviewedAppointment->id }}, 
+                {{ $unreviewedAppointment->property_id }}, 
+                '{{ addslashes($unreviewedAppointment->property->title ?? "Property") }}'
+            );
+            var myModal = new bootstrap.Modal(document.getElementById('reviewModal'));
+            myModal.show();
+        });
+    @endif
 </script>
 </body>
 </html>

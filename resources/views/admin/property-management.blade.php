@@ -1,378 +1,326 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Property Management | Dream Home Admin</title>
+@include('admin.layout.header', ['title' => 'Property Management | Dream Home Admin'])
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
-<link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/dashboard.css">
-</head>
-<body>
-
-<div class="dash-body">
-
-  <!-- ============ SIDEBAR ============ -->
-  <aside class="dash-sidebar" id="sidebar">
-    <a href="admin-dashboard.html" class="dash-logo">
-      <i class="bi bi-house-door-fill"></i>
-      <span class="dash-logo-text">Dream Home<span class="dash-logo-sub">Admin Panel</span></span>
-    </a>
-
-    <div class="dash-nav-label">Overview</div>
-    <ul class="dash-nav">
-      <li><a href="admin-dashboard.html" class="dash-nav-link"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a></li>
-    </ul>
-
-    <div class="dash-nav-label">Management</div>
-    <ul class="dash-nav">
-      <li><a href="customers.html" class="dash-nav-link"><i class="bi bi-people-fill"></i><span>Users</span></a></li>
-      <li><a href="agents.html" class="dash-nav-link"><i class="bi bi-person-badge-fill"></i><span>Agents</span></a></li>
-      <li><a href="property-management.html" class="dash-nav-link active"><i class="bi bi-buildings-fill"></i><span>Properties</span></a></li>
-      <li><a href="#" class="dash-nav-link"><i class="bi bi-calendar-check-fill"></i><span>Bookings</span><span class="dash-nav-badge">12</span></a></li>
-      <li><a href="inquiries.html" class="dash-nav-link"><i class="bi bi-chat-dots-fill"></i><span>Inquiries</span><span class="dash-nav-badge">5</span></a></li>
-    </ul>
-
-    <div class="dash-nav-label">Content</div>
-    <ul class="dash-nav">
-      <li><a href="cms.html" class="dash-nav-link"><i class="bi bi-layout-text-window-reverse"></i><span>CMS Pages</span></a></li>
-      <li><a href="blog-cms.html" class="dash-nav-link"><i class="bi bi-file-earmark-post-fill"></i><span>Blog</span></a></li>
-      <li><a href="notifications.html" class="dash-nav-link"><i class="bi bi-bell-fill"></i><span>Notifications</span></a></li>
-    </ul>
-
-    <div class="dash-sidebar-footer">
-      <ul class="dash-nav">
-        <li><a href="#" class="dash-nav-link"><i class="bi bi-box-arrow-right"></i><span>Logout</span></a></li>
-      </ul>
+<main class="dash-content">
+    <div class="dash-breadcrumb">
+        <a href="{{ route('admin.index') }}">Admin</a> / <span class="current">Properties</span>
     </div>
-  </aside>
 
-  <!-- ============ MAIN ============ -->
-  <div class="dash-main">
-
-    <!-- TOPBAR -->
-    <header class="dash-topbar">
-      <button class="dash-burger" id="burgerBtn"><i class="bi bi-list"></i></button>
-      <div class="dash-search">
-        <i class="bi bi-search"></i>
-        <input type="text" placeholder="Search properties, agents, users...">
-      </div>
-      <div class="dash-topbar-right">
-        <button class="dash-icon-btn" id="themeToggle" title="Toggle theme"><i class="bi bi-moon-stars-fill"></i></button>
-        <button class="dash-icon-btn"><i class="bi bi-bell-fill"></i><span class="dash-icon-dot"></span></button>
-        <div class="dropdown">
-          <button class="dash-profile border-0" data-bs-toggle="dropdown">
-            <img src="https://i.pravatar.cc/64?img=12" alt="Admin">
-            <span class="dash-profile-info d-none d-sm-block">
-              <span class="dash-profile-name d-block">Admin User</span>
-              <span class="dash-profile-role">Super Admin</span>
-            </span>
-            <i class="bi bi-chevron-down text-muted-custom" style="font-size:.7rem;"></i>
-          </button>
-          <div class="dropdown-menu dropdown-menu-end dash-dropdown-menu">
-            <a class="dropdown-item" href="#"><i class="bi bi-person"></i> My Profile</a>
-            <a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Account Settings</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" style="color:#e5484d"><i class="bi bi-box-arrow-right"></i> Logout</a>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- CONTENT -->
-    <main class="dash-content">
-
-      <div class="dash-breadcrumb"><a href="admin-dashboard.html">Admin</a> / <span class="current">Properties</span></div>
-      <div class="dash-page-head">
+    <div class="dash-page-head">
         <div>
-          <h1 class="dash-page-title">Property Management</h1>
-          <p class="dash-page-desc">542 listings across your platform — search, filter, and manage them here.</p>
+            <h1 class="dash-page-title">Property Management</h1>
+            <p class="dash-page-desc">
+                {{ $properties->total() ?? $properties->count() }} listings across your platform — search, filter, and
+                manage them here.
+            </p>
         </div>
-        <div class="dash-head-actions">
-          <button class="dash-btn-secondary"><i class="bi bi-download"></i> Export</button>
-          <button class="dash-btn-primary" data-bs-toggle="modal" data-bs-target="#addPropertyModal"><i class="bi bi-plus-lg"></i> Add Property</button>
-        </div>
-      </div>
+    </div>
 
-      <!-- FILTER BAR -->
-      <div class="dash-filter-bar">
+    <!-- Filter Bar with Auto-Submit -->
+    <form action="{{ route('admin.property') }}" method="GET" id="filterForm" class="dash-filter-bar mb-4">
         <div class="row g-3 align-items-end">
-          <div class="col-lg-3 col-6">
-            <label class="dash-filter-label">Search</label>
-            <div class="dash-input-icon">
-              <i class="bi bi-search"></i>
-              <input type="text" class="dash-input" placeholder="Search by title or ID...">
+            <div class="col-lg-3 col-6">
+                <label class="dash-filter-label">Search</label>
+                <div class="dash-input-icon">
+                    <i class="bi bi-search"></i>
+                    <input type="text" name="search" id="searchInput" class="dash-input"
+                        placeholder="Search by title or ID..." value="{{ request('search') }}">
+                </div>
             </div>
-          </div>
-          <div class="col-lg-2 col-6">
-            <label class="dash-filter-label">Status</label>
-            <select class="dash-select">
-              <option>All Status</option>
-              <option>Published</option>
-              <option>Draft</option>
-              <option>Pending</option>
-            </select>
-          </div>
-          <div class="col-lg-2 col-6">
-            <label class="dash-filter-label">Purpose</label>
-            <select class="dash-select">
-              <option>All</option>
-              <option>For Sale</option>
-              <option>For Rent</option>
-            </select>
-          </div>
-          <div class="col-lg-2 col-6">
-            <label class="dash-filter-label">Category</label>
-            <select class="dash-select">
-              <option>All Types</option>
-              <option>Villa</option>
-              <option>Apartment</option>
-              <option>Townhouse</option>
-              <option>Condo</option>
-            </select>
-          </div>
-          <div class="col-lg-3 col-12">
-            <label class="dash-filter-label">Location</label>
-            <select class="dash-select">
-              <option>All Locations</option>
-              <option>Miami, FL</option>
-              <option>Los Angeles, CA</option>
-              <option>Chicago, IL</option>
-              <option>Austin, TX</option>
-            </select>
-          </div>
+            <div class="col-lg-2 col-6">
+                <label class="dash-filter-label">Status</label>
+                <select name="status" class="dash-select" onchange="this.form.submit()">
+                    <option value="">All Status</option>
+                    <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
+                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                </select>
+            </div>
+            <div class="col-lg-2 col-6">
+                <label class="dash-filter-label">Purpose</label>
+                <select name="purpose" class="dash-select" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    <option value="sale" {{ request('purpose') == 'sale' ? 'selected' : '' }}>For Sale</option>
+                    <option value="rent" {{ request('purpose') == 'rent' ? 'selected' : '' }}>For Rent</option>
+                </select>
+            </div>
+            <div class="col-lg-2 col-6">
+                <label class="dash-filter-label">Category</label>
+                <select name="type" class="dash-select" onchange="this.form.submit()">
+                    <option value="">All Types</option>
+                    <option value="villa" {{ request('type') == 'villa' ? 'selected' : '' }}>Villa</option>
+                    <option value="apartment" {{ request('type') == 'apartment' ? 'selected' : '' }}>Apartment</option>
+                    <option value="house" {{ request('type') == 'house' ? 'selected' : '' }}>House</option>
+                    <option value="land" {{ request('type') == 'land' ? 'selected' : '' }}>Land</option>
+                    <option value="office" {{ request('type') == 'office' ? 'selected' : '' }}>Office</option>
+                </select>
+            </div>
+            <div class="col-lg-3 col-12">
+                <label class="dash-filter-label">Location</label>
+                <select name="city_id" class="dash-select" onchange="this.form.submit()">
+                    <option value="">All Locations</option>
+                    @foreach ($cities ?? [] as $city)
+                        <option value="{{ $city->id }}" {{ request('city_id') == $city->id ? 'selected' : '' }}>
+                            {{ $city->city }}, {{ $city->country }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
         </div>
-      </div>
+    </form>
 
-      <!-- BULK ACTIONS (shown once rows are selected) -->
-      <div class="bulk-actions-bar" id="bulkBar" style="display:none;">
-        <span><strong id="selCount">0</strong> selected</span>
-        <button class="dash-btn-secondary"><i class="bi bi-star"></i> Mark Featured</button>
-        <button class="dash-btn-secondary"><i class="bi bi-eye"></i> Publish</button>
-        <button class="dash-btn-danger"><i class="bi bi-trash"></i> Delete</button>
-      </div>
-
-      <!-- TABLE -->
-      <div class="dash-panel">
+    <!-- Data Table Panel -->
+    <div class="dash-panel">
         <div class="dash-table-wrap">
-          <table class="dash-table">
-            <thead>
-              <tr>
-                <th><input type="checkbox" class="dash-checkbox" id="checkAll"></th>
-                <th>Property</th>
-                <th>Price</th>
-                <th>Purpose</th>
-                <th>Category</th>
-                <th>Agent</th>
-                <th>Status</th>
-                <th>Views</th>
-                <th>Listed On</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="propTableBody">
-              <tr>
-                <td><input type="checkbox" class="dash-checkbox row-check"></td>
-                <td class="d-flex align-items-center gap-2">
-                  <img class="dash-row-thumb" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=100&q=60" alt="">
-                  <div>
-                    <div class="dash-row-title">Modern Villa in Miami <span class="badge-featured ms-1"><i class="bi bi-star-fill"></i>Featured</span></div>
-                    <div class="dash-row-sub">Miami, Florida · PROP-001</div>
-                  </div>
-                </td>
-                <td>$850,000</td>
-                <td><span class="badge-purpose badge-purpose-sale">For Sale</span></td>
-                <td>Villa</td>
-                <td>John Doe</td>
-                <td><span class="status-pill success"><i class="bi bi-circle-fill"></i>Published</span></td>
-                <td>1,204</td>
-                <td>May 20, 2024</td>
-                <td>
-                  <div class="row-actions">
-                    <a href="property-view.html" class="row-action-btn" title="View"><i class="bi bi-eye"></i></a>
-                    <a href="edit-property.html" class="row-action-btn" title="Edit"><i class="bi bi-pencil"></i></a>
-                    <button class="row-action-btn danger" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" class="dash-checkbox row-check"></td>
-                <td class="d-flex align-items-center gap-2">
-                  <img class="dash-row-thumb" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=100&q=60" alt="">
-                  <div><div class="dash-row-title">Luxury Apartment in LA</div><div class="dash-row-sub">Los Angeles, CA · PROP-002</div></div>
-                </td>
-                <td>$2,500/mo</td>
-                <td><span class="badge-purpose badge-purpose-rent">For Rent</span></td>
-                <td>Apartment</td>
-                <td>Sarah Smith</td>
-                <td><span class="status-pill success"><i class="bi bi-circle-fill"></i>Published</span></td>
-                <td>876</td>
-                <td>May 19, 2024</td>
-                <td>
-                  <div class="row-actions">
-                    <a href="property-view.html" class="row-action-btn" title="View"><i class="bi bi-eye"></i></a>
-                    <a href="edit-property.html" class="row-action-btn" title="Edit"><i class="bi bi-pencil"></i></a>
-                    <button class="row-action-btn danger" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" class="dash-checkbox row-check"></td>
-                <td class="d-flex align-items-center gap-2">
-                  <img class="dash-row-thumb" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=100&q=60" alt="">
-                  <div><div class="dash-row-title">Beach House in Florida</div><div class="dash-row-sub">Miami, Florida · PROP-003</div></div>
-                </td>
-                <td>$650,000</td>
-                <td><span class="badge-purpose badge-purpose-sale">For Sale</span></td>
-                <td>Villa</td>
-                <td>Michael Brown</td>
-                <td><span class="status-pill success"><i class="bi bi-circle-fill"></i>Published</span></td>
-                <td>2,310</td>
-                <td>May 18, 2024</td>
-                <td>
-                  <div class="row-actions">
-                    <a href="property-view.html" class="row-action-btn" title="View"><i class="bi bi-eye"></i></a>
-                    <a href="edit-property.html" class="row-action-btn" title="Edit"><i class="bi bi-pencil"></i></a>
-                    <button class="row-action-btn danger" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" class="dash-checkbox row-check"></td>
-                <td class="d-flex align-items-center gap-2">
-                  <div class="dash-row-thumb d-flex align-items-center justify-content-center" style="background:var(--form-input-bg);color:var(--text-muted);"><i class="bi bi-image"></i></div>
-                  <div><div class="dash-row-title">Downtown Condo</div><div class="dash-row-sub">Chicago, Illinois · PROP-004</div></div>
-                </td>
-                <td>$1,200/mo</td>
-                <td><span class="badge-purpose badge-purpose-rent">For Rent</span></td>
-                <td>Condo</td>
-                <td>David Wilson</td>
-                <td><span class="status-pill warning"><i class="bi bi-circle-fill"></i>Pending</span></td>
-                <td>412</td>
-                <td>May 17, 2024</td>
-                <td>
-                  <div class="row-actions">
-                    <a href="property-view.html" class="row-action-btn" title="View"><i class="bi bi-eye"></i></a>
-                    <a href="edit-property.html" class="row-action-btn" title="Edit"><i class="bi bi-pencil"></i></a>
-                    <button class="row-action-btn danger" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" class="dash-checkbox row-check"></td>
-                <td class="d-flex align-items-center gap-2">
-                  <div class="dash-row-thumb d-flex align-items-center justify-content-center" style="background:var(--form-input-bg);color:var(--text-muted);"><i class="bi bi-image"></i></div>
-                  <div><div class="dash-row-title">Family House in Texas</div><div class="dash-row-sub">Austin, Texas · PROP-005</div></div>
-                </td>
-                <td>$450,000</td>
-                <td><span class="badge-purpose badge-purpose-sale">For Sale</span></td>
-                <td>Townhouse</td>
-                <td>Emily Johnson</td>
-                <td><span class="status-pill danger"><i class="bi bi-circle-fill"></i>Draft</span></td>
-                <td>58</td>
-                <td>May 16, 2024</td>
-                <td>
-                  <div class="row-actions">
-                    <a href="property-view.html" class="row-action-btn" title="View"><i class="bi bi-eye"></i></a>
-                    <a href="edit-property.html" class="row-action-btn" title="Edit"><i class="bi bi-pencil"></i></a>
-                    <button class="row-action-btn danger" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+            <table class="dash-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Price</th>
+                        <th>Purpose</th>
+                        <th>Category</th>
+                        <th>Agent</th>
+                        <th>Status</th>
+                        <th>Views</th>
+                        <th>Listed On</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="propTableBody">
+                    @forelse($properties as $property)
+                        @php
+                            $thumbnail = $property->images->firstWhere('is_thumbnail', 1) ?? $property->images->first();
+                            $thumbUrl = $thumbnail ? asset('storage/' . $thumbnail->image) : null;
+                        @endphp
+                        <tr>
+                            <td class="d-flex align-items-center gap-2">
+                                @if ($thumbUrl)
+                                    <img class="dash-row-thumb" src="{{ $thumbUrl }}" alt="{{ $property->title }}">
+                                @else
+                                    <div class="dash-row-thumb d-flex align-items-center justify-content-center"
+                                        style="background:var(--form-input-bg);color:var(--text-muted);">
+                                        <i class="bi bi-image"></i>
+                                    </div>
+                                @endif
+                                <div>
+                                    <div class="dash-row-title">
+                                        {{ $property->title }}
+                                        @if ($property->featured)
+                                            <span class="badge-featured ms-1"><i class="bi bi-star-fill"></i> Featured</span>
+                                        @endif
+                                    </div>
+                                    <div class="dash-row-sub">
+                                        {{ $property->city->city ?? 'N/A' }}, {{ $property->city->country ?? '' }}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                ${{ number_format($property->price, 2) }}{{ $property->purpose === 'rent' ? '/mo' : '' }}
+                            </td>
+                            <td>
+                                <span class="badge-purpose badge-purpose-{{ $property->purpose }}">
+                                    For {{ ucfirst($property->purpose) }}
+                                </span>
+                            </td>
+                            <td>{{ ucfirst($property->type) }}</td>
+                            <td>{{ $property->agent->license_no ?? 'Agent #' . $property->agent_id }}</td>
+                            <td>
+                                <select class="dash-select status-select-dropdown"
+                                    data-property-id="{{ $property->id }}" onchange="updatePropertyStatus(this)">
+                                    <option value="approved" {{ $property->verified === 'approved' ? 'selected' : '' }}>Approved</option>
+                                    <option value="pending" {{ $property->verified === 'pending' ? 'selected' : '' }}>Pending</option>
+                                    <option value="rejected" {{ $property->verified === 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                </select>
+                            </td>
+                            <td>{{ number_format($property->views) }}</td>
+                            <td>{{ \Carbon\Carbon::parse($property->created_at)->format('M d, Y') }}</td>
+                            <td>
+                                <div class="row-actions">
+                                    <a href="{{ route('property.show', $property->id) }}" class="row-action-btn" title="View">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+
+                                    <!-- Feature Toggle Button -->
+                                    <button class="row-action-btn btn-feature-trigger {{ $property->featured ? 'text-warning' : '' }}" 
+                                        title="{{ $property->featured ? 'Unfeature' : 'Feature' }}"
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#featureModal"
+                                        data-action="{{ route('properties.feature', $property->id) }}"
+                                        data-featured="{{ $property->featured ? '1' : '0' }}">
+                                        <i class="bi {{ $property->featured ? 'bi-star-fill' : 'bi-star' }}"></i>
+                                    </button>
+
+                                    <!-- Delete Button -->
+                                    <button class="row-action-btn danger btn-delete-trigger" title="Delete"
+                                        data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                        data-action="{{ route('properties.destroy', $property->id) }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="9" class="text-center py-4 text-muted">
+                                No properties found.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
 
-        <div class="dash-pagination-bar">
-          <span>Showing 1 to 5 of 542 entries</span>
-          <ul class="dash-pagination">
-            <li class="page-link"><i class="bi bi-chevron-left"></i></li>
-            <li class="page-link" style="background:var(--primary);color:#fff;border-color:var(--primary);">1</li>
-            <li class="page-link">2</li>
-            <li class="page-link">3</li>
-            <li class="page-link">4</li>
-            <li class="page-link"><i class="bi bi-chevron-right"></i></li>
-          </ul>
+        <!-- Dynamic Laravel Pagination Bar -->
+        @if ($properties instanceof \Illuminate\Pagination\LengthAwarePaginator && $properties->hasPages())
+            <div class="dash-pagination-bar">
+                <span>Showing {{ $properties->firstItem() }} to {{ $properties->lastItem() }} of
+                    {{ $properties->total() }} entries</span>
+                {{ $properties->links('pagination::bootstrap-5') }}
+            </div>
+        @endif
+    </div>
+</main>
+
+<!-- ================= FEATURE MODAL ================= -->
+<div class="modal fade dash-modal" id="featureModal" tabindex="-1" aria-labelledby="featureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content bg-card border-secondary text-center p-3 shadow-lg rounded-4 overflow-hidden">
+            <form id="featureForm" method="POST" action="">
+                @csrf
+                @method('PATCH')
+                
+                <div class="modal-content p-3">
+                    <div class="stat-icon-lg mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle bg-warning bg-opacity-10 text-warning" style="width: 60px; height: 60px;">
+                        <i class="bi bi-star-fill fs-3"></i>
+                    </div>
+                    
+                    <h5 class="fw-bold mb-2" id="featureModalTitle">Feature Property?</h5>
+                    <p class="text-muted-custom mb-0 small" id="featureModalDesc">
+                        Featured properties are highlighted and placed at the top of search results.
+                    </p>
+                </div>
+
+                <div class="modal-footer justify-content-center border-0 pt-2 pb-1 gap-2">
+                    <button type="button" class="btn btn-outline-secondary px-4 py-2 rounded-3 text-main fw-bold" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-warning px-4 py-2 rounded-3 fw-bold text-dark" id="featureSubmitBtn">
+                        Confirm
+                    </button>
+                </div>
+            </form>
         </div>
-      </div>
-
-    </main>
-  </div>
+    </div>
 </div>
 
-<!-- ADD PROPERTY MODAL -->
-<div class="modal fade dash-modal" id="addPropertyModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add New Property</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <p class="text-muted-custom" style="font-size:.85rem;">This links to the full Add/Edit Property page (the next one I'll build) — with tabs for basic info, pricing, gallery, location, amenities, and SEO.</p>
-      </div>
-      <div class="modal-footer">
-        <button class="dash-btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <a href="add-edit-property.html" class="dash-btn-primary">Continue</a>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- ================= DELETE MODAL ================= -->
+<div class="modal fade dash-modal danger" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content bg-card border-secondary text-center p-3 shadow-lg rounded-4 overflow-hidden">
+            <form id="deleteForm" method="POST" action="">
+                @csrf
+                @method('DELETE')
+                
+                <div class="modal-body p-3">
+                    <div class="stat-icon-lg mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle bg-danger bg-opacity-10 text-danger" style="width: 60px; height: 60px;">
+                        <i class="bi bi-trash fs-3"></i>
+                    </div>
+                    
+                    <h5 class="text-main fw-bold mb-2" id="deleteModalLabel">Delete Property?</h5>
+                    <p class="text-muted-custom mb-0 small">
+                        This action cannot be undone. The listing will be permanently removed.
+                    </p>
+                </div>
 
-<!-- DELETE CONFIRMATION MODAL -->
-<div class="modal fade dash-modal danger" id="deleteModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-3">
-      <div class="modal-body">
-        <div class="stat-icon-lg mx-auto mb-3"><i class="bi bi-trash"></i></div>
-        <h5 class="mb-2">Delete this property?</h5>
-        <p class="text-muted-custom" style="font-size:.85rem;">This action can't be undone. The listing will be permanently removed.</p>
-      </div>
-      <div class="modal-footer justify-content-center border-0 pt-0">
-        <button class="dash-btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button class="dash-btn-danger" data-bs-dismiss="modal">Delete Property</button>
-      </div>
+                <div class="modal-footer justify-content-center border-0 pt-2 pb-1 gap-2">
+                    <button type="button" class="btn btn-outline-secondary px-4 py-2 rounded-3 text-main fw-bold" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-danger px-4 py-2 rounded-3 fw-bold">
+                        Delete Property
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  const sidebar = document.getElementById('sidebar');
-  document.getElementById('burgerBtn').addEventListener('click', () => {
-    if (window.innerWidth <= 991) sidebar.classList.toggle('mobile-open');
-    else sidebar.classList.toggle('collapsed');
-  });
+    // Dynamic Delete Action Mapping
+    document.querySelectorAll('.btn-delete-trigger').forEach(button => {
+        button.addEventListener('click', function() {
+            const actionUrl = this.getAttribute('data-action');
+            document.getElementById('deleteForm').setAttribute('action', actionUrl);
+        });
+    });
 
-  const themeBtn = document.getElementById('themeToggle');
-  const root = document.documentElement;
-  themeBtn.addEventListener('click', () => {
-    const isLight = root.getAttribute('data-theme') === 'light';
-    root.setAttribute('data-theme', isLight ? 'dark' : 'light');
-    themeBtn.innerHTML = isLight ? '<i class="bi bi-moon-stars-fill"></i>' : '<i class="bi bi-sun-fill"></i>';
-  });
+    // Dynamic Feature Action & Modal Content Mapping
+    document.querySelectorAll('.btn-feature-trigger').forEach(button => {
+        button.addEventListener('click', function() {
+            const actionUrl = this.getAttribute('data-action');
+            const isFeatured = this.getAttribute('data-featured') === '1';
 
-  // Select-all + bulk action bar
-  const checkAll = document.getElementById('checkAll');
-  const rowChecks = document.querySelectorAll('.row-check');
-  const bulkBar = document.getElementById('bulkBar');
-  const selCount = document.getElementById('selCount');
+            document.getElementById('featureForm').setAttribute('action', actionUrl);
 
-  function updateBulkBar() {
-    const checked = document.querySelectorAll('.row-check:checked').length;
-    selCount.textContent = checked;
-    bulkBar.style.display = checked > 0 ? 'flex' : 'none';
-  }
-  checkAll.addEventListener('change', () => {
-    rowChecks.forEach(cb => cb.checked = checkAll.checked);
-    updateBulkBar();
-  });
-  rowChecks.forEach(cb => cb.addEventListener('change', updateBulkBar));
-</script>
-</body>
-</html>
+            // Dynamically change title and text depending on current state
+            if (isFeatured) {
+                document.getElementById('featureModalTitle').textContent = 'Remove from Featured?';
+                document.getElementById('featureModalDesc').textContent = 'This property will no longer be highlighted on the homepage.';
+                document.getElementById('featureSubmitBtn').textContent = 'Unfeature Property';
+            } else {
+                document.getElementById('featureModalTitle').textContent = 'Feature Property?';
+                document.getElementById('featureModalDesc').textContent = 'Featured properties are highlighted and placed at the top of search results.';
+                document.getElementById('featureSubmitBtn').textContent = 'Feature Property';
+            }
+        });
+    });
+// Add this inside your <script> block
+async function updatePropertyStatus(selectElement) {
+    const propertyId = selectElement.getAttribute('data-property-id');
+    const newStatus = selectElement.value;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    // Visually indicate updating state
+    selectElement.disabled = true;
+
+    try {
+        const response = await fetch(`/admin/properties/${propertyId}/status`, {
+            method: 'PATCH', // or 'POST', match this with your routes/web.php definition
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ verified: newStatus })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            // Optional: Provide visual success feedback
+            selectElement.style.borderColor = '#198754'; // green border on success
+            setTimeout(() => selectElement.style.borderColor = '', 2000);
+        } else {
+            alert(data.message || 'Failed to update property status.');
+        }
+    } catch (error) {
+        console.error('Error updating status:', error);
+        alert('An error occurred while updating the status.');
+    } finally {
+        selectElement.disabled = false;
+    }
+}
+    // Auto-submit search input with debouncing
+    const searchInput = document.getElementById('searchInput');
+    const filterForm = document.getElementById('filterForm');
+    let searchTimeout = null;
+
+    if (searchInput && filterForm) {
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                filterForm.submit();
+            }, 500);
+        });
+    }
+</script>   

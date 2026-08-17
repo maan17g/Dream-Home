@@ -304,90 +304,10 @@
                 </div>
 
                 <form id="schedule-form" action="<?php echo e(route('appointment.create')); ?>" method="POST">
-                    <?php echo csrf_field(); ?>
-                    <input type="hidden" name="property_id" value="<?php echo e($property->id); ?>">
-                    <?php $__errorArgs = ['property_id'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                        <span class="invalid-feedback"><?php echo e($message); ?></span>
-                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="visit_date">Preferred Date</label>
-                            <input type="date" id="visit_date" name="visit_date" value="<?php echo e(old('visit_date')); ?>"
-                                class="<?php $__errorArgs = ['visit_date'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" required>
-                            <?php $__errorArgs = ['visit_date'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="invalid-feedback"><?php echo e($message); ?></span>
-                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="visit_time">Time Slot</label>
-                            <select id="visit_time" name="visit_time" class="<?php $__errorArgs = ['visit_time'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>"
-                                required>
-                                <option value="" disabled <?php echo e(old('visit_time') ? '' : 'selected'); ?>>Select slot
-                                </option>
-                                <option value="10:00" <?php echo e(old('visit_time') == '10:00' ? 'selected' : ''); ?>>10:00 AM
-                                </option>
-                                <option value="12:00" <?php echo e(old('visit_time') == '12:00' ? 'selected' : ''); ?>>12:00 PM
-                                </option>
-                                <option value="14:00" <?php echo e(old('visit_time') == '14:00' ? 'selected' : ''); ?>>02:00 PM
-                                </option>
-                                <option value="16:00" <?php echo e(old('visit_time') == '16:00' ? 'selected' : ''); ?>>04:00 PM
-                                </option>
-                            </select>
-                            <?php $__errorArgs = ['visit_time'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="invalid-feedback"><?php echo e($message); ?></span>
-                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="notes">Special Requirements / Notes</label>
-                        <textarea id="notes" name="notes" rows="3" class="<?php $__errorArgs = ['notes'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>"
-                            placeholder="Any specific questions or accessibility needs..."><?php echo e(old('notes')); ?></textarea>
-                        <?php $__errorArgs = ['notes'];
+                    <form id="schedule-form" action="<?php echo e(route('appointment.create')); ?>" method="POST">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="property_id" value="<?php echo e($property->id); ?>">
+                        <?php $__errorArgs = ['property_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -397,25 +317,113 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    </div>
 
-                    <div class="actions-group">
-                        <!-- Action 1: Save Listing -->
-                        <button type="button" class="btn-save-prop js-fav-btn" data-id="<?php echo e($property->id); ?>">
-                            <i
-                                class="bi <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill' : 'bi-heart'); ?>"></i>
-                            <span>
-                                <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property'); ?>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="visit_date">Preferred Date</label>
+                                <input type="date" id="visit_date" name="visit_date" value="<?php echo e(old('visit_date')); ?>"
+                                    class="<?php $__errorArgs = ['visit_date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" required>
+                                <?php $__errorArgs = ['visit_date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="invalid-feedback"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </div>
 
-                            </span>
-                        </button>
+                            <div class="form-group">
+                                <label for="visit_time">Time Slot</label>
+                                <select id="visit_time" name="visit_time"
+                                    class="<?php $__errorArgs = ['visit_time'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" required>
+                                    <option value="" disabled <?php echo e(old('visit_time') ? '' : 'selected'); ?>>Select
+                                        slot
+                                    </option>
+                                    <option value="10:00" <?php echo e(old('visit_time') == '10:00' ? 'selected' : ''); ?>>10:00
+                                        AM
+                                    </option>
+                                    <option value="12:00" <?php echo e(old('visit_time') == '12:00' ? 'selected' : ''); ?>>12:00
+                                        PM
+                                    </option>
+                                    <option value="14:00" <?php echo e(old('visit_time') == '14:00' ? 'selected' : ''); ?>>02:00
+                                        PM
+                                    </option>
+                                    <option value="16:00" <?php echo e(old('visit_time') == '16:00' ? 'selected' : ''); ?>>04:00
+                                        PM
+                                    </option>
+                                </select>
+                                <?php $__errorArgs = ['visit_time'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="invalid-feedback"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </div>
+                        </div>
 
-                        <!-- Action 2: Submit Schedule Request -->
-                        <button type="submit" name="action" value="schedule" class="btn btn-primary">
-                            <i class="bi bi-calendar-check"></i> Schedule Visit
-                        </button>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <label for="notes">Special Requirements / Notes</label>
+                            <textarea id="notes" name="notes" rows="3" class="<?php $__errorArgs = ['notes'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                placeholder="Any specific questions or accessibility needs..."><?php echo e(old('notes')); ?></textarea>
+                            <?php $__errorArgs = ['notes'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="invalid-feedback"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="actions-group">
+                            <!-- Action 1: Save Listing -->
+                            <!-- Action 1: Save Listing -->
+                            <button type="button" class="btn-save-prop js-fav-btn" data-id="<?php echo e($property->id); ?>"
+                                data-url="<?php echo e(route('properties.save', $property->id)); ?>">
+                                <i
+                                    class="bi <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill' : 'bi-heart'); ?>"></i>
+                                <span>
+                                    <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property'); ?>
+
+                                </span>
+                            </button>
+
+                            <!-- Action 2: Submit Schedule Request -->
+                            <button type="submit" name="action" value="schedule" class="btn btn-primary">
+                                <i class="bi bi-calendar-check"></i> Schedule Visit
+                            </button>
+                        </div>
+                    </form>
             </div>
         </section>
 
@@ -423,6 +431,7 @@ unset($__errorArgs, $__bag); ?>
 
     <?php echo $__env->make('layout.Notification', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     <script src="<?php echo e(asset('asset/js/script.js')); ?>"></script>
+    <script src="<?php echo e(asset('dashboard/assets/js/script.js')); ?>"></script>
 </body>
 
 </html>

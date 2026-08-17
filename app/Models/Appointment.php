@@ -31,7 +31,9 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
+      public function review(){
+    return $this->hasOne(Review::class);
+  }
     /**
      * Get the agent assigned to this appointment.
      */

@@ -96,18 +96,17 @@ $thumbnailUrl = $thumbnail
                     </div>
                 </div>
             @empty
-            @if (Auth::user()->agent->properties->count()==0)
-            <div class="col-12 text-center py-5">
-              <a href="{{ route('property.create') }}"
-              class="text-decoration-none text-primary-custom text-center fs-2 fw-bold">Add Properties</a>
-            </div>
-            @else
-            <div class="col-12 text-center py-5">
-              <span
-              class="text-decoration-none text-primary-custom text-center fs-2 fw-bold">No Property Found</span>
-            </div>
-
-            @endif
+                @if (Auth::user()->agent->properties->count() == 0)
+                    <div class="col-12 text-center py-5">
+                        <a href="{{ route('property.create') }}"
+                            class="text-decoration-none text-primary-custom text-center fs-2 fw-bold">Add Properties</a>
+                    </div>
+                @else
+                    <div class="col-12 text-center py-5">
+                        <span class="text-decoration-none text-primary-custom text-center fs-2 fw-bold">No Property
+                            Found</span>
+                    </div>
+                @endif
             @endforelse
         </div>
 
@@ -127,19 +126,18 @@ $thumbnailUrl = $thumbnail
 </main>
 </div>
 </div>
-
 <!-- DELETE MODAL -->
-<div class="modal fade dash-modal danger" id="deleteModal" tabindex="-1">
+<div class="modal fade dash-modal danger" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-center p-3">
-            <!-- Wrapped in a form targeting your delete endpoint -->
+        <div class="modal-content text-center p-3 bg-transparent">
+            <!-- Dynamic Form Target (Action populated via JS) -->
             <form id="deleteForm" method="POST" action="">
                 @csrf
                 @method('DELETE')
                 <div class="modal-body">
                     <div class="stat-icon-lg mx-auto mb-3"><i class="bi bi-trash"></i></div>
                     <h5 class="mb-2">Delete this listing?</h5>
-                    <p class="text-muted-custom" style="font-size:.85rem;">This action can't be undone.</p>
+                    <p class="text-muted-custom" style="font-size:.85rem;">This action cannot be undone.</p>
                 </div>
                 <div class="modal-footer justify-content-center border-0 pt-0">
                     <button type="button" class="dash-btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -149,36 +147,42 @@ $thumbnailUrl = $thumbnail
         </div>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @include('layout.Notification')
+
 <script>
+    // Handle dynamic delete modal action URL
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteForm = document.getElementById('deleteForm');
+
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            // Trigger button that opened the modal
+            const button = event.relatedTarget;
+            // Extract info from data-id attribute
+            const propertyId = button.getAttribute('data-id');
+            
+            // Construct base URL dynamically for your route template
+            const baseUrl = "{{ url('properties') }}"; 
+            
+            // Set form action dynamically: /properties/{id}
+            deleteForm.action = `${baseUrl}/${propertyId}`;
+        });
+    });
+
+    // Theme & Sidebar Toggles
     const sidebar = document.getElementById('sidebar');
-    document.getElementById('burgerBtn').addEventListener('click', () => {
+    document.getElementById('burgerBtn')?.addEventListener('click', () => {
         if (window.innerWidth <= 991) sidebar.classList.toggle('mobile-open');
         else sidebar.classList.toggle('collapsed');
     });
+    
     const themeBtn = document.getElementById('themeToggle');
     const root = document.documentElement;
-    themeBtn.addEventListener('click', () => {
+    themeBtn?.addEventListener('click', () => {
         const isLight = root.getAttribute('data-theme') === 'light';
         root.setAttribute('data-theme', isLight ? 'dark' : 'light');
-        themeBtn.innerHTML = isLight ? '<i class="bi bi-moon-stars-fill"></i>' :
-            '<i class="bi bi-sun-fill"></i>';
-    });
-
-
-
-    // Dynamically apply correct delete action endpoint to the form inside the modal
-    document.querySelectorAll('.btn-delete-trigger').forEach(button => {
-        button.addEventListener('click', function() {
-            // 1. Get the ID from the clicked button
-            const id = this.getAttribute('data-id');
-
-            // 2. Set the correct form action matching your Route::delete
-            document.getElementById('deleteForm').setAttribute('action', `/properties/${id}`);
-        });
+        themeBtn.innerHTML = isLight ? '<i class="bi bi-moon-stars-fill"></i>' : '<i class="bi bi-sun-fill"></i>';
     });
 </script>
-</body>
-
-</html>

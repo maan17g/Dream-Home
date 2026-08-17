@@ -557,7 +557,8 @@ nav .active {
 }
 
 .testimonial-section,
-.feature-property {
+.feature-property,
+.about-section {
     background-color: var(--form-bg);
 }
 
@@ -2264,7 +2265,7 @@ main {
 /* ---- SIMPLE STEPS ---- */
 .steps-section {
     padding: 80px 0;
-    background-color: var(--form-bg);
+  
 }
 .step-item {
     text-align: center;

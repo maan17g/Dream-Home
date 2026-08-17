@@ -61,7 +61,10 @@ class agentController extends Controller
      */
     public function show(string $id)
     {
-       
+      $agent=Agent::with(['user','review'])->findOrFail($id);
+      $properties=$agent->properties()->paginate(3);
+    
+       return view('frontend.agent-view',compact('agent','properties'));
     }
 
     /**
@@ -78,6 +81,15 @@ class agentController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+    public function toggleFeature(Agent $agent)
+    {
+        $agent->is_featured = !$agent->is_featured;
+        $agent->save();
+
+        $status = $agent->is_featured ? 'featured' : 'unfeatured';
+
+        return redirect()->back()->with('success', "Agent status updated to {$status} successfully.");
     }
 
     /**

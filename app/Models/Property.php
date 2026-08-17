@@ -20,10 +20,9 @@ class Property extends Model
 
   
 
-    /**
-     * A Property belongs directly to an Agent.
-     * Table relationship: properties.agent_id -> agents.id
-     */
+  public function review(){
+    return $this->hasOne(Review::class);
+  }
     public function agent(): BelongsTo
     {
         return $this->belongsTo(Agent::class, 'agent_id');

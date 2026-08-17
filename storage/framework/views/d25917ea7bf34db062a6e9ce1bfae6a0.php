@@ -126,12 +126,7 @@ unset($__errorArgs, $__bag); ?>
             </div>
 
             <!-- Terms note -->
-            <p class="text-center mt-3" style="font-size:0.75rem;color:var(--text-muted);">
-                By signing in you agree to our
-                <a href="terms-conditions.html" style="color:var(--primary);text-decoration:none;">Terms of Service</a>
-                and
-                <a href="privacy-policy.html" style="color:var(--primary);text-decoration:none;">Privacy Policy</a>.
-            </p>
+         
 
         </div><!-- /auth-form-panel -->
     </div><!-- /auth-page -->

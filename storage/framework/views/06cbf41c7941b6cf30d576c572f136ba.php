@@ -177,19 +177,17 @@
                             href=<?php echo e(route('user.addAppointment', $property->id)); ?>><i
                                 class="bi bi-calendar-check"></i>
                             Book a Viewing </a>
-                        <button type="button" class="btn-save-prop js-fav-btn" data-id="<?php echo e($property->id); ?>">
+                       <!-- Action 1: Save Listing -->
+<button type="button" 
+        class="btn-save-prop js-fav-btn" 
+        data-id="<?php echo e($property->id); ?>"
+        data-url="<?php echo e(route('properties.save', $property->id)); ?>">
+    <i class="bi <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill' : 'bi-heart'); ?>"></i>
+    <span>
+        <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property'); ?>
 
-                            <i
-                                class="bi 
-                         <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill text-danger' : 'bi-heart'); ?>">
-                            </i>
-
-                            <span>
-                                <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property'); ?>
-
-                            </span>
-
-                        </button><?php endif; ?>
+    </span>
+</button><?php endif; ?>
                         <?php if($property->agent?->user): ?>
                             <a href="<?php echo e(route('agent.show', $property->agent->id)); ?>"
                                 class="d-flex align-items-center gap-3 mt-3 p-3 rounded-3 text-decoration-none border">

@@ -60,182 +60,6 @@ if (counters.length) {
     });
 }
 
-// ---- 4. PROPERTIES DATA ----
-// const allProperties = [
-//     {
-//         status: "For Sale",
-//         statusClass: "sale",
-//         price: "$850,000",
-//         priceNum: 850000,
-//         img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80",
-//         title: "Modern Luxury Villa",
-//         location: "Beverly Hills, CA",
-//         beds: 5,
-//         baths: 4,
-//         size: "4,500 sqft",
-//         sizeNum: 4500,
-//         type: "villa",
-//         featured: true,
-//     },
-//     {
-//         status: "New Listing",
-//         statusClass: "new",
-//         price: "$2,100,000",
-//         priceNum: 2100000,
-//         img: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?auto=format&fit=crop&w=800&q=80",
-//         title: "Ocean View Penthouse",
-//         location: "Miami, FL",
-//         beds: 3,
-//         baths: 4,
-//         size: "3,200 sqft",
-//         sizeNum: 3200,
-//         type: "penthouse",
-//         featured: true,
-//     },
-//     {
-//         status: "For Rent",
-//         statusClass: "rent",
-//         price: "$6,500/mo",
-//         priceNum: 6500,
-//         img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80",
-//         title: "Modern Family Townhouse",
-//         location: "Seattle, WA",
-//         beds: 4,
-//         baths: 3,
-//         size: "2,800 sqft",
-//         sizeNum: 2800,
-//         type: "townhouse",
-//         featured: true,
-//     },
-//     {
-//         status: "For Sale",
-//         statusClass: "sale",
-//         price: "$1,250,000",
-//         priceNum: 1250000,
-//         img: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=800&q=80",
-//         title: "Contemporary Apartment",
-//         location: "New York, NY",
-//         beds: 2,
-//         baths: 2,
-//         size: "1,800 sqft",
-//         sizeNum: 1800,
-//         type: "apartment",
-//         featured: true,
-//     },
-//     {
-//         status: "For Sale",
-//         statusClass: "sale",
-//         price: "$3,500,000",
-//         priceNum: 3500000,
-//         img: "https://images.unsplash.com/photo-1600047509358-9dc75507daeb?auto=format&fit=crop&w=800&q=80",
-//         title: "Waterfront Estate",
-//         location: "Malibu, CA",
-//         beds: 6,
-//         baths: 5,
-//         size: "6,200 sqft",
-//         sizeNum: 6200,
-//         type: "villa",
-//     },
-//     {
-//         status: "For Rent",
-//         statusClass: "rent",
-//         price: "$4,200/mo",
-//         priceNum: 4200,
-//         img: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
-//         title: "Downtown Loft",
-//         location: "Chicago, IL",
-//         beds: 2,
-//         baths: 2,
-//         size: "1,500 sqft",
-//         sizeNum: 1500,
-//         type: "apartment",
-//     },
-//     {
-//         status: "New Listing",
-//         statusClass: "new",
-//         price: "$975,000",
-//         priceNum: 975000,
-//         img: "https://images.unsplash.com/photo-1599423300746-b62533397364?auto=format&fit=crop&w=800&q=80",
-//         title: "Suburban Family Home",
-//         location: "Austin, TX",
-//         beds: 4,
-//         baths: 3,
-//         size: "3,400 sqft",
-//         sizeNum: 3400,
-//         type: "townhouse",
-//     },
-//     {
-//         status: "For Sale",
-//         statusClass: "sale",
-//         price: "$1,800,000",
-//         priceNum: 1800000,
-//         img: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?auto=format&fit=crop&w=800&q=80",
-//         title: "Mountain View Chalet",
-//         location: "Denver, CO",
-//         beds: 5,
-//         baths: 4,
-//         size: "4,100 sqft",
-//         sizeNum: 4100,
-//         type: "villa",
-//     },
-//     {
-//         status: "For Rent",
-//         statusClass: "rent",
-//         price: "$5,800/mo",
-//         priceNum: 5800,
-//         img: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
-//         title: "Luxury High-Rise",
-//         location: "San Francisco, CA",
-//         beds: 3,
-//         baths: 3,
-//         size: "2,400 sqft",
-//         sizeNum: 2400,
-//         type: "penthouse",
-//     },
-//     {
-//         status: "For Sale",
-//         statusClass: "sale",
-//         price: "$650,000",
-//         priceNum: 650000,
-//         img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
-//         title: "Cozy Cottage",
-//         location: "Portland, OR",
-//         beds: 3,
-//         baths: 2,
-//         size: "2,100 sqft",
-//         sizeNum: 2100,
-//         type: "townhouse",
-//     },
-//     {
-//         status: "New Listing",
-//         statusClass: "new",
-//         price: "$4,200,000",
-//         priceNum: 4200000,
-//         img: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?auto=format&fit=crop&w=800&q=80",
-//         title: "Beachfront Paradise",
-//         location: "Hawaii",
-//         beds: 5,
-//         baths: 5,
-//         size: "5,500 sqft",
-//         sizeNum: 5500,
-//         type: "villa",
-//     },
-//     {
-//         status: "For Rent",
-//         statusClass: "rent",
-//         price: "$3,900/mo",
-//         priceNum: 3900,
-//         img: "https://images.unsplash.com/photo-1600585152915-d208bec867a1?auto=format&fit=crop&w=800&q=80",
-//         title: "Urban Studio",
-//         location: "Boston, MA",
-//         beds: 1,
-//         baths: 1,
-//         size: "850 sqft",
-//         sizeNum: 850,
-//         type: "apartment",
-//     },
-// ];
-
 // ---- 5. RENDER PROPERTY CARD ----
 const AGENTS = [
     {
@@ -315,14 +139,6 @@ function renderPropertyCard(prop, index = 0) {
     return col;
 }
 
-// ---- 6. FEATURED PROPERTIES (index.html) ----
-const featuredGrid = document.querySelector(".cont-prop");
-if (featuredGrid) {
-    featuredGrid.classList.add("reveal-stagger");
-    allProperties
-        .filter((p) => p.featured)
-        .forEach((p, i) => featuredGrid.appendChild(renderPropertyCard(p, i)));
-}
 
 // ---- 8. SCROLL REVEAL ----
 // Sections and cards fade/slide into place the first time they enter the viewport.
@@ -364,54 +180,69 @@ if (staggerGrids.length && "IntersectionObserver" in window) {
     );
     staggerGrids.forEach((el) => gridIo.observe(el));
 }
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".js-fav-btn").forEach((button) => {
+        button.addEventListener("click", async function (e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-document.querySelectorAll(".js-fav-btn").forEach((button) => {
-    button.addEventListener("click", function (e) {
-        // 1. Prevent default behaviors immediately
-        e.preventDefault();
-        e.stopPropagation();
+            if (!window.Laravel?.isLoggedIn) {
+                alert("Please log in to save properties.");
+                return;
+            }
 
-        // 2. Safe check for login status
-        if (!window.Laravel?.isLoggedIn) {
-            alert("Login to save Property");
-            return;
-        }
+            const icon = this.querySelector("i");
+            // Prefer data-url if available, fallback to dynamic construction
+            const url = this.dataset.url || `/properties/${this.dataset.id}/save`; 
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 
-        let icon = this.querySelector("i");
-        
-        // 3. FIXED LOGIC: Toggle classes correctly
-        if (icon.classList.contains("bi-heart-fill")) {
-            icon.classList.remove("bi-heart-fill", "text-success");
-            icon.classList.add("bi-heart");
-        } else {
-            icon.classList.remove("bi-heart");
-            icon.classList.add("bi-heart-fill", "text-success");
-        }
+            if (!csrfToken) {
+                console.error("CSRF token meta tag missing.");
+                return;
+            }
 
-        let id = this.dataset.id;
+            // Save visual state for rollback if server request fails
+            const originalClasses = icon.className;
 
-        // 4. Safe fetching using optional chaining
-        fetch(`/properties/${id}/save`, {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')?.content || '',
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.success) {
-                    // Sync final state with the server response
-                    if (data.is_favorited) {
-                        icon.classList.remove("bi-heart");
-                        icon.classList.add("bi-heart-fill", "text-success");
-                    } else {
-                        icon.classList.remove("bi-heart-fill", "text-success");
-                        icon.classList.add("bi-heart");
-                    }
+            // Optimistic visual update
+            icon.classList.toggle("bi-heart");
+            icon.classList.toggle("bi-heart-fill");
+            icon.classList.toggle("text-success");
+
+            try {
+                // 1. Declare 'response' properly here
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": csrfToken,
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                // 2. Safely check 'response.ok'
+                if (!response.ok) {
+                    throw new Error(`Server returned HTTP status ${response.status}`);
                 }
-            })
-            .catch((err) => console.error("Error saving property:", err));
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Sync icon strictly with backend response state
+                    if (data.is_favorited) {
+                        icon.className = "bi bi-heart-fill text-success";
+                    } else {
+                        icon.className = "bi bi-heart";
+                    }
+                } else {
+                    // Revert UI if server returns success: false
+                    icon.className = originalClasses;
+                }
+            } catch (error) {
+                console.error("Error toggling favorite state:", error);
+                // Revert visual state on error/network failure
+                icon.className = originalClasses;
+            }
+        });
     });
 });

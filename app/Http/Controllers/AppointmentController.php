@@ -115,6 +115,10 @@ class AppointmentController extends Controller
     /**
      * Update appointment status (Shared by User and Agent).
      */
+    public function getAppointment(){
+        $schedules=Appointment::with(['user','agent','property'])->get();
+        return view('admin.appointment',compact('schedules'));
+    }
     public function updateStatus(Request $request, Appointment $appointment)
     {
         $request->validate([

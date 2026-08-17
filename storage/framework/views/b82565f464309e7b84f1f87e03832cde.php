@@ -27,6 +27,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?php echo e(asset('asset/css/style.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('dashboard/assets/css/dashboard.css')); ?>">
 </head>
 
 <body data-theme="dark">
@@ -46,15 +47,14 @@
 
                 <div class="collapse navbar-collapse" id="navContent">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4">
-                        <li class="nav-item"><a class="nav-link <?php echo e(request()->routeIs('page.index') ? 'active' : ''); ?>"
+                        <li class="nav-item"><a class="nav-link  ? 'active' : '' }}"
                                 href="<?php echo e(route('page.index')); ?>">Home</a></li>
                         <li class="nav-item"><a
                                 class="nav-link <?php echo e(request()->routeIs('property.index') ? 'active' : ''); ?>"
                                 href="<?php echo e(route('property.index')); ?>">Properties</a></li>
                         <li class="nav-item"><a class="nav-link <?php echo e(request()->routeIs('page.about') ? 'active' : ''); ?>"
                                 href="<?php echo e(route('page.about')); ?>">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link <?php echo e(request()->routeIs('blog.index') ? 'active' : ''); ?>"
-                                href="<?php echo e(route('blog.index')); ?>">Blogs</a></li>
+                        
                         <li class="nav-item"><a
                                 class="nav-link <?php echo e(request()->routeIs('page.contact') ? 'active' : ''); ?>"
                                 href="<?php echo e(route('page.contact')); ?>">Contact</a></li>

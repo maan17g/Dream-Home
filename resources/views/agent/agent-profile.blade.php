@@ -76,7 +76,7 @@
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
                             </div>
-                           
+
 
                             <div class="col-md-6">
                                 <label class="dash-form-label">Email</label>
@@ -111,11 +111,9 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="dash-form-label">License Number</label>
-                                <input type="text" name="license_number" class="dash-input"
-                                    value="{{ old('license_number', Auth::user()->agent['license_no']) }}">
-                                @error('license_number')
-                                    <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
-                                @enderror
+                                <input type="text" name="license_number" class="dash-input" disabled
+                                    value="{{ Auth::user()->agent['license_no'] }}">
+                               
                             </div>
 
                             <div class="col-md-6">
@@ -126,7 +124,7 @@
                                     <div style="color: red; font-size: 0.8rem; margin-top: 5px;">{{ $message }}</div>
                                 @enderror
                             </div>
-                             <div class="col-md-6">
+                            <div class="col-md-6">
                                 <label class="dash-form-label">Agent Type</label>
                                 <select name="agent_type" class="dash-input">
                                     <option value="agent"
@@ -274,8 +272,6 @@
             else sidebar.classList.toggle('collapsed');
         });
     }
-
-    
 </script>
 @include('layout.Notification')
 </body>

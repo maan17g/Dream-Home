@@ -172,18 +172,16 @@
                             href={{ route('user.addAppointment', $property->id) }}><i
                                 class="bi bi-calendar-check"></i>
                             Book a Viewing </a>
-                        <button type="button" class="btn-save-prop js-fav-btn" data-id="{{ $property->id }}">
-
-                            <i
-                                class="bi 
-                         {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill text-danger' : 'bi-heart' }}">
-                            </i>
-
-                            <span>
-                                {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property' }}
-                            </span>
-
-                        </button>@endif
+                       <!-- Action 1: Save Listing -->
+<button type="button" 
+        class="btn-save-prop js-fav-btn" 
+        data-id="{{ $property->id }}"
+        data-url="{{ route('properties.save', $property->id) }}">
+    <i class="bi {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+    <span>
+        {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property' }}
+    </span>
+</button>@endif
                         @if ($property->agent?->user)
                             <a href="{{ route('agent.show', $property->agent->id) }}"
                                 class="d-flex align-items-center gap-3 mt-3 p-3 rounded-3 text-decoration-none border">

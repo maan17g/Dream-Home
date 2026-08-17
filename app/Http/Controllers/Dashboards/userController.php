@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Property;
 use App\Models\savedProperties;
 use App\Models\User;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Review;
 
 class userController extends Controller
 {
@@ -19,6 +21,29 @@ class userController extends Controller
         // $record=User::with(['savedProperties'])->where('sid',Auth::user()->id)->count();
 
         return view('user.user-dashboard');
+    }
+
+    public function review(Request $request)
+    {
+       $validated=$request->validate([
+        'appointment_id' => 'required|exists:appointments,id',
+        'property_id'    => 'required|exists:properties,id',
+        'rating'         => 'required|integer|between:1,5',
+        'comment'        => 'nullable|string|max:1000',
+    ]);
+    $chk=Appointment::where('user_id',Auth::user()->id)->where('id',$request->appointment_id)->where('property_id',$request->property_id)->first();
+      if (!$chk) {
+        return redirect()->back()->with('success', 'Unauthorized or invalid appointment.');
+    }
+    $agent=Property::where('id',$request->property_id)->first();
+    Review::create([
+         'appointment_id'=>$request->appointment_id,
+         'agent_id'=>$agent->agent_id,
+         'property_id'=>$request->property_id,
+         'rating'=>$request->rating,
+         'comment'=>$request->comment,
+    ]);
+    return redirect()->back()->with('success','Review saved');
     }
 
     public function saved()

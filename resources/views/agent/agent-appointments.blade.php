@@ -12,12 +12,7 @@
         </div>
     </div>
 
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    @endif
+   
 
     <div class="row g-3">
         <div class="col-lg-8">
@@ -125,8 +120,8 @@
             <!-- COMPLETED PANE -->
             <div class="appt-pane d-none" id="pane-completed">
                 @forelse($completed ?? [] as $appt)
-                    <div class="appointment-card mb-2 p-3 border rounded">
-                        <div class="d-flex align-items-start">
+                    <div class="d-flex align-items-center justify-content-center mb-2 p-3 border rounded">
+                        <div class="d-flex align-items-center gap-1 justify-content-center">
                             <div class="appt-date-box">
                                 <div class="d">{{ \Carbon\Carbon::parse($appt->scheduled_at)->format('d') }}</div>
                                 <div class="m">{{ \Carbon\Carbon::parse($appt->scheduled_at)->format('M') }}</div>
@@ -138,7 +133,7 @@
                                     <div class="ms-2">
                                         <div class="dash-row-title" style="font-size:.85rem;">
                                             {{ $appt->user->first_name }} {{ $appt->user->last_name }}</div>
-                                        <div class="dash-row-sub text-muted" style="font-size:.75rem;">
+                                        <div class="dash-row-sub text-custom-muted" style="font-size:.75rem;">
                                             {{ $appt->property->title }} ·
                                             {{ \Carbon\Carbon::parse($appt->scheduled_at)->format('g:i A') }}</div>
                                     </div>

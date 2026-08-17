@@ -12,13 +12,7 @@
         </div>
     </div>
 
-    <?php if(session('success')): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?php echo e(session('success')); ?>
-
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php endif; ?>
+   
 
     <div class="row g-3">
         <div class="col-lg-8">
@@ -129,8 +123,8 @@
             <!-- COMPLETED PANE -->
             <div class="appt-pane d-none" id="pane-completed">
                 <?php $__empty_1 = true; $__currentLoopData = $completed ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $appt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                    <div class="appointment-card mb-2 p-3 border rounded">
-                        <div class="d-flex align-items-start">
+                    <div class="d-flex align-items-center justify-content-center mb-2 p-3 border rounded">
+                        <div class="d-flex align-items-center gap-1 justify-content-center">
                             <div class="appt-date-box">
                                 <div class="d"><?php echo e(\Carbon\Carbon::parse($appt->scheduled_at)->format('d')); ?></div>
                                 <div class="m"><?php echo e(\Carbon\Carbon::parse($appt->scheduled_at)->format('M')); ?></div>
@@ -142,7 +136,7 @@
                                     <div class="ms-2">
                                         <div class="dash-row-title" style="font-size:.85rem;">
                                             <?php echo e($appt->user->first_name); ?> <?php echo e($appt->user->last_name); ?></div>
-                                        <div class="dash-row-sub text-muted" style="font-size:.75rem;">
+                                        <div class="dash-row-sub text-custom-muted" style="font-size:.75rem;">
                                             <?php echo e($appt->property->title); ?> ·
                                             <?php echo e(\Carbon\Carbon::parse($appt->scheduled_at)->format('g:i A')); ?></div>
                                     </div>

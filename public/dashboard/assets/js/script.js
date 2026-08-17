@@ -120,21 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ==========================================
-    // 5. THEME TOGGLE
-    // ==========================================
-    const themeBtn = document.getElementById('themeToggle');
-    const root = document.documentElement;
-
-    if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-            const isLight = root.getAttribute('data-theme') === 'light';
-            root.setAttribute('data-theme', isLight ? 'dark' : 'light');
-            themeBtn.innerHTML = isLight ? '<i class="bi bi-moon-stars-fill"></i>' : '<i class="bi bi-sun-fill"></i>';
-        });
-    }
-
-    // ==========================================
-    // 6. DASHBOARD GENERAL TABS (APPOINTMENTS / STATS)
+    // 5. DASHBOARD APPOINTMENT TABS
     // ==========================================
     const dashTabs = document.querySelectorAll('.dash-tab');
     if (dashTabs.length > 0) {

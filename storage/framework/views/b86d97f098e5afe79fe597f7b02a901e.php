@@ -20,21 +20,21 @@
         <div class="col-lg-2 col-md-3 col-6">
           <h6 class="footer-heading">Quick Links</h6>
           <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="property.html">Properties</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact-us.html">Contact</a></li>
-            <li><a href="#">Blog</a></li>
+            <li><a href="<?php echo e(route('page.index')); ?>">Home</a></li>
+            <li><a href="<?php echo e(route('property.index')); ?>">Properties</a></li>
+            <li><a href="<?php echo e(route('page.about')); ?>">About Us</a></li>
+            <li><a href="<?php echo e(route('page.contact')); ?>">Contact</a></li>
+            
           </ul>
         </div>
         <div class="col-lg-2 col-md-3 col-6">
           <h6 class="footer-heading">Property Types</h6>
           <ul class="footer-links">
-            <li><a href="property.html">Apartments</a></li>
-            <li><a href="property.html">Villas</a></li>
-            <li><a href="property.html">Townhouses</a></li>
-            <li><a href="property.html">Penthouses</a></li>
-            <li><a href="property.html">Office Spaces</a></li>
+          <li><a href="<?php echo e(route('property.search', ['type' => 'apartment'])); ?>">Apartments</a></li>
+<li><a href="<?php echo e(route('property.search', ['type' => 'villa'])); ?>">Villas</a></li>
+<li><a href="<?php echo e(route('property.search', ['type' => 'townhouse'])); ?>">Townhouses</a></li>
+<li><a href="<?php echo e(route('property.search', ['type' => 'penthouse'])); ?>">Penthouses</a></li>
+<li><a href="<?php echo e(route('property.search', ['type' => 'office'])); ?>">Office Spaces</a></li>
           </ul>
         </div>
         <div class="col-lg-4 col-md-6">
@@ -71,7 +71,8 @@
 
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="<?php echo e(asset('asset/js/script.js')); ?>"></script>
-</body>
+    <script src="<?php echo e(asset('asset/js/script.js')); ?>"></script> 
+    <script src="<?php echo e(asset('dashboard/assets/js/script.js')); ?>"></script> 
+  </body>
 
 </html><?php /**PATH C:\Users\amana\Desktop\dream-home-real-estate_2\estate\resources\views/frontend/layout/footer.blade.php ENDPATH**/ ?>
