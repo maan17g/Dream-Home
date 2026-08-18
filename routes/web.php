@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboards\agentController;
 use App\Http\Controllers\Dashboards\userController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\ContactInquiryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::get('/about', [PageController::class, 'about'])->name('page.about');
 Route::get('/contact', [PageController::class, 'contact'])->name('page.contact');
+Route::get('/contact-us', [ContactInquiryController::class, 'create'])->name('contact.create');
+Route::post('/contact-us', [ContactInquiryController::class, 'store'])->name('contact.store');
 
 // Blog Pages
 Route::controller(blog::class)->group(function () {
@@ -156,6 +159,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/blogcms', 'blogcms')->name('admin.blogcms');
             Route::get('/property', 'property')->name('admin.property');
         });
+        Route::get('/admin/inquiries', [ContactInquiryController::class, 'index'])->name('admin.inquiries.index');
        Route::get('/appointments',[AppointmentController::class,'getAppointment'])->name('admin.appointment');
         // Admin Property Moderation
         Route::patch('/properties/{id}/status', [PropertyController::class, 'updateStatus'])->name('admin.properties.updateStatus');

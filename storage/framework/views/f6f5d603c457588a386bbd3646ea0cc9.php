@@ -80,6 +80,12 @@
                         <i class="bi bi-layout-text-window-reverse"></i><span>Appointments</span>
                     </a>
                 </li>
+                <li>
+                    <a href="<?php echo e(route('admin.inquiries.index')); ?>"
+                        class="dash-nav-link <?php echo e(request()->routeIs('admin.inquiries.index*') ? 'active' : ''); ?>">
+                        <i class="bi bi-layout-text-window-reverse"></i><span>Inquiries</span>
+                    </a>
+                </li>
                 
             </ul>
 

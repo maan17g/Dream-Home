@@ -137,10 +137,8 @@ class RegisterController extends Controller
         if ($user->avatar && Storage::disk('public')->exists($user->avatar) && $user->avatar!='avatars/default.png') {
             Storage::disk('public')->delete($user->avatar);
         }
-        
         $extension = $request->file('profile_picture')->getClientOriginalExtension();
         $fileName  = 'user_' . $user->id . '_' . time() . '.' . $extension;
-
         $path = $request->file('profile_picture')->storeAs('avatars', $fileName, 'public');
         $user->avatar = $path;
     }

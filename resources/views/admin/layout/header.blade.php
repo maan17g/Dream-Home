@@ -80,6 +80,12 @@
                         <i class="bi bi-layout-text-window-reverse"></i><span>Appointments</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.inquiries.index') }}"
+                        class="dash-nav-link {{ request()->routeIs('admin.inquiries.index*') ? 'active' : '' }}">
+                        <i class="bi bi-layout-text-window-reverse"></i><span>Inquiries</span>
+                    </a>
+                </li>
                 {{-- <li>
                     <a href="{{ route('admin.blogcms') }}" class="dash-nav-link {{ request()->routeIs('admin.blogcms*') ? 'active' : '' }}">
           <i class="bi bi-file-earmark-post-fill"></i><span>Blog</span>

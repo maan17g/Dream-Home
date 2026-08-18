@@ -423,64 +423,71 @@
             </div>
         </div>
     </section>
-  <section class="team-section">
-    <div class="container">
-        <div class="text-start mb-5">
-            <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">Meet Our Agents</h6>
-            <h2 class="display-6 fw-bold">Experienced. Trusted. Dedicated.</h2>
-        </div>
-        <div class="row g-4">
-            @forelse($agents as $agent)
-                <div class="col-lg-3 col-md-6">
-                    <div class="team-card">
-                        <div class="team-img-wrapper">
-                            <img src="{{ $agent->user->avatar ? asset('storage/' . $agent->user->avatar) : asset('avatars/default.png') }}"
-                                 alt="{{ $agent->user->first_name }} {{ $agent->user->last_name }}">
-                            
-                            <div class="team-overlay">
-                                <div class="team-social d-flex gap-2">
-                                    @if($agent->linkedin)
-                                        <a href="{{ $agent->linkedin }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
-                                    @endif
-                                    @if($agent->twitter)
-                                        <a href="{{ $agent->twitter }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
-                                    @endif
-                                    @if($agent->facebook)
-                                        <a href="{{ $agent->facebook }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                                    @endif
-                                    @if($agent->instagram)
-                                        <a href="{{ $agent->instagram }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                                    @endif
-                                    @if($agent->user->email)
-                                        <a href="mailto:{{ $agent->user->email }}"><i class="bi bi-envelope-fill"></i></a>
-                                    @endif
+    <section class="team-section">
+        <div class="container">
+            <div class="text-start mb-5">
+                <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">Meet Our Agents</h6>
+                <h2 class="display-6 fw-bold">Experienced. Trusted. Dedicated.</h2>
+            </div>
+            <div class="row g-4">
+                @forelse($agents as $agent)
+                    <div class="col-lg-3 col-md-6">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <img src="{{ $agent->user->avatar ? asset('storage/' . $agent->user->avatar) : asset('avatars/default.png') }}"
+                                    alt="{{ $agent->user->first_name }} {{ $agent->user->last_name }}">
+
+                                <div class="team-overlay">
+                                    <div class="team-social d-flex gap-2">
+                                        @if ($agent->linkedin)
+                                            <a href="{{ $agent->linkedin }}" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                                        @endif
+                                        @if ($agent->twitter)
+                                            <a href="{{ $agent->twitter }}" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                                        @endif
+                                        @if ($agent->facebook)
+                                            <a href="{{ $agent->facebook }}" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                                        @endif
+                                        @if ($agent->instagram)
+                                            <a href="{{ $agent->instagram }}" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                                        @endif
+                                        @if ($agent->user->email)
+                                            <a href="mailto:{{ $agent->user->email }}"><i
+                                                    class="bi bi-envelope-fill"></i></a>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="team-body">
-                            <div class="team-name">{{ $agent->user->first_name }} {{ $agent->user->last_name }}</div>
-                            <div class="team-role text-capitalize">{{ str_replace('_', ' ', $agent->agent_type) }}</div>
-                            <div class="team-stat">
-                                <i class="bi bi-award-fill"></i> 
-                                {{ $agent->years_experience }} Years Experience
-                                @if($agent->rating > 0)
-                                    &nbsp;•&nbsp; {{ number_format($agent->rating, 1) }} ★
-                                @endif
+                            <div class="team-body">
+                                <div class="team-name">{{ $agent->user->first_name }} {{ $agent->user->last_name }}
+                                </div>
+                                <div class="team-role text-capitalize">{{ str_replace('_', ' ', $agent->agent_type) }}
+                                </div>
+                                <div class="team-stat">
+                                    <i class="bi bi-award-fill"></i>
+                                    {{ $agent->years_experience }} Years Experience
+                                    @if ($agent->rating > 0)
+                                        &nbsp;•&nbsp; {{ number_format($agent->rating, 1) }} ★
+                                    @endif
+                                </div>
+                                <p class="team-bio">
+                                    {{ $agent->bio ?? 'Dedicated agent committed to helping you find your perfect property.' }}
+                                </p>
                             </div>
-                            <p class="team-bio">
-                                {{ $agent->bio ?? 'Dedicated agent committed to helping you find your perfect property.' }}
-                            </p>
                         </div>
                     </div>
-                </div>
-            @empty
-                <div class="col-12 text-center py-4">
-                    <p class="text-muted">No agents available at the moment.</p>
-                </div>
-            @endforelse
+                @empty
+                    <div class="col-12 text-center py-4">
+                        <p class="text-muted">No agents available at the moment.</p>
+                    </div>
+                @endforelse
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Blog Section -->
     {{-- <section class="blog-section">
@@ -633,24 +640,50 @@
                 <div class="col-lg-7 align-self-center">
                     <div class="contact-form-wrapper p-4 p-md-5">
                         <h2 class="display-6 fw-bold mb-4">Send Us a Message</h2>
-                        <form>
+                    
+
+                        <form action="{{ route('contact.store') }}" method="POST">
+                            @csrf
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label small">Full Name *</label>
-                                    <input type="text" class="form-control" placeholder="John Smith">
+                                    <input type="text" name="full_name"
+                                        class="form-control @error('full_name') is-invalid @enderror"
+                                        value="{{ old('full_name') }}" placeholder="John Smith">
+                                    @error('full_name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                                 <div class="col-md-6">
                                     <label class="form-label small">Email Address *</label>
-                                    <input type="email" class="form-control" placeholder="john@example.com">
+                                    <input type="email" name="email"
+                                        class="form-control @error('email') is-invalid @enderror"
+                                        value="{{ old('email') }}" placeholder="john@example.com">
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                                 <div class="col-12">
                                     <label class="form-label small">Phone Number</label>
-                                    <input type="tel" class="form-control" placeholder="(555) 555-5555">
+                                    <input type="tel" name="phone"
+                                        class="form-control @error('phone') is-invalid @enderror"
+                                        value="{{ old('phone') }}" placeholder="(555) 555-5555">
+                                    @error('phone')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                                 <div class="col-12">
                                     <label class="form-label small">Message *</label>
-                                    <textarea class="form-control" rows="5" placeholder="Tell us about your real estate needs..."></textarea>
+                                    <textarea name="message" class="form-control @error('message') is-invalid @enderror" rows="5"
+                                        placeholder="Tell us about your real estate needs...">{{ old('message') }}</textarea>
+                                    @error('message')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                                 <div class="col-12 mt-4">
                                     <button type="submit" class="btn btn-search w-100 py-3">
                                         <i class="bi bi-send me-2"></i> Send Message

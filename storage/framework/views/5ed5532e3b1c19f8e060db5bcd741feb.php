@@ -412,65 +412,74 @@ unset($__errorArgs, $__bag); ?>
             </div>
         </div>
     </section>
-  <section class="team-section">
-    <div class="container">
-        <div class="text-start mb-5">
-            <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">Meet Our Agents</h6>
-            <h2 class="display-6 fw-bold">Experienced. Trusted. Dedicated.</h2>
-        </div>
-        <div class="row g-4">
-            <?php $__empty_2 = true; $__currentLoopData = $agents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $agent): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_2 = false; ?>
-                <div class="col-lg-3 col-md-6">
-                    <div class="team-card">
-                        <div class="team-img-wrapper">
-                            <img src="<?php echo e($agent->user->avatar ? asset('storage/' . $agent->user->avatar) : asset('avatars/default.png')); ?>"
-                                 alt="<?php echo e($agent->user->first_name); ?> <?php echo e($agent->user->last_name); ?>">
-                            
-                            <div class="team-overlay">
-                                <div class="team-social d-flex gap-2">
-                                    <?php if($agent->linkedin): ?>
-                                        <a href="<?php echo e($agent->linkedin); ?>" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
-                                    <?php endif; ?>
-                                    <?php if($agent->twitter): ?>
-                                        <a href="<?php echo e($agent->twitter); ?>" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
-                                    <?php endif; ?>
-                                    <?php if($agent->facebook): ?>
-                                        <a href="<?php echo e($agent->facebook); ?>" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                                    <?php endif; ?>
-                                    <?php if($agent->instagram): ?>
-                                        <a href="<?php echo e($agent->instagram); ?>" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                                    <?php endif; ?>
-                                    <?php if($agent->user->email): ?>
-                                        <a href="mailto:<?php echo e($agent->user->email); ?>"><i class="bi bi-envelope-fill"></i></a>
-                                    <?php endif; ?>
+    <section class="team-section">
+        <div class="container">
+            <div class="text-start mb-5">
+                <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">Meet Our Agents</h6>
+                <h2 class="display-6 fw-bold">Experienced. Trusted. Dedicated.</h2>
+            </div>
+            <div class="row g-4">
+                <?php $__empty_2 = true; $__currentLoopData = $agents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $agent): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_2 = false; ?>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <img src="<?php echo e($agent->user->avatar ? asset('storage/' . $agent->user->avatar) : asset('avatars/default.png')); ?>"
+                                    alt="<?php echo e($agent->user->first_name); ?> <?php echo e($agent->user->last_name); ?>">
+
+                                <div class="team-overlay">
+                                    <div class="team-social d-flex gap-2">
+                                        <?php if($agent->linkedin): ?>
+                                            <a href="<?php echo e($agent->linkedin); ?>" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                                        <?php endif; ?>
+                                        <?php if($agent->twitter): ?>
+                                            <a href="<?php echo e($agent->twitter); ?>" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                                        <?php endif; ?>
+                                        <?php if($agent->facebook): ?>
+                                            <a href="<?php echo e($agent->facebook); ?>" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                                        <?php endif; ?>
+                                        <?php if($agent->instagram): ?>
+                                            <a href="<?php echo e($agent->instagram); ?>" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                                        <?php endif; ?>
+                                        <?php if($agent->user->email): ?>
+                                            <a href="mailto:<?php echo e($agent->user->email); ?>"><i
+                                                    class="bi bi-envelope-fill"></i></a>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="team-body">
-                            <div class="team-name"><?php echo e($agent->user->first_name); ?> <?php echo e($agent->user->last_name); ?></div>
-                            <div class="team-role text-capitalize"><?php echo e(str_replace('_', ' ', $agent->agent_type)); ?></div>
-                            <div class="team-stat">
-                                <i class="bi bi-award-fill"></i> 
-                                <?php echo e($agent->years_experience); ?> Years Experience
-                                <?php if($agent->rating > 0): ?>
-                                    &nbsp;•&nbsp; <?php echo e(number_format($agent->rating, 1)); ?> ★
-                                <?php endif; ?>
-                            </div>
-                            <p class="team-bio">
-                                <?php echo e($agent->bio ?? 'Dedicated agent committed to helping you find your perfect property.'); ?>
+                            <div class="team-body">
+                                <div class="team-name"><?php echo e($agent->user->first_name); ?> <?php echo e($agent->user->last_name); ?>
 
-                            </p>
+                                </div>
+                                <div class="team-role text-capitalize"><?php echo e(str_replace('_', ' ', $agent->agent_type)); ?>
+
+                                </div>
+                                <div class="team-stat">
+                                    <i class="bi bi-award-fill"></i>
+                                    <?php echo e($agent->years_experience); ?> Years Experience
+                                    <?php if($agent->rating > 0): ?>
+                                        &nbsp;•&nbsp; <?php echo e(number_format($agent->rating, 1)); ?> ★
+                                    <?php endif; ?>
+                                </div>
+                                <p class="team-bio">
+                                    <?php echo e($agent->bio ?? 'Dedicated agent committed to helping you find your perfect property.'); ?>
+
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_2): ?>
-                <div class="col-12 text-center py-4">
-                    <p class="text-muted">No agents available at the moment.</p>
-                </div>
-            <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_2): ?>
+                    <div class="col-12 text-center py-4">
+                        <p class="text-muted">No agents available at the moment.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Blog Section -->
     
@@ -572,24 +581,111 @@ unset($__errorArgs, $__bag); ?>
                 <div class="col-lg-7 align-self-center">
                     <div class="contact-form-wrapper p-4 p-md-5">
                         <h2 class="display-6 fw-bold mb-4">Send Us a Message</h2>
-                        <form>
+                        <?php if(session('success')): ?>
+                            <div class="alert alert-success mb-4">
+                                <?php echo e(session('success')); ?>
+
+                            </div>
+                        <?php endif; ?>
+
+                        <form action="<?php echo e(route('contact.store')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label small">Full Name *</label>
-                                    <input type="text" class="form-control" placeholder="John Smith">
+                                    <input type="text" name="full_name"
+                                        class="form-control <?php $__errorArgs = ['full_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                        value="<?php echo e(old('full_name')); ?>" placeholder="John Smith">
+                                    <?php $__errorArgs = ['full_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
+
                                 <div class="col-md-6">
                                     <label class="form-label small">Email Address *</label>
-                                    <input type="email" class="form-control" placeholder="john@example.com">
+                                    <input type="email" name="email"
+                                        class="form-control <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                        value="<?php echo e(old('email')); ?>" placeholder="john@example.com">
+                                    <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
+
                                 <div class="col-12">
                                     <label class="form-label small">Phone Number</label>
-                                    <input type="tel" class="form-control" placeholder="(555) 555-5555">
+                                    <input type="tel" name="phone"
+                                        class="form-control <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                        value="<?php echo e(old('phone')); ?>" placeholder="(555) 555-5555">
+                                    <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
+
                                 <div class="col-12">
                                     <label class="form-label small">Message *</label>
-                                    <textarea class="form-control" rows="5" placeholder="Tell us about your real estate needs..."></textarea>
+                                    <textarea name="message" class="form-control <?php $__errorArgs = ['message'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" rows="5"
+                                        placeholder="Tell us about your real estate needs..."><?php echo e(old('message')); ?></textarea>
+                                    <?php $__errorArgs = ['message'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
+
                                 <div class="col-12 mt-4">
                                     <button type="submit" class="btn btn-search w-100 py-3">
                                         <i class="bi bi-send me-2"></i> Send Message
