@@ -29,6 +29,7 @@ class ContactInquiryController extends Controller
     public function index()
     {
         $inquiries = ContactInquiry::latest()->paginate(15);
+       
         return view('admin.contacts', compact('inquiries'));
     }
 }

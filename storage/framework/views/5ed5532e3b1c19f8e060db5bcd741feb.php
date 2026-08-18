@@ -581,12 +581,7 @@ unset($__errorArgs, $__bag); ?>
                 <div class="col-lg-7 align-self-center">
                     <div class="contact-form-wrapper p-4 p-md-5">
                         <h2 class="display-6 fw-bold mb-4">Send Us a Message</h2>
-                        <?php if(session('success')): ?>
-                            <div class="alert alert-success mb-4">
-                                <?php echo e(session('success')); ?>
-
-                            </div>
-                        <?php endif; ?>
+                    
 
                         <form action="<?php echo e(route('contact.store')); ?>" method="POST">
                             <?php echo csrf_field(); ?>
