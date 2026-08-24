@@ -70,17 +70,24 @@
               <form action="<?php echo e(route('users.updateRoles', $user->id)); ?>" method="POST" class="d-inline">
     <?php echo csrf_field(); ?>
     <?php echo method_field('PATCH'); ?>
-    
+   <?php if($user->role==='agent'): ?>
+    <div name="role" 
+            class="badge border-0 <?php echo e($user->role === 'admin' ? 'bg-danger' : ($user->role === 'agent' ? 'bg-info' : 'bg-secondary')); ?>" 
+            onchange="this.form.submit()" 
+            style="cursor: pointer; outline: none;">
+            <option value="agent" <?php echo e($user->role === 'agent' ? 'selected' : ''); ?>>Agent</option>
+              </div >
+    <?php else: ?>
     <select name="role" 
             class="badge border-0 <?php echo e($user->role === 'admin' ? 'bg-danger' : ($user->role === 'agent' ? 'bg-info' : 'bg-secondary')); ?>" 
             onchange="this.form.submit()" 
             style="cursor: pointer; outline: none;">
         
         <option value="buyer" <?php echo e($user->role === 'buyer' ? 'selected' : ''); ?>>Buyer</option>
-        <option value="agent" <?php echo e($user->role === 'agent' ? 'selected' : ''); ?>>Agent</option>
         <option value="admin" <?php echo e($user->role === 'admin' ? 'selected' : ''); ?>>Admin</option>
 
     </select>
+    <?php endif; ?>
 </form>
               </td>
               <td><?php echo e($user['phone'] ?? 'N/A'); ?></td>

@@ -14,8 +14,8 @@ class ContactInquiryController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'full_name' => 'required|string|max:255',
+        $validated = $request->validate([            
+           'full_name' => 'required|string|regex:/^\D/|max:255',
             'email'     => 'required|email|max:255',
             'phone'     => 'nullable|string|max:20',
             'message'   => 'required|string',

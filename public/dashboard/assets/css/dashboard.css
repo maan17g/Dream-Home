@@ -845,8 +845,10 @@ textarea.dash-input { height: auto; padding: 10px 12px; resize: vertical; }
   border: 1px solid var(--border-color);
   border-radius: 18px;
   padding: 1.5rem;
+ padding-top: 1rem;
   text-align: center;
   transition: all 0.25s ease;
+  
 }
 .agent-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 15px 35px var(--shadow); }
 .agent-card img { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; margin-bottom: 0.85rem; border: 2px solid var(--primary); }
@@ -857,12 +859,22 @@ textarea.dash-input { height: auto; padding: 10px 12px; resize: vertical; }
 .agent-stats-row strong { display: block; font-size: 0.95rem; }
 .agent-stats-row span { font-size: 0.7rem; color: var(--text-muted); }
 .rating-stars { color: #f5a623; font-size: 0.78rem; }
-.verified-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: rgba(60,181,124,.14); color: var(--primary);
-  font-size: 0.68rem; font-weight: 700; padding: 3px 9px; border-radius: 20px;
-  position: absolute; top: 14px; right: 14px;
+.badge-tag {
+    display: inline-flex; 
+    align-items: center; 
+    gap: 4px;
+    font-size: 0.68rem; 
+    font-weight: 700; 
+    padding: 3px 9px; 
+    border-radius: 20px;
 }
+
+/* Distinct styling for each status */
+.featured-badge,.verified-badge {
+    background: rgba(60, 181, 124, 0.14); 
+    color: var(--primary);
+}
+
 
 /* ---------------- INQUIRY / CONVERSATION LAYOUT ---------------- */
 .inquiry-list { display: flex; flex-direction: column; gap: 0.6rem; }

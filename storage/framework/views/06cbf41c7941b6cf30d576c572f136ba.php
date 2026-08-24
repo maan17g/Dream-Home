@@ -171,23 +171,23 @@
                         <div class="price-main">$<?php echo e(number_format($property->price, 2)); ?></div>
                         <div class="price-label">For <?php echo e(ucfirst($property->purpose)); ?> &nbsp;·&nbsp; Created
                             <?php echo e($property->created_at->diffForHumans()); ?></div>
-                           
-                            <?php if( Auth::check()? Auth::user()->role=='buyer':!Auth::check()): ?>
-                        <a class="btn-book-viewing text-decoration-none"
-                            href=<?php echo e(route('user.addAppointment', $property->id)); ?>><i
-                                class="bi bi-calendar-check"></i>
-                            Book a Viewing </a>
-                       <!-- Action 1: Save Listing -->
-<button type="button" 
-        class="btn-save-prop js-fav-btn" 
-        data-id="<?php echo e($property->id); ?>"
-        data-url="<?php echo e(route('properties.save', $property->id)); ?>">
-    <i class="bi <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill' : 'bi-heart'); ?>"></i>
-    <span>
-        <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property'); ?>
 
-    </span>
-</button><?php endif; ?>
+                        <?php if(Auth::check() ? Auth::user()->role == 'buyer' : !Auth::check()): ?>
+                            <a class="btn-book-viewing text-decoration-none"
+                                href=<?php echo e(route('user.addAppointment', $property->id)); ?>><i
+                                    class="bi bi-calendar-check"></i>
+                                Book a Viewing </a>
+                            <!-- Action 1: Save Listing -->
+                            <button type="button" class="btn-save-prop js-fav-btn" data-id="<?php echo e($property->id); ?>"
+                                data-url="<?php echo e(route('properties.save', $property->id)); ?>">
+                                <i
+                                    class="bi <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill' : 'bi-heart'); ?>"></i>
+                                <span>
+                                    <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property'); ?>
+
+                                </span>
+                            </button>
+                        <?php endif; ?>
                         <?php if($property->agent?->user): ?>
                             <a href="<?php echo e(route('agent.show', $property->agent->id)); ?>"
                                 class="d-flex align-items-center gap-3 mt-3 p-3 rounded-3 text-decoration-none border">

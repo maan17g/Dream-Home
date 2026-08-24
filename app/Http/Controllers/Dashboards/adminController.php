@@ -52,25 +52,14 @@ class adminController extends Controller
         // Map array values across 12 months (default to 0 if no records exist)
         $chartDataCurrentYear = array_map(fn($m) => $currentYearBookings[$m] ?? 0, range(1, 12));
         $chartDataLastYear    = array_map(fn($m) => $lastYearBookings[$m] ?? 0, range(1, 12));
-//    return  compact(
-//             'totalUsers',
-//             'totalAgents',
-//             'totalProperties',
-//             'totalBookings',
-//             'forSaleCount',
-//             'forRentCount',
-           
-//             'recentBookings',
-//             'chartDataCurrentYear',
-//             'chartDataLastYear'
-//         );
+//  
         return view('admin.admin-dashboard', compact(
             'totalUsers',
             'totalAgents',
             'totalProperties',
             'totalBookings',
             'forSaleCount',
-            'forRentCount',            
+            'forRentCount',        
             'recentBookings',
             'chartDataCurrentYear',
             'chartDataLastYear'
@@ -102,7 +91,9 @@ class adminController extends Controller
 
         return view('admin.customers', compact('users'));
     }
-
+    public function profile(){
+        return view('admin.admin');
+    }
     public function toggleStatus($id)
     {
 
@@ -116,7 +107,7 @@ class adminController extends Controller
     public function updateRole(Request $request, $id)
     {
         $request->validate([
-            'role' => 'required|in:buyer,agent,admin',
+            'role' => 'required|in:buyer,admin',
         ]);
 
         // Update user role
@@ -129,10 +120,10 @@ class adminController extends Controller
 
     public function agents()
     {
-        $agents = Agent::with('user', 'review')->paginate(6);
+        $agents = Agent::with('user', 'review')->orderBy('is_featured','desc')->paginate(6);
         $totalRatingSum = Review::sum('rating');
         $totalReviewsCount = Review::count();  // Prevent division by zero if there are no reviews yet
-        $globalAvgRating = $totalReviewsCount > 0 ? ($totalRatingSum / $totalReviewsCount) : 0;
+        $globalAvgRating = $totalReviewsCount > 0 ? number_format(($totalRatingSum / $totalReviewsCount),2) : 0;
 
         return view('admin.agents', compact('agents', 'globalAvgRating'));
     }
@@ -171,7 +162,6 @@ class adminController extends Controller
     public function cms()
     {
      $reviews = Review::with(['appointment','agent','property','appointment.user'])->get();
-   
         return view('admin.cms', compact('reviews'));
     }
 
@@ -225,13 +215,18 @@ class adminController extends Controller
     // Toggle Featured Status (Standard POST Request)
     public function toggleReview($id)
     {
+        if(Review::where('featured',1)->count()<3){
         $review = Review::findOrFail($id);
-
         // Toggle 1 to 0 OR 0 to 1
         $review->featured = $review->featured ? 0 : 1;
         $review->save();
-
+        
         return redirect()->back()->with('success', 'Review featured status updated successfully!');
+        }
+        else{
+            return redirect()->back()->with('error', 'Only 3 Reviews Can be featured at a time!');
+
+        }
     }
 
     // Delete Review
@@ -241,6 +236,12 @@ class adminController extends Controller
         $review->delete();
 
         return redirect()->back()->with('success', 'Review deleted successfully!');
+    }
+    public function  statusApprove($id){
+          Review::where('id',$id)->update([
+            'status'=>true,
+          ]);
+          return redirect()->back()->with('success','Review Status updated Succesfully');
     }
 
     /**

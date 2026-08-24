@@ -28,7 +28,7 @@ class PropertyController extends Controller
 
     public function index()
     {
-        $properties = Property::with(['images', 'amenities', 'city', 'agent.user'])->where('verified','approved')->get();
+        $properties = Property::with(['images', 'amenities', 'city', 'agent.user'])->where('verified','approved')->paginate(9);
         $cities = City::all()->unique('city')->pluck('city');
 
         return view('frontend.property', compact('properties', 'cities'));
@@ -487,11 +487,13 @@ class PropertyController extends Controller
 
     public function toggleFeature(Property $property)
     {
-        // Toggle featured status (1 -> 0, or 0 -> 1)
+        if(Property::where('featured',1)->count()<3){
         $property->update([
             'featured' => ! $property->featured,
         ]);
-
         return redirect()->back()->with('success', 'Property feature status updated successfully.');
+        }
+        else
+        return redirect()->back()->with('error', 'Only 3 Properties can be featured at a time.');
     }
 }

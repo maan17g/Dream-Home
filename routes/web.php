@@ -22,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'index'])->name('page.index');
 Route::get('/about', [PageController::class, 'about'])->name('page.about');
 Route::get('/contact', [PageController::class, 'contact'])->name('page.contact');
+Route::get('/testimonials',[PageController::class,'reviews'])->name('testimonials.index');
+Route::get('/privacyPolicy',[PageController::class,'privacyPolicy'])->name('page.privacyPolicy');
+Route::get('/termsandConditions',[PageController::class,'termsandconditions'])->name('page.termsandconditions');
+
 Route::get('/contact-us', [ContactInquiryController::class, 'create'])->name('contact.create');
 Route::post('/contact-us', [ContactInquiryController::class, 'store'])->name('contact.store');
 
@@ -83,8 +87,9 @@ Route::middleware('auth')->controller(otpVerificationController::class)->prefix(
 */
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    // Shared Profile Update Route
+    // Shared Profile Update Routes
     Route::put('user/dashboard/profile', [RegisterController::class, 'update'])->name('register.update');
+    Route::put('/updatePassword', [RegisterController::class, 'updatePassword'])->name('register.update.password');
 
     /*
     |--------------------------------------------------------------------------
@@ -124,23 +129,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/property/{id}', 'show')->name('agent.show');
             Route::get('/profile', 'profile')->name('agent.profile');
             Route::get('/logout', 'destroy')->name('agent.destroy');
-            });
-            
-            // Agent Property Management
-            Route::controller(PropertyController::class)->group(function () {
-                Route::get('/dashboard/add', 'create')->name('property.create');
+        });
+
+        // Agent Property Management
+        Route::controller(PropertyController::class)->group(function () {
+            Route::get('/dashboard/add', 'create')->name('property.create');
             Route::post('/dashboard/add', 'store')->name('properties.store');
             Route::get('/properties/{id}/edit', 'edit')->name('property.edit');
             Route::put('/properties/{id}/update', 'update')->name('property.update');
             Route::get('/properties/{id}/delete', 'destroy')->name('properties.destroy');
             Route::get('/properties/search', 'propsearch')->name('agent.propsearch');
         });
-        
+
         // Agent Appointments
         Route::get('dashboard/appointments', [AppointmentController::class, 'agentAppointments'])->name('agent.appointments');
-        });
-        
-        Route::patch('/agents/{agent}/toggle-feature', [AgentController::class, 'toggleFeature'])->name('admin.agents.toggle-feature');
+    });
+
+    Route::patch('/agents/{agent}/toggle-feature', [AgentController::class, 'toggleFeature'])->name('admin.agents.toggle-feature');
+
     /*
     |--------------------------------------------------------------------------
     | Admin Routes
@@ -150,17 +156,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::controller(adminController::class)->prefix('dashboard')->group(function () {
             Route::get('/', 'index')->name('admin.index');
             Route::get('/users', 'users')->name('admin.users');
+            Route::get('/profile','profile')->name('admin.profile');
             Route::patch('/users/suspend/{id}', 'toggleStatus')->name('users.suspend');
             Route::patch('/users/update/{id}', 'updateRole')->name('users.updateRoles');
             Route::get('/agents', 'agents')->name('admin.agents');
             Route::get('/reviews', 'cms')->name('admin.cms');
             Route::patch('/review/{id}/toggle', 'toggleReview')->name('admin.review.toggle');
+            Route::put('/review/{id}/approve', 'statusApprove')->name('admin.review.status');
             Route::delete('/review/{id}', 'destroyReview')->name('admin.review.delete');
             Route::get('/blogcms', 'blogcms')->name('admin.blogcms');
             Route::get('/property', 'property')->name('admin.property');
+            Route::get('/logout', [UserController::class,'destroy'])->name('admin.destroy');
+
         });
+
         Route::get('/admin/inquiries', [ContactInquiryController::class, 'index'])->name('admin.inquiries.index');
-       Route::get('/appointments',[AppointmentController::class,'getAppointment'])->name('admin.appointment');
+        Route::get('/appointments',[AppointmentController::class,'getAppointment'])->name('admin.appointment');
+
         // Admin Property Moderation
         Route::patch('/properties/{id}/status', [PropertyController::class, 'updateStatus'])->name('admin.properties.updateStatus');
         Route::patch('/properties/{property}/feature', [PropertyController::class, 'toggleFeature'])->name('properties.feature');
@@ -175,7 +187,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/cities/{city}', 'destroyCity')->name('cities.destroy');
         });
     });
-
+ 
     /*
     |--------------------------------------------------------------------------
     | Shared Protected Actions (Agents & Buyers / Multi-Role)

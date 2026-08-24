@@ -70,17 +70,24 @@
               <form action="{{ route('users.updateRoles', $user->id) }}" method="POST" class="d-inline">
     @csrf
     @method('PATCH')
-    
+   @if($user->role==='agent')
+    <div name="role" 
+            class="badge border-0 {{ $user->role === 'admin' ? 'bg-danger' : ($user->role === 'agent' ? 'bg-info' : 'bg-secondary') }}" 
+            onchange="this.form.submit()" 
+            style="cursor: pointer; outline: none;">
+            <option value="agent" {{ $user->role === 'agent' ? 'selected' : '' }}>Agent</option>
+              </div >
+    @else
     <select name="role" 
             class="badge border-0 {{ $user->role === 'admin' ? 'bg-danger' : ($user->role === 'agent' ? 'bg-info' : 'bg-secondary') }}" 
             onchange="this.form.submit()" 
             style="cursor: pointer; outline: none;">
         
         <option value="buyer" {{ $user->role === 'buyer' ? 'selected' : '' }}>Buyer</option>
-        <option value="agent" {{ $user->role === 'agent' ? 'selected' : '' }}>Agent</option>
         <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
 
     </select>
+    @endif
 </form>
               </td>
               <td>{{ $user['phone'] ?? 'N/A' }}</td>

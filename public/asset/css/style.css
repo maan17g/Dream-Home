@@ -223,6 +223,7 @@ nav .active {
     flex-direction: column;
     justify-content: center;
     padding-top: 80px;
+      margin-bottom: 1rem;
 }
 
 .trust-badge {
@@ -331,7 +332,7 @@ nav .active {
 
 /* ---- ABOUT / FEATURES SECTION ---- */
 .about-section {
-    padding: 2rem 0 0 0;
+  
     background-color: var(--bg-body);
 }
 
@@ -558,6 +559,7 @@ nav .active {
 
 .testimonial-section,
 .feature-property,
+.contact-section,
 .about-section {
     background-color: var(--form-bg);
 }
@@ -688,15 +690,15 @@ nav .active {
 }
 
 .pagination {
-    margin-top: 3rem;
+  
 }
 
 .page-link {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     color: var(--text-main);
-    padding: 10px 18px;
-    margin: 0 5px;
+  
+  
     border-radius: 8px;
 }
 
@@ -718,9 +720,6 @@ nav .active {
 }
 
 /* ---- TESTIMONIALS ---- */
-.testimonial-section {
-    padding: 100px 0;
-}
 
 .editorial-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
@@ -914,7 +913,7 @@ nav .active {
 }
 
 .team-section {
-    padding: 80px 0;
+    
     background-color: var(--bg-body);
 }
 
@@ -1211,7 +1210,6 @@ nav .active {
 
 /* ---- CONTACT PAGE ---- */
 .contact-page-section {
-    padding: 80px 0;
     background-color: var(--bg-body);
 }
 
@@ -2007,8 +2005,9 @@ main {
     color: #fff;
 }
 .hero-proof-item strong {
-    font-size: 1rem;
+      font-size:large !important;
     font-weight: 700;
+  
 }
 .hero-proof-item span {
     font-size: 0.78rem;
@@ -3671,7 +3670,7 @@ main {
     }
     .prop-badge.sale { background: rgba(60,181,124,0.15); color: var(--primary); border: 1px solid var(--primary); }
     .prop-badge.featured { background: rgba(255,193,7,0.15); color: #ffc107; border: 1px solid #ffc107; }
-    .prop-badge.verified { background: rgba(13,202,240,0.12); color: #0dcaf0; border: 1px solid #0dcaf0; }
+    .prop-badge .verified { background: rgba(13,202,240,0.12); color: #0dcaf0; border: 1px solid #0dcaf0; }
 
     /* Quick Stats */
     .quick-stats {

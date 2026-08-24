@@ -24,24 +24,16 @@ class RegisterController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
             'role'       => 'required|string|in:agent,buyer', 
-            'first_name' => 'required|string|max:255',
-            'last_name'  => 'required|string|max:255',
+           'first_name' => 'required|string|regex:/^\D/|max:255',
+           'last_name' => 'required|string|regex:/^\D/|max:255',
             'email'      => 'required|string|email|max:255|unique:users,email',
-            'password'   => [
+           'password'   => [
                 'required',
                 'string',
                 'confirmed',
@@ -52,6 +44,9 @@ class RegisterController extends Controller
                     ->symbols(),      
             ], 
             'agree_terms' => 'required|accepted', 
+        ],[
+           'first_name'=>'The First Name starts with the letter',
+           'last_name'=>'The Last Name starts with the letter',
         ]);
 
         // 1. Create User
@@ -87,22 +82,32 @@ class RegisterController extends Controller
         return redirect()->route('otp.index')->with('success', 'OTP has been sent to your email'); 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+  public function updatePassword(Request $request){
+    $password=Auth::user()->password; 
+
+    if(Hash::check($request->current_password,$password)){
+        $request->validate([
+             'password'   => [
+                'required',
+                'string',
+                'confirmed',
+                Password::min(8)
+                    ->letters()      
+                    ->mixedCase()    
+                    ->numbers()      
+                    ->symbols(),      
+            ], 
+        ]);
+        Auth::user()->update(['password'=>Hash::make($request->password)],);
+        return redirect()->back()->with('success','Password Updated');
+        }
+
+        else{
+            
+            return redirect()->back()->with('error','Wrong Password');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
+  }
     /**
      * Update the specified resource in storage.
      */
@@ -113,8 +118,8 @@ class RegisterController extends Controller
     $user = Auth::user();
 
     $validatedData = $request->validate([
-        'first_name'      => 'required|string|max:255',
-        'last_name'       => 'nullable|string|max:255', // Made nullable if not sent in payload
+        'first_name' => 'required|string|regex:/^\D/|max:255',
+        'last_name' => 'nullable|required|string|regex:/^\D/|max:255',
         'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'bio'             => 'nullable|string',
         'phone'           => 'nullable|string|max:20', // Changed from numeric|digits:11 to allow flexible phone inputs
@@ -130,6 +135,9 @@ class RegisterController extends Controller
         'instagram'       => 'nullable|url',
         'linkedin'        => 'nullable|url',
         'twitter'         => 'nullable|url',
+    ],[
+        'first_name'=>'The First Name starts with the letter',
+        'last_name'=>'The Last Name starts with the letter',
     ]);
 
     // Profile Picture Upload

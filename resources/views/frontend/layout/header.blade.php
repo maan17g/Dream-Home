@@ -31,63 +31,60 @@
 
 <body data-theme="dark">
 
-    <!-- Header / Navbar -->
-    <header>
-        <nav class="navbar navbar-expand-lg fixed-top" id="navbar">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="{{ route('page.index') }}">
+  <header>
+    <nav class="navbar navbar-expand-lg fixed-top" id="navbar">
+        <div class="container">
+            <!-- Left Logo Container (Flex-1) -->
+            <div class="flex-lg-1">
+                <a class="navbar-brand d-flex align-items-center me-0" href="{{ route('page.index') }}">
                     <i class="bi bi-house-door-fill"></i> Real Estate
                 </a>
+            </div>
 
-                <!-- Mobile Toggle for Menu -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navContent">
-                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4">
-                        <li class="nav-item"><a class="nav-link  ? 'active' : '' }}"
-                                href="{{ route('page.index') }}">Home</a></li>
-                        <li class="nav-item"><a
-                                class="nav-link {{ request()->routeIs('property.index') ? 'active' : '' }}"
-                                href="{{ route('property.index') }}">Properties</a></li>
-                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('page.about') ? 'active' : '' }}"
-                                href="{{ route('page.about') }}">About Us</a></li>
-                        {{-- <li class="nav-item"><a class="nav-link {{ request()->routeIs('blog.index') ? 'active' : '' }}"
-                                href="{{ route('blog.index') }}">Blogs</a></li> --}}
-                        <li class="nav-item"><a
-                                class="nav-link {{ request()->routeIs('page.contact') ? 'active' : '' }}"
-                                href="{{ route('page.contact') }}">Contact</a></li>
-                    </ul>
+            <!-- Nav Content -->
+            <div class="collapse navbar-collapse" id="navContent">
+                <!-- Links Centered via mx-auto -->
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('page.index') ? 'active' : '' }}" href="{{ route('page.index') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('property.index') ? 'active' : '' }}" href="{{ route('property.index') }}">Properties</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('page.about') ? 'active' : '' }}" href="{{ route('page.about') }}">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('page.contact') ? 'active' : '' }}" href="{{ route('page.contact') }}">Contact</a>
+                    </li>
+                </ul>
 
-                    <div class="d-flex align-items-center gap-3 flex-column flex-lg-row mt-3 mt-lg-0">
-                        <!-- Theme Toggle Button -->
-                        {{-- <button class="theme-toggle-btn" id="themeToggle" title="Toggle Light/Dark Mode">
-                        </button> --}}
-                        @if (Auth::check())
-                            @if (Auth::user()->role == 'admin')
-                                <a href="{{ route('admin.index') }}" class="nav-link fw-bold"><i
-                                        class="bi bi-person-circle" style="font-size: 2rem;"></i>
-                                </a>
-                            @elseif (Auth::user()->role == 'agent')
-                                <a href="{{ route('agent.index') }}" class="nav-link fw-bold">
-                                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt=""
-                                        width="30" height="30" class="rounded-circle img"> <!-- <i
-                                        class="bi bi-person-circle" style="font-size: 2rem;"></i> -->
-                                </a>
-                            @else
-                                <a href="{{ route('user.index') }}" class="nav-link fw-bold">
-                                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt=""
-                                        width="30" height="30" class="rounded-circle img"> 
-                                    </a>
-@endif
-@else
-<a href="{{ route('login.index') }}" class="nav-link fw-bold">Login</a>
+                <!-- Right Action Container (Flex-1 & End-Aligned) -->
+                <div class="flex-lg-1 d-flex justify-content-lg-end align-items-center gap-3 flex-column flex-lg-row mt-3 mt-lg-0">
+                    @if (Auth::check())
+                        @if (Auth::user()->role == 'admin')
+                            <a href="{{ route('admin.index') }}" class="nav-link fw-bold">
+                                <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
+                            </a>
+                        @elseif (Auth::user()->role == 'agent')
+                            <a href="{{ route('agent.index') }}" class="nav-link fw-bold">
+                                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="" width="30" height="30" class="rounded-circle img">
+                            </a>
+                        @else
+                            <a href="{{ route('user.index') }}" class="nav-link fw-bold">
+                                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="" width="30" height="30" class="rounded-circle img">
+                            </a>
                         @endif
-
-
-                    </div>
+                    @else
+                        <a href="{{ route('login.index') }}" class="nav-link fw-bold">Login</a>
+                    @endif
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>

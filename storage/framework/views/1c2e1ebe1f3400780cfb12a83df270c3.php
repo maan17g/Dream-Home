@@ -58,47 +58,47 @@
         <?php endif; ?>
 
         <!-- SMART FILTERS FORM -->
-       <!-- SMART FILTERS FORM -->
-<section class="filter-top-wrap mb-4">
-    <form action="<?php echo e(route('property.search')); ?>" method="GET" id="filterForm">
- 
-        <div class="filter-top-head d-flex justify-content-between align-items-center">
-            <h5 class="mb-0"><i class="bi bi-sliders me-2"></i>Smart Filters</h5>
-            <button type="reset" class="btn-reset-all text-decoration-none" id="btnResetAll">
-                <i class="bi bi-arrow-clockwise me-1"></i> Reset All
-            </button>
-        </div>
+        <!-- SMART FILTERS FORM -->
+        <section class="filter-top-wrap mb-4">
+            <form action="<?php echo e(route('property.search')); ?>" method="GET" id="filterForm">
 
-        <div class="filter-top-grid">
-            
-            <!-- Search Input -->
-            <div class="filter-group">
-                <label for="searchInput">Search</label>
-                <input type="text" name="search" class="form-control <?php $__errorArgs = ['search'];
+                <div class="filter-top-head d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="bi bi-sliders me-2"></i>Smart Filters</h5>
+                    <button type="reset" class="btn-reset-all text-decoration-none" id="btnResetAll">
+                        <i class="bi bi-arrow-clockwise me-1"></i> Reset All
+                    </button>
+                </div>
+
+                <div class="filter-top-grid">
+
+                    <!-- Search Input -->
+                    <div class="filter-group">
+                        <label for="searchInput">Search</label>
+                        <input type="text" name="search" class="form-control <?php $__errorArgs = ['search'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" 
-                    placeholder="Search by title..." id="searchInput" value="<?php echo e(request('search')); ?>">
-                <?php $__errorArgs = ['search'];
+unset($__errorArgs, $__bag); ?>"
+                            placeholder="Search by title..." id="searchInput" value="<?php echo e(request('search')); ?>">
+                        <?php $__errorArgs = ['search'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback"><?php echo e($message); ?></div>
-                <?php unset($message);
+                            <div class="invalid-feedback"><?php echo e($message); ?></div>
+                        <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-            </div>
+                    </div>
 
-            <!-- NEW: Location (City) Dropdown -->
-            <div class="filter-group">
-                <label for="cityInput">Location</label>
-                <select name="city" class="form-select <?php $__errorArgs = ['city'];
+                    <!-- NEW: Location (City) Dropdown -->
+                    <div class="filter-group">
+                        <label for="cityInput">Location</label>
+                        <select name="city" class="form-select <?php $__errorArgs = ['city'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -106,212 +106,214 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" id="cityInput">
-                    <option value="">All Locations</option>
-                    <?php $__currentLoopData = $cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option value="<?php echo e($city); ?>" <?php echo e(request('city') == $city ? 'selected' : ''); ?>>
-                            <?php echo e($city); ?>
+                            <option value="">All Locations</option>
+                            <?php $__currentLoopData = $cities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $city): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($city); ?>" <?php echo e(request('city') == $city ? 'selected' : ''); ?>>
+                                    <?php echo e($city); ?>
 
-                        </option>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </select>
-                <?php $__errorArgs = ['city'];
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                        <?php $__errorArgs = ['city'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback"><?php echo e($message); ?></div>
-                <?php unset($message);
+                            <div class="invalid-feedback"><?php echo e($message); ?></div>
+                        <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-            </div>
-
-            <!-- Property Type -->
-            <div class="filter-group">
-                <label for="propertyType">Property Type</label>
-                <select name="type" class="form-select <?php $__errorArgs = ['type'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" id="propertyType">
-                    <option value="">All Types</option>
-                    <option value="apartment" <?php echo e(request('type') == 'apartment' ? 'selected' : ''); ?>>Apartment</option>
-                    <option value="villa" <?php echo e(request('type') == 'villa' ? 'selected' : ''); ?>>Villa</option>
-                    <option value="house" <?php echo e(request('type') == 'house' ? 'selected' : ''); ?>>House</option>
-                    <option value="land" <?php echo e(request('type') == 'land' ? 'selected' : ''); ?>>Land</option>
-                    <option value="office" <?php echo e(request('type') == 'office' ? 'selected' : ''); ?>>Office</option>
-                </select>
-                <?php $__errorArgs = ['type'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback"><?php echo e($message); ?></div>
-                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-            </div>
-
-            <!-- Bedrooms -->
-            <div class="filter-group">
-                <label for="bedrooms">Bedrooms</label>
-                <select name="bedrooms" class="form-select <?php $__errorArgs = ['bedrooms'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" id="bedrooms">
-                    <option value="">Any</option>
-                    <option value="1" <?php echo e(request('bedrooms') == '1' ? 'selected' : ''); ?>>1+</option>
-                    <option value="2" <?php echo e(request('bedrooms') == '2' ? 'selected' : ''); ?>>2+</option>
-                    <option value="3" <?php echo e(request('bedrooms') == '3' ? 'selected' : ''); ?>>3+</option>
-                    <option value="4" <?php echo e(request('bedrooms') == '4' ? 'selected' : ''); ?>>4+</option>
-                    <option value="5" <?php echo e(request('bedrooms') == '5' ? 'selected' : ''); ?>>5+</option>
-                </select>
-                <?php $__errorArgs = ['bedrooms'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback"><?php echo e($message); ?></div>
-                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-            </div>
-
-            <!-- Bathrooms -->
-            <div class="filter-group">
-                <label for="bathrooms">Bathrooms</label>
-                <select name="bathrooms" class="form-select <?php $__errorArgs = ['bathrooms'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" id="bathrooms">
-                    <option value="">Any</option>
-                    <option value="1" <?php echo e(request('bathrooms') == '1' ? 'selected' : ''); ?>>1+</option>
-                    <option value="2" <?php echo e(request('bathrooms') == '2' ? 'selected' : ''); ?>>2+</option>
-                    <option value="3" <?php echo e(request('bathrooms') == '3' ? 'selected' : ''); ?>>3+</option>
-                    <option value="4" <?php echo e(request('bathrooms') == '4' ? 'selected' : ''); ?>>4+</option>
-                </select>
-                <?php $__errorArgs = ['bathrooms'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback"><?php echo e($message); ?></div>
-                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-            </div>
-
-            <!-- Min Area -->
-            <div class="filter-group">
-                <label for="minArea">Min Area (sqft)</label>
-                <input type="number" name="min_area" class="form-control <?php $__errorArgs = ['min_area'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-                    placeholder="e.g. 1000" id="minArea" value="<?php echo e(request('min_area')); ?>">
-                <?php $__errorArgs = ['min_area'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="invalid-feedback"><?php echo e($message); ?></div>
-                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-            </div>
-
-            <!-- Purpose (Sale / Rent) -->
-            <div class="filter-grou">
-                <label>Purpose</label>
-                <div class="status-pills">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="purpose[]" value="sale" id="statusSale"
-                            <?php echo e(is_array(request('purpose')) && in_array('sale', request('purpose')) ? 'checked' : ''); ?>>
-                        <label class="form-check-label" for="statusSale">For Sale</label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="purpose[]" value="rent" id="statusRent"
-                            <?php echo e(is_array(request('purpose')) && in_array('rent', request('purpose')) ? 'checked' : ''); ?>>
-                        <label class="form-check-label" for="statusRent">For Rent</label>
+
+                    <!-- Property Type -->
+                    <div class="filter-group">
+                        <label for="propertyType">Property Type</label>
+                        <select name="type" class="form-select <?php $__errorArgs = ['type'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                            id="propertyType">
+                            <option value="">All Types</option>
+                            <option value="apartment" <?php echo e(request('type') == 'apartment' ? 'selected' : ''); ?>>Apartment
+                            </option>
+                            <option value="villa" <?php echo e(request('type') == 'villa' ? 'selected' : ''); ?>>Villa</option>
+                            <option value="house" <?php echo e(request('type') == 'house' ? 'selected' : ''); ?>>House</option>
+                            <option value="land" <?php echo e(request('type') == 'land' ? 'selected' : ''); ?>>Land</option>
+                            <option value="office" <?php echo e(request('type') == 'office' ? 'selected' : ''); ?>>Office</option>
+                        </select>
+                        <?php $__errorArgs = ['type'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="invalid-feedback"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+
+                    <!-- Bedrooms -->
+                    <div class="filter-group">
+                        <label for="bedrooms">Bedrooms</label>
+                        <select name="bedrooms" class="form-select <?php $__errorArgs = ['bedrooms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                            id="bedrooms">
+                            <option value="">Any</option>
+                            <option value="1" <?php echo e(request('bedrooms') == '1' ? 'selected' : ''); ?>>1+</option>
+                            <option value="2" <?php echo e(request('bedrooms') == '2' ? 'selected' : ''); ?>>2+</option>
+                            <option value="3" <?php echo e(request('bedrooms') == '3' ? 'selected' : ''); ?>>3+</option>
+                            <option value="4" <?php echo e(request('bedrooms') == '4' ? 'selected' : ''); ?>>4+</option>
+                            <option value="5" <?php echo e(request('bedrooms') == '5' ? 'selected' : ''); ?>>5+</option>
+                        </select>
+                        <?php $__errorArgs = ['bedrooms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="invalid-feedback"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+
+                    <!-- Bathrooms -->
+                    <div class="filter-group">
+                        <label for="bathrooms">Bathrooms</label>
+                        <select name="bathrooms" class="form-select <?php $__errorArgs = ['bathrooms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                            id="bathrooms">
+                            <option value="">Any</option>
+                            <option value="1" <?php echo e(request('bathrooms') == '1' ? 'selected' : ''); ?>>1+</option>
+                            <option value="2" <?php echo e(request('bathrooms') == '2' ? 'selected' : ''); ?>>2+</option>
+                            <option value="3" <?php echo e(request('bathrooms') == '3' ? 'selected' : ''); ?>>3+</option>
+                            <option value="4" <?php echo e(request('bathrooms') == '4' ? 'selected' : ''); ?>>4+</option>
+                        </select>
+                        <?php $__errorArgs = ['bathrooms'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="invalid-feedback"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+
+                    <!-- Min Area -->
+                    <div class="filter-group">
+                        <label for="minArea">Min Area (sqft)</label>
+                        <input type="number" name="min_area"
+                            class="form-control <?php $__errorArgs = ['min_area'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" placeholder="e.g. 1000"
+                            id="minArea" value="<?php echo e(request('min_area')); ?>">
+                        <?php $__errorArgs = ['min_area'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="invalid-feedback"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+
+                    <!-- Purpose (Sale / Rent) -->
+                    <div class="filter-grou">
+                        <label>Purpose</label>
+                        <div class="status-pills">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="purpose[]" value="sale"
+                                    id="statusSale"
+                                    <?php echo e(is_array(request('purpose')) && in_array('sale', request('purpose')) ? 'checked' : ''); ?>>
+                                <label class="form-check-label" for="statusSale">For Sale</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="purpose[]" value="rent"
+                                    id="statusRent"
+                                    <?php echo e(is_array(request('purpose')) && in_array('rent', request('purpose')) ? 'checked' : ''); ?>>
+                                <label class="form-check-label" for="statusRent">For Rent</label>
+                            </div>
+                        </div>
+                        <?php $__errorArgs = ['purpose'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="text-danger small mt-1"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="filter-group filter-price">
+                        <label for="priceRange">Max Price</label>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="range-value">$0</span>
+                            <span class="range-value"
+                                id="priceValue">$<?php echo e(number_format(request('max_price', 50000))); ?></span>
+                        </div>
+                        <input type="range" class="form-range <?php $__errorArgs = ['max_price'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                            name="max_price" min="0" max="50000" step="50"
+                            value="<?php echo e(request('max_price', 50000)); ?>" id="priceRange"
+                            oninput="document.getElementById('priceValue').innerText = '$' + Number(this.value).toLocaleString()">
+                        <?php $__errorArgs = ['max_price'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="text-danger small mt-1"><?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+
+                    <div class="filter-actions">
+                        <button type="submit" class="btn-filter"><i class="bi bi-search me-2"></i> Apply
+                            Filters</button>
                     </div>
                 </div>
-                <?php $__errorArgs = ['purpose'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="text-danger small mt-1"><?php echo e($message); ?></div>
-                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-            </div>
 
-            <!-- Price Range -->
-            <div class="filter-group filter-price">
-                <label for="priceRange">Max Price</label>
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="range-value">$0</span>
-                    <span class="range-value" id="priceValue">$<?php echo e(number_format(request('max_price', 50000))); ?></span>
-                </div>
-                <input 
-                    type="range" 
-                    class="form-range <?php $__errorArgs = ['max_price'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>" 
-                    name="max_price" 
-                    min="0" 
-                    max="50000" 
-                    step="50"
-                    value="<?php echo e(request('max_price', 50000)); ?>" 
-                    id="priceRange"
-                    oninput="document.getElementById('priceValue').innerText = '$' + Number(this.value).toLocaleString()"
-                >
-                <?php $__errorArgs = ['max_price'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <div class="text-danger small mt-1"><?php echo e($message); ?></div>
-                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-            </div>
+                <input type="hidden" name="sort" id="hiddenSort" value="<?php echo e(request('sort', 'featured')); ?>">
 
-            <div class="filter-actions">
-                <button type="submit" class="btn-filter"><i class="bi bi-search me-2"></i> Apply Filters</button>
-            </div>
-        </div>
-
-        <input type="hidden" name="sort" id="hiddenSort" value="<?php echo e(request('sort', 'featured')); ?>">
-    
-    </form>
-</section>
+            </form>
+        </section>
         <!-- RESULTS + SORT -->
         <section>
             <div class="sort-dropdown d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
@@ -366,9 +368,21 @@ unset($__errorArgs, $__bag); ?>
                 <?php endif; ?>
             </div>
 
-            <!-- DYNAMIC PAGINATION -->
-            <div class="mt-5 d-flex justify-content-center">
-                
+            <div class="mt-5 d-flex justify-content-between align-items-center gap-2">
+                <!-- Results Counter Text -->
+                <?php if($properties->total() > 0): ?>
+                    <p class="text-muted-custom  small">
+                        Showing <span class="fw-semibold"><?php echo e($properties->firstItem()); ?></span>
+                        to <span class="fw-semibold"><?php echo e($properties->lastItem()); ?></span>
+                        of <span class="fw-semibold"><?php echo e($properties->total()); ?></span> results
+                    </p>
+                <?php endif; ?>
+
+                <!-- Laravel Pagination Links -->
+                <div>
+                    <?php echo e($properties->links()); ?>
+
+                </div>
             </div>
         </section>
     </div>

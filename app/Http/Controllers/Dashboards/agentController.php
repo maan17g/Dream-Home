@@ -31,12 +31,9 @@ class agentController extends Controller
     ->get();  
         return view('agent.agent-properties',['properties'=>$properties]);
     }
-    public function appointments(){
-        return view('agent.agent-appointments');
-    }
   
     public function profile(){
-                $agent = Auth::user()->agent;
+                // $agent = Auth::user()->agent;
         return view('agent.agent-profile');
     }
     /**
@@ -84,12 +81,16 @@ class agentController extends Controller
     }
     public function toggleFeature(Agent $agent)
     {
-        $agent->is_featured = !$agent->is_featured;
-        $agent->save();
-
-        $status = $agent->is_featured ? 'featured' : 'unfeatured';
-
-        return redirect()->back()->with('success', "Agent status updated to {$status} successfully.");
+        if(Agent::where('is_featured',1)->count()<4){
+            $agent->is_featured = !$agent->is_featured;
+            $agent->save();
+            $status = $agent->is_featured ? 'featured' : 'unfeatured';
+            return redirect()->back()->with('success', "Agent status updated to {$status} successfully.");
+            }
+            else{
+        return redirect()->back()->with('error', "Only 4 Agent can be featured at a time");
+        
+    }
     }
 
     /**

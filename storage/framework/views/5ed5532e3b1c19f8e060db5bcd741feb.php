@@ -10,7 +10,7 @@
         <div class="container hero-content">
             <div class="col-lg-8">
                 <div class="trust-badge">
-                    <span class="trust-dot"></span> Trusted by 10,000+ Happy Homeowners
+                    <span class="trust-dot"></span> Trusted by <?php echo e($customers); ?> Happy Homeowners
                 </div>
                 <h1 class="hero-title mb-3">Find your Perfect <br><span>Dream Home</span></h1>
                 <p class="hero-desc mb-4">
@@ -19,12 +19,12 @@
                 </p>
                 <div class="d-flex flex-wrap gap-4 hero-proof-row">
                     <div class="hero-proof-item">
-                        <strong>10K+</strong>
+                        <strong><?php echo e($customers); ?>+</strong>
                         <span>Happy Clients</span>
                     </div>
                     <div class="hero-proof-divider"></div>
                     <div class="hero-proof-item">
-                        <strong>500+</strong>
+                        <strong><?php echo e($listing); ?></strong>
                         <span>Premium Listings</span>
                     </div>
                     <div class="hero-proof-divider"></div>
@@ -126,7 +126,7 @@ unset($__errorArgs, $__bag); ?>
     </section>
 
     <!-- Feature Property Section -->
-    <section class="feature-property">
+    <section class="feature-property  py-5">
         <div class="container" id="container-prop">
             <!-- Section Header -->
             <div class="d-flex justify-content-between align-items-end mb-3 flex-wrap gap-3">
@@ -168,61 +168,70 @@ unset($__errorArgs, $__bag); ?>
     
 
     <!-- Browse By Category -->
-    <section class="category-section mt-5">
-        <div class="container">
+    <section class="category-section pt-5">
+        <div class="container ">
             <div class="text-start mb-4">
                 <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">Browse By Category</h6>
                 <h2 class="display-6 fw-bold mb-0">Explore Property Types</h2>
             </div>
-            <div class="row g-3">
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="category-card">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
+                <!-- Apartments -->
+                <div class="col">
+                    <a href="<?php echo e(route('property.search', ['type' => 'apartment'])); ?>"
+                        class="category-card text-decoration-none text-white d-block">
                         <div class="category-icon"><i class="bi bi-buildings"></i></div>
                         <div class="category-name">Apartments</div>
                         <div class="category-count">320+ Properties</div>
-                    </div>
+                    </a>
                 </div>
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="category-card">
+
+                <!-- Villas -->
+                <div class="col">
+                    <a href="<?php echo e(route('property.search', ['type' => 'villa'])); ?>"
+                        class="category-card text-decoration-none text-white d-block">
                         <div class="category-icon"><i class="bi bi-house-door"></i></div>
                         <div class="category-name">Villas</div>
                         <div class="category-count">150+ Properties</div>
-                    </div>
+                    </a>
                 </div>
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="category-card">
+
+                <!-- Houses -->
+                <div class="col">
+                    <a href="<?php echo e(route('property.search', ['type' => 'house'])); ?>"
+                        class="category-card text-decoration-none text-white d-block">
                         <div class="category-icon"><i class="bi bi-house"></i></div>
-                        <div class="category-name">Townhouses</div>
+                        <div class="category-name">Houses</div>
                         <div class="category-count">200+ Properties</div>
-                    </div>
+                    </a>
                 </div>
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="category-card">
-                        <div class="category-icon"><i class="bi bi-building"></i></div>
-                        <div class="category-name">Penthouses</div>
+
+                <!-- Land -->
+                <div class="col">
+                    <a href="<?php echo e(route('property.search', ['type' => 'land'])); ?>"
+                        class="category-card text-decoration-none text-white d-block">
+                        <div class="category-icon"><i class="bi bi-geo-alt"></i></div>
+                        <div class="category-name">Land</div>
                         <div class="category-count">80+ Properties</div>
-                    </div>
+                    </a>
                 </div>
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="category-card">
-                        <div class="category-icon"><i class="bi bi-house-heart"></i></div>
-                        <div class="category-name">Luxury Homes</div>
+
+                <!-- Office Spaces -->
+                <div class="col">
+                    <a href="<?php echo e(route('property.search', ['type' => 'office'])); ?>"
+                        class="category-card text-decoration-none text-white d-block">
+                        <div class="category-icon"><i class="bi bi-building"></i></div>
+                        <div class="category-name">Office Spaces</div>
                         <div class="category-count">120+ Properties</div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="category-card">
-                        <div class="category-icon"><i class="bi bi-building-fill-gear"></i></div>
-                        <div class="category-name">Commercial</div>
-                        <div class="category-count">60+ Properties</div>
-                    </div>
+                    </a>
                 </div>
             </div>
+
+
         </div>
     </section>
 
     <!-- About / Features Section -->
-    <section class="about-section">
+    <section class="about-section pt-5">
         <div class="container">
             <div class="row align-items-center gy-5">
 
@@ -258,12 +267,15 @@ unset($__errorArgs, $__bag); ?>
                     <div class="container">
                         <div class="row gap-0 gap-md-5 justify-content-between px-2 my-5 align-items-center">
                             <div class="col-3 count justify-content-center d-flex align-items-center flex-column">
-                                <h2 class="m-0 counter" data-bs-start="0" data-bs-end="500" data-bs-sign="+">500+
+                                <h2 class="m-0 counter" data-bs-start="0" data-bs-end="<?php echo e($listing); ?>"
+                                    data-bs-sign="+"><?php echo e($listing); ?>
+
                                 </h2>
                                 <span class="text-muted-custom text-center">Properties Listed</span>
                             </div>
                             <div class="col-3 count p-3 d-flex align-items-center flex-column">
-                                <h2 class="counter" data-bs-start="0" data-bs-end="150" data-bs-sign="+">150+</h2>
+                                <h2 class="counter" data-bs-start="0" data-bs-end="<?php echo e($customers); ?>"
+                                    data-bs-sign="+">150+</h2>
                                 <span class="text-muted-custom text-center">Satisfied Client</span>
                             </div>
                             <div class="col-3 count p-3 d-flex align-items-center flex-column">
@@ -285,8 +297,8 @@ unset($__errorArgs, $__bag); ?>
                             <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80"
                                 class="img-cover" alt="Real Estate Agent">
                         </div>
-                        <div class="promise-badge">
-                            <strong>10,000+</strong>
+                        <div class="promise-badge text-center">
+                            <strong><?php echo e($customers); ?>+</strong>
                             <span>Happy Homeowners</span>
                         </div>
                     </div>
@@ -341,78 +353,85 @@ unset($__errorArgs, $__bag); ?>
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonial-section">
-        <div class="container">
-            <div class="row align-items-end mb-5">
-                <div class="col-lg-7">
-                    <span class="text-uppercase small fw-medium text-primary-custom" style="letter-spacing: 3px;">
-                        <span class="section-line"></span>Perspectives
-                    </span>
-                    <h2 class="editorial-title">What it feels like to <br><i
-                            style="font-weight: normal; opacity: 0.8;">finally</i> be home.</h2>
-                </div>
-                <div class="col-lg-5 text-lg-end">
-                    <p class="text-muted-custom mb-4" style="max-width: 400px; margin-left: auto;">
-                        A collection of experiences from the homeowners who redefined their lifestyle with Real Estate.
-                    </p>
-                </div>
+    <section class="testimonial-section py-5">
+    <div class="container">
+        <div class="row align-items-end mb-5">
+            <div class="col-lg-7">
+                <span class="text-uppercase small fw-medium text-primary-custom" style="letter-spacing: 3px;">
+                    <span class="section-line"></span>Perspectives
+                </span>
+                <h2 class="editorial-title">What it feels like to <br><i
+                        style="font-weight: normal; opacity: 0.8;">finally</i> be home.</h2>
             </div>
+            <a href="<?php echo e(route('testimonials.index')); ?>" class="btn-view-all">View All Reviews <i
+                     class="bi bi-arrow-right ms-1"></i></a>
+            
+            
+            <div class="col-lg-5 text-lg-end d-flex flex-column align-items-lg-end justify-content-end mt-3 mt-lg-0">
+                <p class="text-muted-custom mb-4" style="max-width: 400px; margin-left: auto; margin-right: 0;">
+                    A collection of experiences from the homeowners who redefined their lifestyle with Real Estate.
+                </p>
+                
+                </a>
+            </div>
+        </div>
 
-            <div class="row g-4">
-                <?php $__empty_2 = true; $__currentLoopData = $reviews; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $review): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_2 = false; ?>
-                    <?php
-                        $user = $review->appointment?->user;
-                    ?>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="sleek-card h-100 d-flex flex-column justify-content-between">
-                            <div>
+        <div class="row g-4">
+            <?php $__empty_2 = true; $__currentLoopData = $reviews; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $review): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_2 = false; ?>
+                <?php
+                    $user = $review->appointment?->user;
+                ?>
+                <div class="col-lg-4 col-md-6">
+                    <div class="sleek-card h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            
+                            <div class="text-warning mb-3">
                                 
-                                <div class="text-warning mb-3">
-                                    
-                                </div>
-
-                                
-                                <p class="quote-content">
-                                    <?php if($review->comment): ?>
-                                        "<?php echo e($review->comment); ?>"
-                                    <?php else: ?>
-                                        <i class="text-muted">No comment provided with this rating.</i>
-                                    <?php endif; ?>
-                                </p>
                             </div>
 
                             
-                            <div class="author-wrap mt-4">
-                                <?php if($user?->avatar): ?>
-                                    <img src="<?php echo e(asset('storage/' . $user->avatar)); ?>" class="author-img"
-                                        alt="<?php echo e($user->first_name); ?> <?php echo e($user->last_name); ?>">
-                                <?php else: ?>
-                                    <div class="author-img-placeholder rounded-circle bg-light d-flex align-items-center justify-content-center text-primary fw-bold"
-                                        style="width: 48px; height: 48px; font-size: 1.1rem;">
-                                        <?php echo e(strtoupper(substr($user?->first_name ?? 'U', 0, 1))); ?>
-
-                                    </div>
+                            <p class="quote-content">
+                                <?php if($review->comment): ?>
+                                    "<?php echo e($review->comment); ?>"
+                                Aminated@else
+                                    <i class="text-muted">No comment provided with this rating.</i>
                                 <?php endif; ?>
+                            </p>
+                        </div>
 
-                                <div class="ms-3">
-                                    <h6 class="author-name mb-0">
-                                        <?php echo e($user?->first_name ?? 'Anonymous'); ?> <?php echo e($user?->last_name); ?>
+                        
+                        <div class="author-wrap mt-4">
+                            <?php if($user?->avatar): ?>
+                                <img src="<?php echo e(asset('storage/' . $user->avatar)); ?>" class="author-img"
+                                    alt="<?php echo e($user->first_name); ?> <?php echo e($user->last_name); ?>">
+                            <?php else: ?>
+                                <div class="author-img-placeholder rounded-circle bg-light d-flex align-items-center justify-content-center text-primary fw-bold"
+                                    style="width: 48px; height: 48px; font-size: 1.1rem;">
+                                    <?php echo e(strtoupper(substr($user?->first_name ?? 'U', 0, 1))); ?>
 
-                                    </h6>
-                                    <span class="author-label text-muted small">Verified Buyer</span>
                                 </div>
+                            <?php endif; ?>
+
+                            <div class="ms-3">
+                                <h6 class="author-name mb-0">
+                                    <?php echo e($user?->first_name ?? 'Anonymous'); ?> <?php echo e($user?->last_name); ?>
+
+                                </h6>
+                                <span class="author-label text-muted small">Verified Buyer</span>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_2): ?>
-                    <div class="col-12 text-center py-5">
-                        <p class="text-muted">No featured testimonials available at the moment.</p>
-                    </div>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_2): ?>
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No featured testimonials available at the moment.</p>
+                </div>
+            <?php endif; ?>
         </div>
-    </section>
-    <section class="team-section">
+    </div>
+</section>
+
+    <section class="team-section py-5">
         <div class="container">
             <div class="text-start mb-5">
                 <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">Meet Our Agents</h6>
@@ -420,61 +439,79 @@ unset($__errorArgs, $__bag); ?>
             </div>
             <div class="row g-4">
                 <?php $__empty_2 = true; $__currentLoopData = $agents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $agent): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_2 = false; ?>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-card">
-                            <div class="team-img-wrapper">
-                                <img src="<?php echo e($agent->user->avatar ? asset('storage/' . $agent->user->avatar) : asset('avatars/default.png')); ?>"
-                                    alt="<?php echo e($agent->user->first_name); ?> <?php echo e($agent->user->last_name); ?>">
+                   <div class="col-lg-3 col-md-6">
+    <div class="team-card position-relative"> 
 
-                                <div class="team-overlay">
-                                    <div class="team-social d-flex gap-2">
-                                        <?php if($agent->linkedin): ?>
-                                            <a href="<?php echo e($agent->linkedin); ?>" target="_blank"
-                                                rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
-                                        <?php endif; ?>
-                                        <?php if($agent->twitter): ?>
-                                            <a href="<?php echo e($agent->twitter); ?>" target="_blank"
-                                                rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
-                                        <?php endif; ?>
-                                        <?php if($agent->facebook): ?>
-                                            <a href="<?php echo e($agent->facebook); ?>" target="_blank"
-                                                rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                                        <?php endif; ?>
-                                        <?php if($agent->instagram): ?>
-                                            <a href="<?php echo e($agent->instagram); ?>" target="_blank"
-                                                rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                                        <?php endif; ?>
-                                        <?php if($agent->user->email): ?>
-                                            <a href="mailto:<?php echo e($agent->user->email); ?>"><i
-                                                    class="bi bi-envelope-fill"></i></a>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="team-body">
-                                <div class="team-name"><?php echo e($agent->user->first_name); ?> <?php echo e($agent->user->last_name); ?>
+        <div class="team-img-wrapper">
+            <img src="<?php echo e($agent->user->avatar ? asset('storage/' . $agent->user->avatar) : asset('avatars/default.png')); ?>"
+                alt="<?php echo e($agent->user->first_name); ?> <?php echo e($agent->user->last_name); ?>">
 
-                                </div>
-                                <div class="team-role text-capitalize"><?php echo e(str_replace('_', ' ', $agent->agent_type)); ?>
+            
+            <div class="team-overlay" style="z-index: 2;">
+                <div class="team-social d-flex gap-2">
+                    <?php if($agent->linkedin): ?>
+                        <a href="<?php echo e($agent->linkedin); ?>" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    <?php endif; ?>
+                    <?php if($agent->twitter): ?>
+                        <a href="<?php echo e($agent->twitter); ?>" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    <?php endif; ?>
+                    <?php if($agent->facebook): ?>
+                        <a href="<?php echo e($agent->facebook); ?>" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    <?php endif; ?>
+                    <?php if($agent->instagram): ?>
+                        <a href="<?php echo e($agent->instagram); ?>" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    <?php endif; ?>
+                    <?php if($agent->user->email): ?>
+                        <a href="mailto:<?php echo e($agent->user->email); ?>">
+                            <i class="bi bi-envelope-fill"></i>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
 
-                                </div>
-                                <div class="team-stat">
-                                    <i class="bi bi-award-fill"></i>
-                                    <?php echo e($agent->years_experience); ?> Years Experience
-                                    <?php if($agent->rating > 0): ?>
-                                        &nbsp;•&nbsp; <?php echo e(number_format($agent->rating, 1)); ?> ★
-                                    <?php endif; ?>
-                                </div>
-                                <p class="team-bio">
-                                    <?php echo e($agent->bio ?? 'Dedicated agent committed to helping you find your perfect property.'); ?>
+        <div class="team-body">
+            
+            <div class="team-name">
+                <a href="<?php echo e(route('agent.show', $agent->id)); ?>" class="stretched-link text-decoration-none text-white">
+                    <?php echo e($agent->user->first_name); ?> <?php echo e($agent->user->last_name); ?>
 
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                </a>
+            </div>
+            
+            <div class="team-role text-capitalize">
+                <?php echo e(str_replace('_', ' ', $agent->agent_type)); ?>
+
+            </div>
+            
+            <div class="team-stat">
+                <i class="bi bi-award-fill"></i>
+                <?php echo e($agent->years_experience); ?> Years Experience
+                <?php if($agent->rating > 0): ?>
+                    &nbsp;•&nbsp; <?php echo e(number_format($agent->rating, 1)); ?> ★
+                <?php endif; ?>
+            </div>
+            
+            <p class="team-bio">
+                <?php echo e($agent->bio ?? 'Dedicated agent committed to helping you find your perfect property.'); ?>
+
+            </p>
+        </div>
+
+    </div>
+</div>
+
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_2): ?>
                     <div class="col-12 text-center py-4">
-                        <p class="text-muted">No agents available at the moment.</p>
+                        <p class="text-muted-custom">No agents available at the moment.</p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -521,8 +558,8 @@ unset($__errorArgs, $__bag); ?>
                 <p class="text-muted-custom mb-4 mx-auto" style="max-width: 520px;">Join thousands of satisfied
                     homeowners who found their perfect property with our expert guidance.</p>
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <a href="property.html" class="btn btn-search px-4" style="width:auto;">Browse Properties</a>
-                    <a href="contact-us.html" class="btn cta-hvr-btn px-4"
+                    <a href="<?php echo e(route('property.index')); ?>" class="btn btn-search px-4" style="width:auto;">Browse Properties</a>
+                    <a href="<?php echo e(route('page.contact')); ?>" class="btn cta-hvr-btn px-4"
                         style="width:auto; border:1px solid var(--border-color); color:var(--text-main); border-radius:8px; display:flex; align-items:center;">Contact
                         an Agent</a>
                 </div>
@@ -531,7 +568,7 @@ unset($__errorArgs, $__bag); ?>
     </section>
 
     <!-- Contact Section -->
-    <section class="contact-section mb-3 p-4">
+    <section class="contact-section py-5">
         <div class="container">
             <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">Get In Touch</h6>
             <h2 class="display-6 fw-bold mb-4">Have Questions? Reach Out to Us</h2>
@@ -581,7 +618,7 @@ unset($__errorArgs, $__bag); ?>
                 <div class="col-lg-7 align-self-center">
                     <div class="contact-form-wrapper p-4 p-md-5">
                         <h2 class="display-6 fw-bold mb-4">Send Us a Message</h2>
-                    
+
 
                         <form action="<?php echo e(route('contact.store')); ?>" method="POST">
                             <?php echo csrf_field(); ?>

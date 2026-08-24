@@ -95,7 +95,9 @@
 
             <div class="dash-sidebar-footer">
                 <ul class="dash-nav">
-                    <li><a href="{{ route('user.destroy') }}" class="dash-nav-link"><i
+                    <li><a href="{{ route('admin.profile') }}" class="dash-nav-link"><i
+                                class="bi bi-person"></i><span>Profile</span></a></li>
+                    <li><a href="{{ route('admin.destroy') }}" class="dash-nav-link"><i
                                 class="bi bi-box-arrow-right"></i><span>Logout</span></a></li>
                 </ul>
             </div>

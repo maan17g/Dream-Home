@@ -40,35 +40,39 @@
                             <td>
                                 <div class="d-flex align-items-center gap-2">
                                     <?php if($review->appointment?->user?->avatar): ?>
-                                        <img src="<?php echo e(asset('storage/' . $review->appointment->user->avatar)); ?>" 
-                                             alt="User Avatar" 
-                                             class="rounded-circle" 
-                                             style="width: 36px; height: 36px; object-fit: cover;">
+                                        <img src="<?php echo e(asset('storage/' . $review->appointment->user->avatar)); ?>"
+                                            alt="User Avatar" class="rounded-circle"
+                                            style="width: 36px; height: 36px; object-fit: cover;">
                                     <?php else: ?>
-                                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-muted fw-bold" 
-                                             style="width: 36px; height: 36px;">
+                                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-muted fw-bold"
+                                            style="width: 36px; height: 36px;">
                                             <?php echo e(strtoupper(substr($review->appointment?->user?->first_name ?? 'U', 0, 1))); ?>
 
                                         </div>
                                     <?php endif; ?>
                                     <div>
                                         <div class="fw-bold">
-                                            <?php echo e($review->appointment?->user?->first_name); ?> <?php echo e($review->appointment?->user?->last_name); ?>
+                                            <?php echo e($review->appointment?->user?->first_name); ?>
+
+                                            <?php echo e($review->appointment?->user?->last_name); ?>
 
                                         </div>
-                                        <small class="text-muted"><?php echo e($review->appointment?->user?->email); ?></small>
+                                        <small
+                                            class="text-muted-custom"><?php echo e($review->appointment?->user?->email); ?></small>
                                     </div>
                                 </div>
                             </td>
 
                             
                             <td>
-                                <div class="fw-bold text-truncate" style="max-width: 180px;" title="<?php echo e($review->property?->title); ?>">
+                                <div class="fw-bold text-truncate" style="max-width: 180px;"
+                                    title="<?php echo e($review->property?->title); ?>">
                                     <?php echo e($review->property?->title ?? 'N/A'); ?>
 
                                 </div>
-                                <small class="text-muted">
-                                    $<?php echo e(number_format((float)($review->property?->price ?? 0), 2)); ?> / <?php echo e(ucfirst($review->property?->purpose ?? 'N/A')); ?>
+                                <small class="text-muted-custom">
+                                    $<?php echo e(number_format((float) ($review->property?->price ?? 0), 2)); ?> /
+                                    <?php echo e(ucfirst($review->property?->purpose ?? 'N/A')); ?>
 
                                 </small>
                             </td>
@@ -79,7 +83,9 @@
                                     <?php for($i = 1; $i <= 5; $i++): ?>
                                         <i class="bi bi-star<?php echo e($i <= $review->rating ? '-fill' : ''); ?>"></i>
                                     <?php endfor; ?>
-                                    <span class="ms-1 text-dark fw-bold">(<?php echo e($review->rating); ?>/5)</span>
+                                    <span
+                                        class="ms-1 text-white
+                                         fw-bold">(<?php echo e($review->rating); ?>/5)</span>
                                 </div>
                             </td>
 
@@ -100,9 +106,8 @@
                                     <?php echo csrf_field(); ?>
                                     <?php echo method_field('PATCH'); ?>
                                     <label class="dash-toggle">
-                                        <input type="checkbox" 
-                                               onchange="this.form.submit()" 
-                                               <?php echo e($review->featured ? 'checked' : ''); ?>>
+                                        <input type="checkbox" onchange="this.form.submit()"
+                                            <?php echo e($review->featured ? 'checked' : ''); ?>>
                                         <span class="dash-toggle-slider"></span>
                                     </label>
                                 </form>
@@ -111,16 +116,31 @@
                             
                             <td>
                                 <div class="row-actions">
-                                    <form action="<?php echo e(route('admin.review.delete', $review->id)); ?>" 
-                                          method="POST" 
-                                          class="d-inline" 
-                                          onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                    <form action="<?php echo e(route('admin.review.delete', $review->id)); ?>" method="POST"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Are you sure you want to delete this review?');">
                                         <?php echo csrf_field(); ?>
                                         <?php echo method_field('DELETE'); ?>
                                         <button type="submit" class="row-action-btn danger" title="Delete Review">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
+
+                                    <?php if(!$review->status): ?>
+                                        
+
+                                        <form action="<?php echo e(route('admin.review.status', $review->id)); ?>" method="POST"
+                                            class="d-inline">
+                                            <?php echo csrf_field(); ?>
+                                            <?php echo method_field('PUT'); ?>
+                                            <button type="submit" class="row-action-btn danger" title="Delete Review">
+                                                <i class="bi bi-check-circle"></i>
+                                            </button>
+                                        </form>
+                                       
+                                  
+                                        
+                                    <?php endif; ?>
                                 </div>
                             </td>
                         </tr>
@@ -149,4 +169,6 @@
     });
 </script>
 </body>
-</html><?php /**PATH C:\Users\amana\Desktop\dream-home-real-estate_2\estate\resources\views/admin/cms.blade.php ENDPATH**/ ?>
+
+</html>
+<?php /**PATH C:\Users\amana\Desktop\dream-home-real-estate_2\estate\resources\views/admin/cms.blade.php ENDPATH**/ ?>

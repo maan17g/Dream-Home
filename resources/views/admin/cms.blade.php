@@ -39,49 +39,54 @@
                             {{-- USER INFO --}}
                             <td>
                                 <div class="d-flex align-items-center gap-2">
-                                    @if($review->appointment?->user?->avatar)
-                                        <img src="{{ asset('storage/' . $review->appointment->user->avatar) }}" 
-                                             alt="User Avatar" 
-                                             class="rounded-circle" 
-                                             style="width: 36px; height: 36px; object-fit: cover;">
+                                    @if ($review->appointment?->user?->avatar)
+                                        <img src="{{ asset('storage/' . $review->appointment->user->avatar) }}"
+                                            alt="User Avatar" class="rounded-circle"
+                                            style="width: 36px; height: 36px; object-fit: cover;">
                                     @else
-                                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-muted fw-bold" 
-                                             style="width: 36px; height: 36px;">
+                                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-muted fw-bold"
+                                            style="width: 36px; height: 36px;">
                                             {{ strtoupper(substr($review->appointment?->user?->first_name ?? 'U', 0, 1)) }}
                                         </div>
                                     @endif
                                     <div>
                                         <div class="fw-bold">
-                                            {{ $review->appointment?->user?->first_name }} {{ $review->appointment?->user?->last_name }}
+                                            {{ $review->appointment?->user?->first_name }}
+                                            {{ $review->appointment?->user?->last_name }}
                                         </div>
-                                        <small class="text-muted">{{ $review->appointment?->user?->email }}</small>
+                                        <small
+                                            class="text-muted-custom">{{ $review->appointment?->user?->email }}</small>
                                     </div>
                                 </div>
                             </td>
 
                             {{-- PROPERTY INFO --}}
                             <td>
-                                <div class="fw-bold text-truncate" style="max-width: 180px;" title="{{ $review->property?->title }}">
+                                <div class="fw-bold text-truncate" style="max-width: 180px;"
+                                    title="{{ $review->property?->title }}">
                                     {{ $review->property?->title ?? 'N/A' }}
                                 </div>
-                                <small class="text-muted">
-                                    ${{ number_format((float)($review->property?->price ?? 0), 2) }} / {{ ucfirst($review->property?->purpose ?? 'N/A') }}
+                                <small class="text-muted-custom">
+                                    ${{ number_format((float) ($review->property?->price ?? 0), 2) }} /
+                                    {{ ucfirst($review->property?->purpose ?? 'N/A') }}
                                 </small>
                             </td>
 
                             {{-- STAR RATING --}}
                             <td>
                                 <div class="text-warning">
-                                    @for($i = 1; $i <= 5; $i++)
+                                    @for ($i = 1; $i <= 5; $i++)
                                         <i class="bi bi-star{{ $i <= $review->rating ? '-fill' : '' }}"></i>
                                     @endfor
-                                    <span class="ms-1 text-dark fw-bold">({{ $review->rating }}/5)</span>
+                                    <span
+                                        class="ms-1 text-white
+                                         fw-bold">({{ $review->rating }}/5)</span>
                                 </div>
                             </td>
 
                             {{-- COMMENT --}}
                             <td>
-                                @if($review->comment)
+                                @if ($review->comment)
                                     <p class="mb-0 text-break" style="max-width: 250px;">
                                         "{{ $review->comment }}"
                                     </p>
@@ -96,9 +101,8 @@
                                     @csrf
                                     @method('PATCH')
                                     <label class="dash-toggle">
-                                        <input type="checkbox" 
-                                               onchange="this.form.submit()" 
-                                               {{ $review->featured ? 'checked' : '' }}>
+                                        <input type="checkbox" onchange="this.form.submit()"
+                                            {{ $review->featured ? 'checked' : '' }}>
                                         <span class="dash-toggle-slider"></span>
                                     </label>
                                 </form>
@@ -107,16 +111,31 @@
                             {{-- ACTIONS --}}
                             <td>
                                 <div class="row-actions">
-                                    <form action="{{ route('admin.review.delete', $review->id) }}" 
-                                          method="POST" 
-                                          class="d-inline" 
-                                          onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                    <form action="{{ route('admin.review.delete', $review->id) }}" method="POST"
+                                        class="d-inline"
+                                        onsubmit="return confirm('Are you sure you want to delete this review?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="row-action-btn danger" title="Delete Review">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
+
+                                    @if (!$review->status)
+                                        
+
+                                        <form action="{{ route('admin.review.status', $review->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="row-action-btn danger" title="Delete Review">
+                                                <i class="bi bi-check-circle"></i>
+                                            </button>
+                                        </form>
+                                       
+                                  
+                                        
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -145,4 +164,5 @@
     });
 </script>
 </body>
+
 </html>

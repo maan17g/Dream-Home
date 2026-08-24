@@ -40,10 +40,7 @@ class LoginController extends Controller
                 'required',
                 'string',
                 Password::min(8)
-                    ->letters()
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols(), ],
+                    ],
            'remember' => 'nullable', 
         ]);
 
