@@ -2,6 +2,16 @@
 
 <div class="container-fluid py-4 px-lg-5">
 
+   
+
+    <?php if(session('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <?php echo e(session('error')); ?>
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
     <!-- PAGE TITLE -->
     <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
         <div>
@@ -45,7 +55,7 @@
             <div class="row g-4">
                 <!-- Add Amenity Form -->
                 <div class="col-lg-4">
-                    <div class=" feature-box h-auto">
+                    <div class="feature-box h-auto">
                         <div class="card-header bg-transparent border-secondary text-main fw-bold px-0 pt-0 pb-3">
                             Add New Amenity
                         </div>
@@ -54,11 +64,45 @@
                                 <?php echo csrf_field(); ?>
                                 <div class="mb-3">
                                     <label class="form-label small">Amenity Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="e.g. Swimming Pool" required>
+                                    <input type="text" name="name" class="form-control <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('name')); ?>" placeholder="e.g. Swimming Pool" required>
+                                    <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label small">Bootstrap Icon Class</label>
-                                    <input type="text" name="icon" class="form-control" placeholder="e.g. bi-droplet">
+                                    <input type="text" name="icon" class="form-control <?php $__errorArgs = ['icon'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('icon')); ?>" placeholder="e.g. bi-droplet">
+                                    <?php $__errorArgs = ['icon'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <button type="submit" class="btn btn-consult w-100 fw-bold mt-2">Save Amenity</button>
                             </form>
@@ -68,7 +112,7 @@
 
                 <!-- Amenities List -->
                 <div class="col-lg-8">
-                    <div class=" feature-box h-auto">
+                    <div class="feature-box h-auto">
                         <div class="card-header bg-transparent border-secondary text-main fw-bold px-0 pt-0 pb-3">
                             Existing Amenities
                         </div>
@@ -114,7 +158,7 @@
             <div class="row g-4">
                 <!-- Add City Form -->
                 <div class="col-lg-4">
-                    <div class=" feature-box h-auto">
+                    <div class="feature-box h-auto">
                         <div class="card-header bg-transparent border-secondary text-main fw-bold px-0 pt-0 pb-3">
                             Add New City
                         </div>
@@ -123,12 +167,47 @@
                                 <?php echo csrf_field(); ?>
                                 <div class="mb-3">
                                     <label class="form-label small">City Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="e.g. Multan" required>
+                                    <input type="text" name="city" class="form-control <?php $__errorArgs = ['city'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('city')); ?>" placeholder="e.g. Multan" required>
+                                    <?php $__errorArgs = ['city'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label small">State / Region</label>
-                                    <input type="text" name="state" class="form-control" placeholder="e.g. Punjab">
+                                    <input type="text" name="state" class="form-control <?php $__errorArgs = ['state'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('state')); ?>" placeholder="e.g. Punjab">
+                                    <?php $__errorArgs = ['state'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
+                               
                                 <button type="submit" class="btn btn-consult w-100 fw-bold mt-2">Save City</button>
                             </form>
                         </div>
@@ -137,7 +216,7 @@
 
                 <!-- Cities List -->
                 <div class="col-lg-8">
-                    <div class=" feature-box h-auto">
+                    <div class="feature-box h-auto">
                         <div class="card-header bg-transparent border-secondary text-main fw-bold px-0 pt-0 pb-3">
                             Existing Cities
                         </div>
@@ -147,6 +226,7 @@
                                     <tr>
                                         <th>City Name</th>
                                         <th>State</th>
+                                   
                                         <th class="text-end">Actions</th>
                                     </tr>
                                 </thead>
@@ -155,6 +235,7 @@
                                     <tr class="border-secondary">
                                         <td class="fw-bold text-main"><?php echo e($city->city); ?></td>
                                         <td class="text-muted-custom"><?php echo e($city->state ?? '—'); ?></td>
+                                        
                                         <td class="text-end">
                                             <form action="<?php echo e(route('cities.destroy', $city->id)); ?>" method="POST" class="d-inline" onsubmit="return confirm('Delete this city?');">
                                                 <?php echo csrf_field(); ?>
@@ -165,7 +246,7 @@
                                     </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                     <tr>
-                                        <td colspan="3" class="text-center text-muted-custom py-4">No cities added yet.</td>
+                                        <td colspan="4" class="text-center text-muted-custom py-4">No cities added yet.</td>
                                     </tr>
                                     <?php endif; ?>
                                 </tbody>
@@ -179,53 +260,45 @@
     </div>
 </div>
 
-<!-- TAB SWITCHING SCRIPT -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const tabs = document.querySelectorAll('#cmsTabs button[data-bs-toggle="tab"]');
     const tabPanes = document.querySelectorAll('.tab-content .tab-pane');
 
+    function activateTab(targetSelector) {
+        const targetPane = document.querySelector(targetSelector);
+        const activeTabBtn = document.querySelector(`#cmsTabs button[data-bs-target="${targetSelector}"]`);
+
+        if (!targetPane || !activeTabBtn) return;
+
+        tabs.forEach(t => {
+            t.classList.remove('active', 'text-main');
+            t.classList.add('text-muted-custom');
+            t.setAttribute('aria-selected', 'false');
+        });
+
+        activeTabBtn.classList.add('active', 'text-main');
+        activeTabBtn.classList.remove('text-muted-custom');
+        activeTabBtn.setAttribute('aria-selected', 'true');
+
+        tabPanes.forEach(pane => {
+            pane.classList.remove('show', 'active');
+        });
+
+        targetPane.classList.add('show', 'active');
+    }
+
     tabs.forEach(tab => {
         tab.addEventListener('click', function (e) {
             e.preventDefault();
-
             const targetSelector = this.getAttribute('data-bs-target');
-            const targetPane = document.querySelector(targetSelector);
-
-            if (!targetPane) return;
-
-            // 1. Reset all tab buttons
-            tabs.forEach(t => {
-                t.classList.remove('active', 'text-main');
-                t.classList.add('text-muted-custom');
-                t.setAttribute('aria-selected', 'false');
-            });
-
-            // 2. Activate clicked tab button
-            this.classList.add('active', 'text-main');
-            this.classList.remove('text-muted-custom');
-            this.setAttribute('aria-selected', 'true');
-
-            // 3. Hide all tab content panels
-            tabPanes.forEach(pane => {
-                pane.classList.remove('show', 'active');
-            });
-
-            // 4. Show active content panel
-            targetPane.classList.add('show', 'active');
-
-            // 5. Store current active tab in URL hash
+            activateTab(targetSelector);
             history.replaceState(null, null, targetSelector);
         });
     });
 
-    // Auto-open tab based on URL hash
-    const currentHash = window.location.hash;
-    if (currentHash) {
-        const activeTabBtn = document.querySelector(`#cmsTabs button[data-bs-target="${currentHash}"]`);
-        if (activeTabBtn) {
-            activeTabBtn.click();
-        }
+    if (window.location.hash) {
+        activateTab(window.location.hash);
     }
 });
 </script><?php /**PATH C:\Users\amana\Desktop\dream-home-real-estate_2\estate\resources\views/admin/cms-AmenityCity.blade.php ENDPATH**/ ?>

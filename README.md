@@ -1,59 +1,301 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Dream Home Real Estate 🏠
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-stack real estate web application built with Laravel, designed to provide property browsing, property management, appointments, user authentication, and role-based dashboards for **Buyers, Agents, and Administrators**.
 
-## About Laravel
+## 🚀 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 🔐 Authentication & Authorization
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* User registration and login
+* OTP verification during registration
+* Role-based access control
+* Middleware-protected dashboards
+* CSRF protection
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 👤 Buyer / User
 
-## Learning Laravel
+* Browse available properties
+* View detailed property information
+* Save / favorite properties
+* Prevent duplicate saved properties
+* Request property appointments
+* Manage appointment requests and statuses
+* Submit inquiries to administrators
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 🏢 Agent Dashboard
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* Manage agent profile
+* Add properties
+* Edit properties
+* Delete properties
+* Manage own property listings
+* Upload property images
+* Select property amenities
+* Assign property city/location
+* Manage property status
+* Manage appointment requests
 
-## Laravel Sponsors
+### 🛠️ Admin Dashboard
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+* Manage users
+* Manage agents and buyers
+* Manage properties
+* Approve properties
+* Manage cities / locations
+* Manage amenities
+* Manage featured properties
+* Manage featured agents
+* Manage featured reviews
+* Manage user inquiries
+* Manage appointments
 
-### Premium Partners
+### 🏡 Property Management
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+* Property creation and editing
+* Property deletion
+* Property details
+* Multiple property images
+* Property status
+* Property approval workflow
+* Agent-property relationship
+* City/location relationship
+* Property amenities
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🧰 Tech Stack
 
-## Code of Conduct
+* **Laravel 12.x**
+* **PHP**
+* **MySQL**
+* **HTML5**
+* **CSS3**
+* **JavaScript**
+* **Bootstrap**
+* **jQuery**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## ⚙️ Local Installation
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 1. Install XAMPP
 
-## License
+Install XAMPP and make sure Apache and MySQL are available.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 2. Clone the Repository
+
+```bash
+git clone <your-repository-url>
+cd dream-home
+```
+
+### 3. Install PHP Dependencies
+
+```bash
+composer install
+```
+
+### 4. Configure Environment
+
+Create your `.env` file:
+
+```bash
+cp .env.example .env
+```
+
+Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+### 5. Configure MySQL
+
+Create a MySQL database and update the following values in `.env`:
+
+```env
+DB_DATABASE=your_database_name
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Use the appropriate credentials for your local MySQL installation.
+
+---
+
+## 📧 Local OTP Email Testing with Mailpit
+
+Dream Home uses OTP verification during user registration.
+
+For local development, **Mailpit** can capture emails without sending real emails.
+
+Download Mailpit from:
+
+[Mailpit Official Website](https://mailpit.axllent.org/)
+
+After installing Mailpit, run it according to its official documentation.
+
+Then configure the mail settings in `.env` to use the local Mailpit SMTP server.
+
+Typical local configuration:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=127.0.0.1
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+```
+
+Mailpit's web interface is typically available at:
+
+```text
+http://localhost:8025
+```
+
+---
+
+## 🗄️ Database Setup
+
+Run the migrations:
+
+```bash
+php artisan migrate
+```
+
+Populate the application with demo data:
+
+```bash
+php artisan db:seed
+```
+
+The seeder creates sample application data such as properties and related real-estate information. Internet access may be required if external images are downloaded during seeding.
+
+---
+
+## 🖼️ Storage Setup
+
+Create Laravel's public storage link:
+
+```bash
+php artisan storage:link
+```
+
+This allows uploaded property images stored in Laravel's public storage to be accessed by the application.
+
+**Do not manually delete the `storage` directory or storage link.**
+
+---
+
+## ▶️ Run the Application
+
+Start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8000
+```
+
+---
+
+## 📋 Complete Setup Commands
+
+After configuring `.env`, the main setup flow is:
+
+```bash
+composer install
+php artisan key:generate
+php artisan migrate
+php artisan db:seed
+php artisan storage:link
+php artisan serve
+```
+
+For OTP testing, Mailpit should also be running.
+
+---
+
+## 📸 Screenshots
+
+The project includes screenshots demonstrating the main parts of the application:
+
+* Homepage
+* Property listings
+* Property details
+* User dashboard
+* Agent dashboard
+* Admin dashboard
+* Property management
+* Appointment management
+
+Screenshots focus on the major workflows rather than documenting every individual page.
+
+---
+
+## 🏗️ Project Architecture
+
+Dream Home follows Laravel's MVC architecture:
+
+```text
+Routes
+   ↓
+Controllers
+   ↓
+Models
+   ↓
+MySQL Database
+   ↓
+Blade Views
+```
+
+The application uses Laravel's:
+
+* Controllers
+* Eloquent ORM
+* Models & Relationships
+* Migrations
+* Seeders
+* Middleware
+* Blade Templates
+* Authentication
+* Validation
+* File Storage
+
+---
+
+## 🎯 Project Purpose
+
+Dream Home was developed as a practical full-stack Laravel project to demonstrate the development of a real-world property management platform.
+
+The project focuses on:
+
+* Backend development
+* Database design
+* Laravel MVC architecture
+* Authentication and authorization
+* CRUD operations
+* Eloquent relationships
+* Role-based dashboards
+* File management
+* Appointment workflows
+* Admin management
+* Responsive frontend development
+
+---
+
+## 👨‍💻 Developer
+
+**Maan**
+
+GitHub: https://github.com/maan17g
+
+LinkedIn: https://www.linkedin.com/in/aman-ahmad-a8a675363/
+
+---
+

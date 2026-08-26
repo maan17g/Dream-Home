@@ -92,11 +92,11 @@
                             
                             <td>
                                 <?php if($review->comment): ?>
+                              
                                     <p class="mb-0 text-break" style="max-width: 250px;">
                                         "<?php echo e($review->comment); ?>"
                                     </p>
-                                <?php else: ?>
-                                    <span class="badge bg-light text-muted fw-normal">No comment provided</span>
+                               
                                 <?php endif; ?>
                             </td>
 

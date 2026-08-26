@@ -487,7 +487,7 @@ class PropertyController extends Controller
 
     public function toggleFeature(Property $property)
     {
-        if(Property::where('featured',1)->count()<3){
+        if($property->featured || Property::where('featured',1)->count()<3){
         $property->update([
             'featured' => ! $property->featured,
         ]);

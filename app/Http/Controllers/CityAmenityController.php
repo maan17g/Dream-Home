@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Amenity;
 use App\Models\City;
 use App\Models\Property;
- 
 
 class CityAmenityController extends Controller
 {
@@ -63,29 +62,39 @@ class CityAmenityController extends Controller
     public function storeCity(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:cities,name',
+            'city' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    $exists = City::where('city', $value)->exists();
+                    if ($exists) {
+                        $fail('The city name has already been taken.');
+                    }
+                }
+            ],
             'state' => 'nullable|string|max:255',
-            'is_active' => 'required|boolean',
+          
         ]);
 
-        City::create($validated);
+        City::create([...$validated,
+        'address_line'=>'',]);
 
-        return redirect()->route('amenities.index')
+        return redirect()->to(route('amenities.index') . '#cities-panel')
             ->with('success', 'City added successfully.');
     }
 
     public function destroyCity(City $city)
     {
-        
-    $cityexsist =Property::where('city_id',$city->id)->exists();
-    
+        $cityExist = Property::where('city_id', $city->id)->exists();
 
-if ($cityexsist) {
-   return back()->with('error','City is Used by Property');
-} else {
-            $city->delete();
+        if ($cityExist) {
+            return redirect()->back()->with('error', 'City is used by a property and cannot be deleted.');
+        }
 
-        return redirect()->route('amenities.index')
+        $city->delete();
+
+        return redirect()->to(route('amenities.index') . '#cities-panel')
             ->with('success', 'City removed successfully.');
     }
-}}
+}

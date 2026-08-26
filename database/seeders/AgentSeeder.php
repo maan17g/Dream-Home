@@ -30,7 +30,7 @@ class AgentSeeder extends Seeder
                 'twitter' => fake()->boolean(20) ? 'https://twitter.com/' . fake()->userName() : null,
                 'rating' => fake()->randomFloat(2, 3, 5),
                 'approval_status' => fake()->randomElement(['pending', 'approved', 'approved', 'approved']),
-                'is_featured' => fake()->boolean(25),
+                'is_featured' => fake()->boolean(33),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

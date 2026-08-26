@@ -53,18 +53,7 @@
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-8">
-                    <!-- Share Bar -->
-                    <div class="share-bar">
-                        <span>Share:</span>
-                        <button class="share-btn" title="Facebook"><i class="fab fa-facebook-f"></i></button>
-                        <button class="share-btn" title="Twitter"><i class="fab fa-x-twitter"></i></button>
-                        <button class="share-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-                        <button class="share-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></button>
-                        <button class="share-btn" title="Copy Link" onclick="copyLink()"><i
-                                class="bi bi-link-45deg"></i></button>
-                        <span id="copyMsg" style="color:var(--primary);font-size:0.8rem;display:none;">Link
-                            copied!</span>
-                    </div>
+                    
 
                     <h1 class="prop-title">{{ $property->title }}</h1>
                     <p class="prop-location">

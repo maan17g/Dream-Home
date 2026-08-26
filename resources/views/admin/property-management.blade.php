@@ -174,7 +174,7 @@
             <div class="dash-pagination-bar">
                 <span>Showing {{ $properties->firstItem() }} to {{ $properties->lastItem() }} of
                     {{ $properties->total() }} entries</span>
-                {{ $properties->links('pagination::bootstrap-5') }}
+              {{ $properties->appends(request()->query())->links('pagination::bootstrap-5') }}
             </div>
         @endif
     </div>

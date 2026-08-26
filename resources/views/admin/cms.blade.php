@@ -87,11 +87,11 @@
                             {{-- COMMENT --}}
                             <td>
                                 @if ($review->comment)
+                              
                                     <p class="mb-0 text-break" style="max-width: 250px;">
                                         "{{ $review->comment }}"
                                     </p>
-                                @else
-                                    <span class="badge bg-light text-muted fw-normal">No comment provided</span>
+                               
                                 @endif
                             </td>
 

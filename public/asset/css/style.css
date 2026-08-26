@@ -800,7 +800,7 @@ nav .active {
 
 /* ---- ABOUT PAGE ---- */
 .mission-section {
-    padding: 80px 0;
+  
     background-color: var(--bg-body);
 }
 
@@ -982,7 +982,6 @@ nav .active {
     transition: background 0.2s ease;
 }
 .values-section {
-    padding: 80px 0;
     background-color: var(--form-bg);
 }
 .value-item {
@@ -1017,7 +1016,7 @@ nav .active {
     margin-bottom: 0;
 }
 .testimonials-section {
-    padding: 80px 0;
+  
     background-color: var(--bg-body);
 }
 .testimonial-card {
@@ -3579,7 +3578,7 @@ main {
   .cat-pill:hover,.cat-pill.active{background:var(--primary);border-color:var(--primary);color:#fff;}
   .blog-search{max-width:340px;}
       /* Contact page specific */
-    .faq-section { padding: 80px 0; background-color: var(--bg-body); }
+    .faq-section { background-color: var(--bg-body); }
     .faq-accordion .accordion-item { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px !important; margin-bottom: 0.75rem; overflow: hidden; }
     .faq-accordion .accordion-button { background: var(--bg-card); color: var(--text-main); font-weight: 600; font-size: 0.95rem; box-shadow: none; }
     .faq-accordion .accordion-button:not(.collapsed) { background: rgba(60,181,124,0.08); color: var(--primary); box-shadow: none; }

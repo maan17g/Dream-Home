@@ -373,16 +373,15 @@
                 <h2 class="editorial-title">What it feels like to <br><i
                         style="font-weight: normal; opacity: 0.8;">finally</i> be home.</h2>
             </div>
-            <a href="{{ route('testimonials.index') }}" class="btn-view-all">View All Reviews <i
-                     class="bi bi-arrow-right ms-1"></i></a>
             
             {{-- RIGHT COLUMN: Text and "View All" Button --}}
             <div class="col-lg-5 text-lg-end d-flex flex-column align-items-lg-end justify-content-end mt-3 mt-lg-0">
                 <p class="text-muted-custom mb-4" style="max-width: 400px; margin-left: auto; margin-right: 0;">
                     A collection of experiences from the homeowners who redefined their lifestyle with Real Estate.
                 </p>
-                {{-- Added View All Button here --}}
-                </a>
+                <a href="{{ route('testimonials.index') }}" class="btn-view-all">View All Reviews <i
+                         class="bi bi-arrow-right ms-1"></i></a>
+            
             </div>
         </div>
 
@@ -405,8 +404,7 @@
                             <p class="quote-content">
                                 @if ($review->comment)
                                     "{{ $review->comment }}"
-                                Aminated@else
-                                    <i class="text-muted">No comment provided with this rating.</i>
+                              
                                 @endif
                             </p>
                         </div>

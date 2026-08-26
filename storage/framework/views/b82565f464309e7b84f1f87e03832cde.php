@@ -63,6 +63,7 @@
                     <li class="nav-item">
                         <a class="nav-link <?php echo e(request()->routeIs('page.contact') ? 'active' : ''); ?>" href="<?php echo e(route('page.contact')); ?>">Contact</a>
                     </li>
+                    
                 </ul>
 
                 <!-- Right Action Container (Flex-1 & End-Aligned) -->

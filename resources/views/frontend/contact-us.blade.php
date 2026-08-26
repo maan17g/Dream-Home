@@ -16,7 +16,7 @@
     </section>
 
     <!-- INFO CARDS -->
-    <section class="contact-page-section">
+    <section class="contact-page-section py-5">
         <div class="container">
             <div class="text-start mb-5">
                 <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">Get In Touch</h6>
@@ -200,7 +200,7 @@
     </section>
 
     <!-- MAP -->
-    <section class="map-section">
+    <section class="map-section py-5 mb-5">
         <div class="container">
             <div class="text-start mb-4">
                 <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">Find Us</h6>

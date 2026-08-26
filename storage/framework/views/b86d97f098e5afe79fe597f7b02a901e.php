@@ -21,6 +21,8 @@
                      <li><a href="<?php echo e(route('property.index')); ?>">Properties</a></li>
                      <li><a href="<?php echo e(route('page.about')); ?>">About Us</a></li>
                      <li><a href="<?php echo e(route('page.contact')); ?>">Contact</a></li>
+                     <li><a href="<?php echo e(route('testimonials.index')); ?>">Testimonials</a></li>
+                     
                      
                  </ul>
              </div>

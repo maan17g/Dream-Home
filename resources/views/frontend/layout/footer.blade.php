@@ -21,6 +21,8 @@
                      <li><a href="{{ route('property.index') }}">Properties</a></li>
                      <li><a href="{{ route('page.about') }}">About Us</a></li>
                      <li><a href="{{ route('page.contact') }}">Contact</a></li>
+                     <li><a href="{{ route('testimonials.index') }}">Testimonials</a></li>
+                     
                      {{-- <li><a href="#">Blog</a></li> --}}
                  </ul>
              </div>

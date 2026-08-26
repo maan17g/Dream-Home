@@ -5,7 +5,6 @@
     <div class="dash-breadcrumb mb-3">
         <a href="{{ route('admin.index') }}">Admin</a> / <span class="current">Schedules</span>
     </div>
-
     <!-- Page Header & Overview Stats -->
     <div class="dash-page-head d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
         <div>
@@ -25,7 +24,7 @@
                 </div>
                 <div>
                     <span class="text-custom-muted small d-block">Total Bookings</span>
-                    <strong class="fs-5">{{ count($schedules) }}</strong>
+                    <strong class="fs-5">{{ $schedules->total()}}</strong>
                 </div>
             </div>
         </div>
@@ -37,7 +36,7 @@
                 </div>
                 <div>
                     <span class="text-custom-muted small d-block">Pending</span>
-                    <strong class="fs-5">{{ collect($schedules)->where('status', 'pending')->count() }}</strong>
+                    <strong class="fs-5">{{$pending }}</strong>
                 </div>
             </div>
         </div>
@@ -49,7 +48,7 @@
                 </div>
                 <div>
                     <span class="text-custom-muted small d-block">Completed</span>
-                    <strong class="fs-5">{{ collect($schedules)->where('status', 'completed')->count() }}</strong>
+                    <strong class="fs-5">{{ $completed }}</strong>
                 </div>
             </div>
         </div>
@@ -61,15 +60,15 @@
                 </div>
                 <div>
                     <span class="text-custom-muted small d-block">Cancelled</span>
-                    <strong class="fs-5">{{ collect($schedules)->where('status', 'cancelled')->count() }}</strong>
+                    <strong class="fs-5">{{$cancelled }}</strong>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Schedules Table Panel -->
-    <div class="dash-panel">
-        <div class="dash-table-wrap">
+    <div class="dash-panel" >
+        <div class="dash-table-wrap"  style="scrollbar-width: none;">
             <table class="dash-table">
                 <thead>
                     <tr>

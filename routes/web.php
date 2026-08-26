@@ -65,7 +65,9 @@ Route::middleware('guest')->group(function () {
     // Login
     Route::controller(loginController::class)->prefix('auth')->group(function () {
         Route::get('/login', 'index')->name('login.index');
+      
         Route::post('/login', 'store')->name('login.store');
+
     });
 });
 

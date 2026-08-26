@@ -2,6 +2,15 @@
 
 <div class="container-fluid py-4 px-lg-5">
 
+   
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <!-- PAGE TITLE -->
     <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
         <div>
@@ -45,7 +54,7 @@
             <div class="row g-4">
                 <!-- Add Amenity Form -->
                 <div class="col-lg-4">
-                    <div class=" feature-box h-auto">
+                    <div class="feature-box h-auto">
                         <div class="card-header bg-transparent border-secondary text-main fw-bold px-0 pt-0 pb-3">
                             Add New Amenity
                         </div>
@@ -54,11 +63,17 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label class="form-label small">Amenity Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="e.g. Swimming Pool" required>
+                                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="e.g. Swimming Pool" required>
+                                    @error('name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label small">Bootstrap Icon Class</label>
-                                    <input type="text" name="icon" class="form-control" placeholder="e.g. bi-droplet">
+                                    <input type="text" name="icon" class="form-control @error('icon') is-invalid @enderror" value="{{ old('icon') }}" placeholder="e.g. bi-droplet">
+                                    @error('icon')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <button type="submit" class="btn btn-consult w-100 fw-bold mt-2">Save Amenity</button>
                             </form>
@@ -68,7 +83,7 @@
 
                 <!-- Amenities List -->
                 <div class="col-lg-8">
-                    <div class=" feature-box h-auto">
+                    <div class="feature-box h-auto">
                         <div class="card-header bg-transparent border-secondary text-main fw-bold px-0 pt-0 pb-3">
                             Existing Amenities
                         </div>
@@ -114,7 +129,7 @@
             <div class="row g-4">
                 <!-- Add City Form -->
                 <div class="col-lg-4">
-                    <div class=" feature-box h-auto">
+                    <div class="feature-box h-auto">
                         <div class="card-header bg-transparent border-secondary text-main fw-bold px-0 pt-0 pb-3">
                             Add New City
                         </div>
@@ -123,12 +138,19 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label class="form-label small">City Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="e.g. Multan" required>
+                                    <input type="text" name="city" class="form-control @error('city') is-invalid @enderror" value="{{ old('city') }}" placeholder="e.g. Multan" required>
+                                    @error('city')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label small">State / Region</label>
-                                    <input type="text" name="state" class="form-control" placeholder="e.g. Punjab">
+                                    <input type="text" name="state" class="form-control @error('state') is-invalid @enderror" value="{{ old('state') }}" placeholder="e.g. Punjab">
+                                    @error('state')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+                               
                                 <button type="submit" class="btn btn-consult w-100 fw-bold mt-2">Save City</button>
                             </form>
                         </div>
@@ -137,7 +159,7 @@
 
                 <!-- Cities List -->
                 <div class="col-lg-8">
-                    <div class=" feature-box h-auto">
+                    <div class="feature-box h-auto">
                         <div class="card-header bg-transparent border-secondary text-main fw-bold px-0 pt-0 pb-3">
                             Existing Cities
                         </div>
@@ -147,6 +169,7 @@
                                     <tr>
                                         <th>City Name</th>
                                         <th>State</th>
+                                   
                                         <th class="text-end">Actions</th>
                                     </tr>
                                 </thead>
@@ -155,6 +178,7 @@
                                     <tr class="border-secondary">
                                         <td class="fw-bold text-main">{{ $city->city }}</td>
                                         <td class="text-muted-custom">{{ $city->state ?? '—' }}</td>
+                                        
                                         <td class="text-end">
                                             <form action="{{ route('cities.destroy', $city->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this city?');">
                                                 @csrf
@@ -165,7 +189,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="3" class="text-center text-muted-custom py-4">No cities added yet.</td>
+                                        <td colspan="4" class="text-center text-muted-custom py-4">No cities added yet.</td>
                                     </tr>
                                     @endforelse
                                 </tbody>
@@ -179,53 +203,45 @@
     </div>
 </div>
 
-<!-- TAB SWITCHING SCRIPT -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const tabs = document.querySelectorAll('#cmsTabs button[data-bs-toggle="tab"]');
     const tabPanes = document.querySelectorAll('.tab-content .tab-pane');
 
+    function activateTab(targetSelector) {
+        const targetPane = document.querySelector(targetSelector);
+        const activeTabBtn = document.querySelector(`#cmsTabs button[data-bs-target="${targetSelector}"]`);
+
+        if (!targetPane || !activeTabBtn) return;
+
+        tabs.forEach(t => {
+            t.classList.remove('active', 'text-main');
+            t.classList.add('text-muted-custom');
+            t.setAttribute('aria-selected', 'false');
+        });
+
+        activeTabBtn.classList.add('active', 'text-main');
+        activeTabBtn.classList.remove('text-muted-custom');
+        activeTabBtn.setAttribute('aria-selected', 'true');
+
+        tabPanes.forEach(pane => {
+            pane.classList.remove('show', 'active');
+        });
+
+        targetPane.classList.add('show', 'active');
+    }
+
     tabs.forEach(tab => {
         tab.addEventListener('click', function (e) {
             e.preventDefault();
-
             const targetSelector = this.getAttribute('data-bs-target');
-            const targetPane = document.querySelector(targetSelector);
-
-            if (!targetPane) return;
-
-            // 1. Reset all tab buttons
-            tabs.forEach(t => {
-                t.classList.remove('active', 'text-main');
-                t.classList.add('text-muted-custom');
-                t.setAttribute('aria-selected', 'false');
-            });
-
-            // 2. Activate clicked tab button
-            this.classList.add('active', 'text-main');
-            this.classList.remove('text-muted-custom');
-            this.setAttribute('aria-selected', 'true');
-
-            // 3. Hide all tab content panels
-            tabPanes.forEach(pane => {
-                pane.classList.remove('show', 'active');
-            });
-
-            // 4. Show active content panel
-            targetPane.classList.add('show', 'active');
-
-            // 5. Store current active tab in URL hash
+            activateTab(targetSelector);
             history.replaceState(null, null, targetSelector);
         });
     });
 
-    // Auto-open tab based on URL hash
-    const currentHash = window.location.hash;
-    if (currentHash) {
-        const activeTabBtn = document.querySelector(`#cmsTabs button[data-bs-target="${currentHash}"]`);
-        if (activeTabBtn) {
-            activeTabBtn.click();
-        }
+    if (window.location.hash) {
+        activateTab(window.location.hash);
     }
 });
 </script>

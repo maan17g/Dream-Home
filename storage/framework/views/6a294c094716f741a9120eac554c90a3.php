@@ -16,7 +16,7 @@
   </section>
 
   <!-- MISSION / VISION -->
-  <section class="mission-section">
+  <section class="mission-section py-5">
     <div class="container">
       <div class="text-start mb-5">
         <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">What Drives Us</h6>
@@ -70,7 +70,7 @@
   </section>
 
   <!-- STORY + TIMELINE -->
-  <section class="story-section">
+  <section class="story-section py-5">
     <div class="container">
       <div class="row align-items-center gy-5">
         <div class="col-lg-6">
@@ -132,7 +132,7 @@
   </div>
 
   <!-- DYNAMIC TEAM / AGENTS SECTION -->
-  <section class="team-section">
+  <section class="team-section py-5">
     <div class="container">
       <div class="text-start mb-5">
         <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">The People Behind It</h6>
@@ -180,7 +180,7 @@
   </section>
 
   <!-- CORE VALUES -->
-  <section class="values-section">
+  <section class="values-section py-5">
     <div class="container">
       <div class="row align-items-center gy-5">
         <div class="col-lg-5">
@@ -203,7 +203,7 @@
   </section>
 
   <!-- DYNAMIC TESTIMONIALS / REVIEWS SECTION -->
-  <section class="testimonials-section">
+  <section class="testimonials-section py-5">
     <div class="container">
       <div class="text-start mb-5">
         <h6 class="text-primary-custom text-uppercase letter-spacing-2 fw-bold">Client Stories</h6>

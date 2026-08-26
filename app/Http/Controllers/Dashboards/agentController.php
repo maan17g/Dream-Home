@@ -81,7 +81,7 @@ class agentController extends Controller
     }
     public function toggleFeature(Agent $agent)
     {
-        if(Agent::where('is_featured',1)->count()<4){
+        if($agent->is_featured || Agent::where('is_featured',1)->count()<4){
             $agent->is_featured = !$agent->is_featured;
             $agent->save();
             $status = $agent->is_featured ? 'featured' : 'unfeatured';

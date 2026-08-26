@@ -179,7 +179,7 @@
             <div class="dash-pagination-bar">
                 <span>Showing <?php echo e($properties->firstItem()); ?> to <?php echo e($properties->lastItem()); ?> of
                     <?php echo e($properties->total()); ?> entries</span>
-                <?php echo e($properties->links('pagination::bootstrap-5')); ?>
+              <?php echo e($properties->appends(request()->query())->links('pagination::bootstrap-5')); ?>
 
             </div>
         <?php endif; ?>

@@ -62,6 +62,9 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('page.contact') ? 'active' : '' }}" href="{{ route('page.contact') }}">Contact</a>
                     </li>
+                    {{-- <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('testimonials.index') ? 'active' : '' }}" href="{{route('testimonials.index') }}">Testimonial</a>
+                    </li> --}}
                 </ul>
 
                 <!-- Right Action Container (Flex-1 & End-Aligned) -->

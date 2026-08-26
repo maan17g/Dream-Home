@@ -170,30 +170,7 @@ class adminController extends Controller
         return view('admin.blog-cms');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
@@ -215,7 +192,9 @@ class adminController extends Controller
     // Toggle Featured Status (Standard POST Request)
     public function toggleReview($id)
     {
-        if(Review::where('featured',1)->count()<3){
+        $review=Review::where('id',$id)->firstOrFail();
+        
+        if($review->featured || Review::where('featured',1)->count()<3){
         $review = Review::findOrFail($id);
         // Toggle 1 to 0 OR 0 to 1
         $review->featured = $review->featured ? 0 : 1;
@@ -244,11 +223,5 @@ class adminController extends Controller
           return redirect()->back()->with('success','Review Status updated Succesfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+ 
 }

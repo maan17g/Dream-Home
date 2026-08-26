@@ -233,7 +233,7 @@
                     <div class="col-12 text-center py-5">
                         <i class="bi bi-building-exclamation display-4 text-muted"></i>
                         <h4 class="mt-3">No properties found</h4>
-                        <p class="text-muted">Try adjusting your filters or resetting them to find matching properties.
+                        <p class="text-muted-custom">Try adjusting your filters or resetting them to find matching properties.
                         </p>
                         <a href="{{ route('property.index') }}" class="btn btn-outline-primary mt-2">
                             <i class="bi bi-arrow-clockwise me-1"></i> Reset Filters

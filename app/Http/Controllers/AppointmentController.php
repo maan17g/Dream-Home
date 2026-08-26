@@ -7,6 +7,7 @@ use App\Models\Property;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schedule;
 
 class AppointmentController extends Controller
 {
@@ -116,8 +117,11 @@ class AppointmentController extends Controller
      * Update appointment status (Shared by User and Agent).
      */
     public function getAppointment(){
-        $schedules=Appointment::with(['user','agent','property'])->get();
-        return view('admin.appointment',compact('schedules'));
+        $schedules=Appointment::with(['user','agent','property'])->paginate('10');
+        $pending= Appointment::where('status', 'pending')->count();
+        $completed= Appointment::where('status', 'completed')->count();
+        $cancelled= Appointment::where('status', 'cancelled')->count();
+        return view('admin.appointment',compact('schedules','pending','cancelled','completed'));
     }
     public function updateStatus(Request $request, Appointment $appointment)
     {
