@@ -225,16 +225,24 @@ For OTP testing, Mailpit should also be running.
 
 The project includes screenshots demonstrating the main parts of the application:
 
-* Homepage
-* Property listings
-* Property details
-* User dashboard
-* Agent dashboard
-* Admin dashboard
-* Property management
-* Appointment management
 
-Screenshots focus on the major workflows rather than documenting every individual page.
+* Homepage
+<img src="assets/homepage.png" style="margin:20px; padding:20px;">
+* Property listings
+<img src="assets/propertypage.png" style="margin:20px; padding:20px;">
+* Property details
+<img src="assets/propertydetailpage.png" style="margin:20px; padding:20px;">
+* User dashboard
+<img src="assets/userpage.png" style="margin:20px; padding:20px;">
+* Agent dashboard
+<img src="assets/agentpage.png" style="margin:20px; padding:20px;">
+* Admin dashboard
+<img src="assets/adminpanel.png" style="margin:20px; padding:20px;">
+* Property management
+<img src="assets/propertymanagementpage.png" style="margin:20px; padding:20px;">
+* Agent management
+<img src="assets/agentmanagementpage.png" style="margin:20px; padding:20px;">
+
 
 ---
 

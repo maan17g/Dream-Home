@@ -18,12 +18,12 @@
                     <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client">
                 </div>
                 <div class="hero-proof-item">
-                    <strong>10K+</strong>
+                    <strong>{{$users}}+</strong>
                     <span>Happy Customers</span>
                 </div>
                 <div class="hero-proof-divider"></div>
                 <div class="hero-proof-item">
-                    <strong><i class="bi bi-star-fill text-warning"></i> 4.9</strong>
+                    <strong><i class="bi bi-star-fill text-warning"></i> {{number_format($reviews,2)}}</strong>
                     <span>Average Rating</span>
                 </div>
             </div>

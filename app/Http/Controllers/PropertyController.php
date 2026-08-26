@@ -7,6 +7,8 @@ use App\Models\City;
 use App\Models\Property;
 use App\Models\PropertyImage;
 use App\Models\savedProperties;
+use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,8 +32,10 @@ class PropertyController extends Controller
     {
         $properties = Property::with(['images', 'amenities', 'city', 'agent.user'])->where('verified','approved')->paginate(9);
         $cities = City::all()->unique('city')->pluck('city');
+        $users=User::count();
+        $reviews=Review::avg('rating');
 
-        return view('frontend.property', compact('properties', 'cities'));
+        return view('frontend.property', compact('properties', 'cities','users','reviews'));
     }
 
     public function edit($id)
