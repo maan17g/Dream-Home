@@ -53,7 +53,7 @@
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-8">
-                    
+
 
                     <h1 class="prop-title">{{ $property->title }}</h1>
                     <p class="prop-location">
@@ -156,11 +156,13 @@
                         <div class="price-label">For {{ ucfirst($property->purpose) }} &nbsp;·&nbsp; Created
                             {{ $property->created_at->diffForHumans() }}</div>
 
-                        @if (Auth::check() ? Auth::user()->role == 'buyer' : !Auth::check())
+                        @if (Auth::check() && Auth::user()->role == 'buyer')
+                            <!-- Logged in Buyers: Can book directly without alerts -->
                             <a class="btn-book-viewing text-decoration-none"
-                                href={{ route('user.addAppointment', $property->id) }}><i
-                                    class="bi bi-calendar-check"></i>
-                                Book a Viewing </a>
+                                href="{{ route('user.addAppointment', $property->id) }}">
+                                <i class="bi bi-calendar-check"></i> Book a Viewing
+                            </a>
+
                             <!-- Action 1: Save Listing -->
                             <button type="button" class="btn-save-prop js-fav-btn" data-id="{{ $property->id }}"
                                 data-url="{{ route('properties.save', $property->id) }}">
@@ -170,6 +172,20 @@
                                     {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property' }}
                                 </span>
                             </button>
+                            @elseif (!Auth::check())
+                            <!-- Guests: Prompts them to log in -->
+                            <a class="btn-book-viewing text-decoration-none" href="{{ route('login.index') }}"
+                            onclick="alert('Login to get Appointment')">
+                            <i class="bi bi-calendar-check"></i> Book a Viewing
+                        </a>
+                        <button type="button" class="btn-save-prop js-fav-btn" data-id="{{ $property->id }}"
+                            data-url="{{ route('properties.save', $property->id) }}">
+                            <i
+                                class="bi {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+                            <span>
+                                {{ $property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property' }}
+                            </span>
+                        </button>
                         @endif
                         @if ($property->agent?->user)
                             <a href="{{ route('agent.show', $property->agent->id) }}"

@@ -53,7 +53,7 @@
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-8">
-                    
+
 
                     <h1 class="prop-title"><?php echo e($property->title); ?></h1>
                     <p class="prop-location">
@@ -161,11 +161,13 @@
                         <div class="price-label">For <?php echo e(ucfirst($property->purpose)); ?> &nbsp;·&nbsp; Created
                             <?php echo e($property->created_at->diffForHumans()); ?></div>
 
-                        <?php if(Auth::check() ? Auth::user()->role == 'buyer' : !Auth::check()): ?>
+                        <?php if(Auth::check() && Auth::user()->role == 'buyer'): ?>
+                            <!-- Logged in Buyers: Can book directly without alerts -->
                             <a class="btn-book-viewing text-decoration-none"
-                                href=<?php echo e(route('user.addAppointment', $property->id)); ?>><i
-                                    class="bi bi-calendar-check"></i>
-                                Book a Viewing </a>
+                                href="<?php echo e(route('user.addAppointment', $property->id)); ?>">
+                                <i class="bi bi-calendar-check"></i> Book a Viewing
+                            </a>
+
                             <!-- Action 1: Save Listing -->
                             <button type="button" class="btn-save-prop js-fav-btn" data-id="<?php echo e($property->id); ?>"
                                 data-url="<?php echo e(route('properties.save', $property->id)); ?>">
@@ -176,6 +178,21 @@
 
                                 </span>
                             </button>
+                            <?php elseif(!Auth::check()): ?>
+                            <!-- Guests: Prompts them to log in -->
+                            <a class="btn-book-viewing text-decoration-none" href="<?php echo e(route('login.index')); ?>"
+                            onclick="alert('Login to get Appointment')">
+                            <i class="bi bi-calendar-check"></i> Book a Viewing
+                        </a>
+                        <button type="button" class="btn-save-prop js-fav-btn" data-id="<?php echo e($property->id); ?>"
+                            data-url="<?php echo e(route('properties.save', $property->id)); ?>">
+                            <i
+                                class="bi <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'bi-heart-fill' : 'bi-heart'); ?>"></i>
+                            <span>
+                                <?php echo e($property->savedProperties->contains('user_id', auth()->id()) ? 'Saved Property' : 'Save Property'); ?>
+
+                            </span>
+                        </button>
                         <?php endif; ?>
                         <?php if($property->agent?->user): ?>
                             <a href="<?php echo e(route('agent.show', $property->agent->id)); ?>"

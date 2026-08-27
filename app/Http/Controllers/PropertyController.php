@@ -246,11 +246,12 @@ class PropertyController extends Controller
                     $query->orderBy('featured', 'desc')->orderBy('created_at', 'desc');
                     break;
             }
-
+            $users=User::count();
+        $reviews=Review::avg('rating');
             // Paginate and retain active query params
             $properties = $query->paginate(12)->withQueryString();
 
-            return view('frontend.property', compact('properties','cities'));
+            return view('frontend.property', compact('properties','cities','users','reviews'));
 
         } catch (\Exception $e) {
             // Return back with error alert if a query or database issue occurs
