@@ -284,12 +284,12 @@
                                 <span class="text-muted-custom text-center">Properties Listed</span>
                             </div>
                             <div class="col-3 count p-3 d-flex align-items-center flex-column">
-                                <h2 class="counter" data-bs-start="0" data-bs-end="{{ $customers }}"
+                                <h2 class="counter m-0" data-bs-start="0" data-bs-end="{{ $customers }}"
                                     data-bs-sign="+">150+</h2>
                                 <span class="text-muted-custom text-center">Satisfied Client</span>
                             </div>
                             <div class="col-3 count p-3 d-flex align-items-center flex-column">
-                                <h2 class="counter" data-bs-start="0" data-bs-end="98" data-bs-sign="%">98%</h2>
+                                <h2 class="counter m-0" data-bs-start="0" data-bs-end="98" data-bs-sign="%">98%</h2>
                                 <span class="text-muted-custom text-center">Client Satisfaction</span>
                             </div>
                         </div>

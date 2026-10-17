@@ -1,3 +1,5 @@
+
+
 <?php
 
 use Illuminate\Foundation\Application;
@@ -11,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+         $middleware->redirectGuestsTo(fn () => route('login.index'));
          $middleware->alias([
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'verified' => \App\Http\Middleware\VerifiedMiddleware::class,

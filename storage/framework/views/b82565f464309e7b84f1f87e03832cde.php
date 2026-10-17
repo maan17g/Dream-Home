@@ -55,7 +55,7 @@
                         <a class="nav-link <?php echo e(request()->routeIs('page.index') ? 'active' : ''); ?>" href="<?php echo e(route('page.index')); ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo e(request()->routeIs('property.index') ? 'active' : ''); ?>" href="<?php echo e(route('property.index')); ?>">Properties</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('property.index') || request()->routeIs('property.search') ? 'active' : ''); ?>" href="<?php echo e(route('property.index')); ?>">Properties</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo e(request()->routeIs('page.about') ? 'active' : ''); ?>" href="<?php echo e(route('page.about')); ?>">About Us</a>

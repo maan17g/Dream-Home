@@ -54,7 +54,7 @@
                         <a class="nav-link {{ request()->routeIs('page.index') ? 'active' : '' }}" href="{{ route('page.index') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('property.index') ? 'active' : '' }}" href="{{ route('property.index') }}">Properties</a>
+                        <a class="nav-link {{ request()->routeIs('property.index') || request()->routeIs('property.search') ? 'active' : '' }}" href="{{ route('property.index') }}">Properties</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('page.about') ? 'active' : '' }}" href="{{ route('page.about') }}">About Us</a>
